@@ -1,0 +1,58 @@
+# GitHub actions for using 
+# Nx Distributed Task Execution (see: https://nx.dev/using-nx/dte)
+# see Nx Mental Model (https://nx.dev/using-nx/mental-model)
+
+name: Distributed Task Execution
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'feature/**'
+      - 'hotfix/**'
+      - 'release/**'
+  pull_request:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout [main]
+        with:
+          fetch-depth: 0
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        id: setSHAs
+        uses: nrwl/nx-set-shas@v2
+      - run: echo "BASE set to ${{ steps.setSHAs.outputs.base }}"
+      - run: echo "HEAD set to ${{ steps.setSHAs.outputs.head }}"
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - run: npm install
+      - run: npx nx affected --target=test --parallel --max-parallel=2
+      - run: npx nx affected --target=lint --fix --parallel --max-parallel=2
+      - run: npx nx affected --target=build --parallel --max-parallel=2
+      # - run: npx nx affected --target=generate-docs --parallel --max-parallel=2
+  pr:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        id: setSHAs
+        uses: nrwl/nx-set-shas@v2
+      - run: echo "The base is set to ${{ steps.setSHAs.outputs.base }}"
+      - run: echo "The HEAD is set to ${{ steps.setSHAs.outputs.head }}"
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - run: npm install
+      - run: npx nx affected --target=lint --fix --parallel --max-parallel=2
+      - run: npx nx affected --target=test --parallel --max-parallel=2
+      - run: npx nx affected --target=build --parallel --max-parallel=3
+      # - run: npx nx affected --target=generate-docs --parallel --max-parallel=2

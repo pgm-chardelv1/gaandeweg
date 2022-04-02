@@ -1,0 +1,52 @@
+{
+  "root": "apps/gaandeweg-server",
+  "sourceRoot": "apps/gaandeweg-server/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/gaandeweg-server",
+        "main": "apps/gaandeweg-server/src/main.ts",
+        "tsConfig": "apps/gaandeweg-server/tsconfig.app.json",
+        "assets": ["apps/gaandeweg-server/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/gaandeweg-server/src/environments/environment.ts",
+              "with": "apps/gaandeweg-server/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "gaandeweg-server:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/gaandeweg-server/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/gaandeweg-server"],
+      "options": {
+        "jestConfig": "apps/gaandeweg-server/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
