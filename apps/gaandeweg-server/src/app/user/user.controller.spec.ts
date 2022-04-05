@@ -1,17 +1,41 @@
+import { ModuleMocker, MockFunctionMetadata } from 'jest-mock';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
+
+const moduleMocker = new ModuleMocker(global);
 
 describe('UserController', () => {
   let controller: UserController;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const moduleRef: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
-      providers: [UserService],
-    }).compile();
+    })
+      .useMocker((token) => {
+        if (token === UserService) {
+          return {
+            findAll: () =>
+              jest.fn().mockResolvedValue([
+                {
+                  id: '123',
+                  email: 'some@user.is',
+                  password: '1234',
+                },
+              ]),
+          };
+        }
+        if (typeof token === 'function') {
+          const mockMetadata = moduleMocker.getMetadata(
+            token
+          ) as MockFunctionMetadata<any, any>;
+          const Mock = moduleMocker.generateFromMetadata(mockMetadata);
+          return new Mock();
+        }
+      })
+      .compile();
 
-    controller = module.get<UserController>(UserController);
+    controller = moduleRef.get<UserController>(UserController);
   });
 
   it('should be defined', () => {
