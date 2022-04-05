@@ -5,24 +5,24 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { ConfigService } from '@nestjs/config';
+// import { ConfigService } from '@nestjs/config';
 
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
-      origin: ['http://localhost:8100'],
+      origin: ['http://localhost:4200'],
       credentials: true,
     },
   });
-  const configService = app.get(ConfigService);
+  // const configService = app.get(ConfigService);
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   app.enableCors();
 
-  const port = configService.get<number>('PORT', 3333);
+  const port = /* configService.get<number>('PORT', */ 3333; /* ) */
 
   await app.listen(port);
   Logger.log(
