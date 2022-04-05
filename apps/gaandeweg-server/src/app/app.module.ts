@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MySQLConnectionOptions';
+import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
