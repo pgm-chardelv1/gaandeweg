@@ -47,3 +47,7 @@ Thumbs.db
 
 # MySQL Database volume
 data
+
+# Environment files
+/**/**/.env
+.env

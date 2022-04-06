@@ -5,6 +5,10 @@ import { ModulesService } from './modules.service';
 
 const moduleMocker = new ModuleMocker(global);
 
+/**
+ * Tests the ModulesController class.
+ * @returns None
+ */
 describe('ModulesController', () => {
   let controller: ModulesController;
 
@@ -30,6 +34,7 @@ describe('ModulesController', () => {
         if (typeof token === 'function') {
           const mockMetadata = moduleMocker.getMetadata(
             token
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ) as MockFunctionMetadata<any, any>;
           const Mock = moduleMocker.generateFromMetadata(mockMetadata);
           return new Mock();

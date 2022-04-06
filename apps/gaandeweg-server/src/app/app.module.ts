@@ -16,6 +16,7 @@ import { User } from './user/entities/user.entity';
 import { Exercise } from './exercise/entities/exercise.entity';
 import { InfoElement } from './info-element/entities/info-element.entity';
 import { Profile } from './profile/entities/profile.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { Profile } from './profile/entities/profile.entity';
     UserModule,
     ProfileModule,
     InfoElementModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
