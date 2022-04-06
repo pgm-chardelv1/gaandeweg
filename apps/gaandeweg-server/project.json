@@ -46,6 +46,13 @@
         "jestConfig": "apps/gaandeweg-server/jest.config.js",
         "passWithNoTests": true
       }
+    },
+    "generate-docs": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx compodoc -p apps/gaandeweg-server/tsconfig.json -d dist/docs/gaandeweg-server -n \"Gaandeweg Server\" -r 8081",
+        "color": true
+      }
     }
   },
   "tags": []

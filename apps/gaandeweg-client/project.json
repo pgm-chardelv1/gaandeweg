@@ -187,6 +187,13 @@
           "cmd": "update android"
         }
       }
+    },
+    "generate-docs": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx compodoc -p apps/gaandeweg-client/tsconfig.json -d dist/docs/gaandeweg-client -n \"Gaandeweg Client\" -r 80",
+        "color": true
+      }
     }
   },
   "tags": []
