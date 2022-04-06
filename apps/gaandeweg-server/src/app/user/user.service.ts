@@ -65,6 +65,18 @@ export class UserService {
     }
   }
 
+  async findUnique(data: { where: object }): Promise<User> {
+    try {
+      const user = await this.userRepository.findOne(data);
+      if (!user) {
+        throw new BadRequestException('User could not be found');
+      }
+      return user;
+    } catch (error) {
+      Logger.log(`Could not find user. ${error}`);
+    }
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     try {
       const user = await this.userRepository.findOne(id);
