@@ -28,7 +28,7 @@ import { AuthModule } from './auth/auth.module';
           port: 3307,
           username: 'root',
           password: 'root',
-          database: 'gaandeweg',
+          database: 'gaandeweg-dev',
           entities: [Exercise, InfoElement, ModuleEntity, Profile, User],
           synchronize: true,
           migrations: [__dirname, 'src/migrations'],

@@ -15,8 +15,8 @@ export class Profile {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('varchar', { length: 45, array: true })
-  moduleIds: [number];
+  @Column('varchar', { length: 45, nullable: true })
+  moduleIds: number[];
 
   @CreateDateColumn()
   createdAt: Date;
