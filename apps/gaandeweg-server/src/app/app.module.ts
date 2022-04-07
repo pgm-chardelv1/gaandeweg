@@ -17,6 +17,8 @@ import { Exercise } from './exercise/entities/exercise.entity';
 import { InfoElement } from './info-element/entities/info-element.entity';
 import { Profile } from './profile/entities/profile.entity';
 import { AuthModule } from './auth/auth.module';
+import { SeederService } from './seeder/seeder.service';
+import { SeederModule } from './seeder/seeder.module';
 
 @Module({
   imports: [
@@ -47,8 +49,9 @@ import { AuthModule } from './auth/auth.module';
     ProfileModule,
     InfoElementModule,
     AuthModule,
+    SeederModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeederService],
 })
 export class AppModule {}
