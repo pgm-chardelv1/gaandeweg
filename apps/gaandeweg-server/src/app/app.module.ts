@@ -5,13 +5,13 @@ import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOpti
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { ModulesModule } from './modules/modules.module';
+import { CategoryModule } from './category/category.module';
 import { ExerciseModule } from './exercise/exercise.module';
 import { UserModule } from './user/user.module';
 import { ProfileModule } from './profile/profile.module';
 import { InfoElementModule } from './info-element/info-element.module';
 
-import { Module as ModuleEntity } from './modules/entities/module.entity';
+import { Category } from './category/entities/category.entity';
 import { User } from './user/entities/user.entity';
 import { Exercise } from './exercise/entities/exercise.entity';
 import { InfoElement } from './info-element/entities/info-element.entity';
@@ -31,7 +31,7 @@ import { SeederModule } from './seeder/seeder.module';
           username: 'root',
           password: 'root',
           database: 'gaandeweg-dev',
-          entities: [Exercise, InfoElement, ModuleEntity, Profile, User],
+          entities: [Exercise, InfoElement, Category, Profile, User],
           synchronize: true,
           migrations: [__dirname, 'src/migrations'],
           migrationsRun: true,
@@ -43,7 +43,7 @@ import { SeederModule } from './seeder/seeder.module';
         };
       },
     }),
-    ModulesModule,
+    CategoryModule,
     ExerciseModule,
     UserModule,
     ProfileModule,

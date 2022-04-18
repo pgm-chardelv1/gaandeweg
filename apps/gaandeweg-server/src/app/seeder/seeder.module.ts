@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ExerciseModule } from '../exercise/exercise.module';
 import { InfoElementModule } from '../info-element/info-element.module';
-import { ModulesModule } from '../modules/modules.module';
+import { CategoryModule } from '../category/category.module';
 import { ProfileModule } from '../profile/profile.module';
 import { UserModule } from '../user/user.module';
 import { SeederService } from './seeder.service';
@@ -11,7 +11,7 @@ import { SeederController } from './seeder.controller';
   imports: [
     ExerciseModule,
     InfoElementModule,
-    ModulesModule,
+    CategoryModule,
     ProfileModule,
     UserModule,
   ],
