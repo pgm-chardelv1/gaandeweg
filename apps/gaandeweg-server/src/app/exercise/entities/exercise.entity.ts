@@ -17,7 +17,7 @@ export class Exercise {
   version: string;
 
   @Column()
-  moduleId: number;
+  categoryId: number;
 
   @Column('varchar', { length: 45 })
   name: string;

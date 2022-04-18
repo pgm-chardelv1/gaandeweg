@@ -32,6 +32,29 @@ export class UserService {
   }
 
   /**
+   * Creates a user if one doesn't exist.
+   * @param {object} where - The where clause to find the user.
+   * @param {CreateUserDto} data - The data to create the user with.
+   * @returns {Promise<User>} - The user that was created.
+   */
+  async createIfDoesntExist(data: {
+    where: object;
+    data: CreateUserDto;
+  }): Promise<User> {
+    try {
+      const user = await this.userRepository.findOne(data.where);
+      if (!user) {
+        const newUser = await this.userRepository.create(data.data);
+        await this.userRepository.save(newUser);
+        return newUser;
+      }
+      return user;
+    } catch (error) {
+      Logger.log(`Could not create user. ${error}`);
+    }
+  }
+
+  /**
    * Find all users in the database.
    * @returns A promise that resolves to an array of user objects.
    */
@@ -45,7 +68,7 @@ export class UserService {
        */
       return users.map((user: User) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { password, ...rest } = user;
+        const { email, password, ...rest } = user;
         return rest;
       });
     } catch (error) {

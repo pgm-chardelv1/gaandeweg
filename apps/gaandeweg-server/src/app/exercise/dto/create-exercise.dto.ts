@@ -4,7 +4,7 @@ export class CreateExerciseDto {
   version: string;
 
   @IsInt()
-  moduleId: number;
+  categoryId: number;
 
   name: string;
 

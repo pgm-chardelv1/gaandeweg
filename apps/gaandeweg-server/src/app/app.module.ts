@@ -5,20 +5,17 @@ import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOpti
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { CategoryModule } from './category/category.module';
-import { ExerciseModule } from './exercise/exercise.module';
-import { UserModule } from './user/user.module';
-import { ProfileModule } from './profile/profile.module';
-import { InfoElementModule } from './info-element/info-element.module';
+import {
+  AuthModule,
+  CategoryModule,
+  ExerciseModule,
+  InfoElementModule,
+  ProfileModule,
+  SeederModule,
+  UserModule,
+} from './app.modules';
 
-import { Category } from './category/entities/category.entity';
-import { User } from './user/entities/user.entity';
-import { Exercise } from './exercise/entities/exercise.entity';
-import { InfoElement } from './info-element/entities/info-element.entity';
-import { Profile } from './profile/entities/profile.entity';
-import { AuthModule } from './auth/auth.module';
-import { SeederService } from './seeder/seeder.service';
-import { SeederModule } from './seeder/seeder.module';
+import { Category, Exercise, InfoElement, Profile, User } from './app.entities';
 
 @Module({
   imports: [
@@ -52,6 +49,6 @@ import { SeederModule } from './seeder/seeder.module';
     SeederModule,
   ],
   controllers: [AppController],
-  providers: [AppService, SeederService],
+  providers: [AppService],
 })
 export class AppModule {}
