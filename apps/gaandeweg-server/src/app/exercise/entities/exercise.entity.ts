@@ -6,8 +6,17 @@ import {
   ManyToOne,
   UpdateDateColumn,
 } from 'typeorm';
-import { Module } from '../../modules/entities/module.entity';
+import { Category } from '../../category/entities/category.entity';
 
+/**
+ * @Entity('exercise')
+ * @class Exercise
+ * @property {number} id - The id of the exercise.
+ * @property {string} version - The version of the exercise.
+ * @property {number} categoryId - The id of the category the exercise belongs to.
+ * @property {string} publishedBy - The name of the user who published the exercise.
+ * @property {Category} category - The category the exercise belongs to.
+ */
 @Entity('exercise')
 export class Exercise {
   @PrimaryGeneratedColumn()
@@ -17,7 +26,7 @@ export class Exercise {
   version: string;
 
   @Column()
-  moduleId: number;
+  categoryId: number;
 
   @Column('varchar', { length: 45 })
   name: string;
@@ -40,10 +49,10 @@ export class Exercise {
   @Column('varchar', { length: 45 })
   publishedBy: string;
 
-  @ManyToOne(() => Module, (module) => module.exercises, {
+  @ManyToOne(() => Category, (category) => category.exercises, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     orphanedRowAction: 'nullify',
   })
-  module: Module;
+  category: Category;
 }

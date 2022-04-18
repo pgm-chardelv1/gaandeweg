@@ -6,6 +6,13 @@ import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { Profile } from './entities/profile.entity';
 
+/**
+ * Service for profile resource
+ *
+ * @class ProfileService
+ * @description This service contains all the profile related services and controllers.
+ * @exports ProfileService
+ */
 @Injectable()
 export class ProfileService {
   constructor(
@@ -61,6 +68,12 @@ export class ProfileService {
     }
   }
 
+  /**
+   * Updates a profile.
+   * @param {string} id - the id of the profile to update
+   * @param {UpdateProfileDto} updateProfileDto - the profile to update
+   * @returns {Promise<Profile>} - the updated profile
+   */
   async update(
     id: string,
     updateProfileDto: UpdateProfileDto
@@ -83,6 +96,11 @@ export class ProfileService {
     }
   }
 
+  /**
+   * Removes a profile from the database.
+   * @param {string} id - the id of the profile to remove
+   * @returns {Promise<Profile>} - the removed profile
+   */
   async remove(id: string): Promise<Profile> {
     try {
       const profile = await this.profileRepository.findOne(id);

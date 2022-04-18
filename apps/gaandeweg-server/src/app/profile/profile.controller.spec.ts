@@ -5,6 +5,10 @@ import { ProfileService } from './profile.service';
 
 const moduleMocker = new ModuleMocker(global);
 
+/**
+ * Tests the ProfileController class.
+ * @returns None
+ */
 describe('ProfileController', () => {
   let controller: ProfileController;
 

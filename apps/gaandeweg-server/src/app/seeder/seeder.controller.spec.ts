@@ -1,37 +1,34 @@
 import { ModuleMocker, MockFunctionMetadata } from 'jest-mock';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
+import { SeederController } from './seeder.controller';
+import { SeederService } from './seeder.service';
 
 const moduleMocker = new ModuleMocker(global);
 
 /**
- * A test suite for the UserController class.
+ * Tests the SeederController class.
  * @returns None
  */
-describe('UserController', () => {
-  let controller: UserController;
+describe('SeederController', () => {
+  let controller: SeederController;
 
   beforeEach(async () => {
-    const moduleRef: TestingModule = await Test.createTestingModule({
-      controllers: [UserController],
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [SeederController],
     })
       .useMocker((token) => {
-        if (token === UserService) {
+        if (token === SeederService) {
           return {
-            findAll: () =>
-              jest.fn().mockResolvedValue([
-                {
-                  id: '123',
-                  email: 'some@user.is',
-                  password: '1234',
-                },
-              ]),
+            startSeed: () =>
+              jest.fn().mockResolvedValue({
+                message: 'Success!',
+              }),
           };
         }
         if (typeof token === 'function') {
           const mockMetadata = moduleMocker.getMetadata(
             token
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ) as MockFunctionMetadata<any, any>;
           const Mock = moduleMocker.generateFromMetadata(mockMetadata);
           return new Mock();
@@ -39,7 +36,7 @@ describe('UserController', () => {
       })
       .compile();
 
-    controller = moduleRef.get<UserController>(UserController);
+    controller = module.get<SeederController>(SeederController);
   });
 
   it('should be defined', () => {

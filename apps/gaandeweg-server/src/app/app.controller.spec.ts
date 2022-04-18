@@ -3,6 +3,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+/**
+ * A test function that tests the getData function.
+ * @returns None
+ */
 describe('AppController', () => {
   let app: TestingModule;
 

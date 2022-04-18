@@ -6,6 +6,13 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserInterface } from './entities/user.entity';
 
+/**
+ * Service for user resource
+ *
+ * @description This service contains all the user related services and controllers.
+ * @exports UserService
+ * @class UserService
+ */
 @Injectable()
 export class UserService {
   constructor(
@@ -32,6 +39,29 @@ export class UserService {
   }
 
   /**
+   * Creates a user if one doesn't exist.
+   * @param {object} where - The where clause to find the user.
+   * @param {CreateUserDto} data - The data to create the user with.
+   * @returns {Promise<User>} - The user that was created.
+   */
+  async createIfDoesntExist(data: {
+    where: object;
+    data: CreateUserDto;
+  }): Promise<User> {
+    try {
+      const user = await this.userRepository.findOne(data.where);
+      if (!user) {
+        const newUser = await this.userRepository.create(data.data);
+        await this.userRepository.save(newUser);
+        return newUser;
+      }
+      return user;
+    } catch (error) {
+      Logger.log(`Could not create user. ${error}`);
+    }
+  }
+
+  /**
    * Find all users in the database.
    * @returns A promise that resolves to an array of user objects.
    */
@@ -45,7 +75,7 @@ export class UserService {
        */
       return users.map((user: User) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { password, ...rest } = user;
+        const { email, password, ...rest } = user;
         return rest;
       });
     } catch (error) {
@@ -53,6 +83,11 @@ export class UserService {
     }
   }
 
+  /**
+   * Finds a user by their id.
+   * @param {string} id - the id of the user to find
+   * @returns {Promise<User>} - the user with the given id
+   */
   findOne(id: string): Promise<User> {
     try {
       const user: Promise<User> = this.userRepository.findOne(id);
@@ -65,6 +100,11 @@ export class UserService {
     }
   }
 
+  /**
+   * Finds a user in the database.
+   * @param {object} data - The data to search for.
+   * @returns {Promise<User>} - The user that was found.
+   */
   async findUnique(data: { where: object }): Promise<User> {
     try {
       const user = await this.userRepository.findOne(data);
@@ -77,6 +117,12 @@ export class UserService {
     }
   }
 
+  /**
+   * Updates a user with the given updateUserDto.
+   * @param {string} id - the id of the user to update
+   * @param {UpdateUserDto} updateUserDto - the updateUserDto to update the user with
+   * @returns {Promise<User>} - the updated user
+   */
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     try {
       const user = await this.userRepository.findOne(id);
@@ -92,6 +138,11 @@ export class UserService {
     }
   }
 
+  /**
+   * Removes a user from the database.
+   * @param {string} id - the id of the user to remove
+   * @returns {Promise<User>} - the user that was removed
+   */
   async remove(id: string): Promise<User> {
     try {
       const user = await this.userRepository.findOne(id);

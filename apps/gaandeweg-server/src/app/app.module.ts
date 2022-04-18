@@ -5,18 +5,23 @@ import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOpti
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { ModulesModule } from './modules/modules.module';
-import { ExerciseModule } from './exercise/exercise.module';
-import { UserModule } from './user/user.module';
-import { ProfileModule } from './profile/profile.module';
-import { InfoElementModule } from './info-element/info-element.module';
+import {
+  AuthModule,
+  CategoryModule,
+  ExerciseModule,
+  InfoElementModule,
+  ProfileModule,
+  SeederModule,
+  UserModule,
+} from './app.modules';
 
-import { Module as ModuleEntity } from './modules/entities/module.entity';
-import { User } from './user/entities/user.entity';
-import { Exercise } from './exercise/entities/exercise.entity';
-import { InfoElement } from './info-element/entities/info-element.entity';
-import { Profile } from './profile/entities/profile.entity';
-import { AuthModule } from './auth/auth.module';
+import { Category, Exercise, InfoElement, Profile, User } from './app.entities';
+
+/**
+ * The main module of the application.
+ * @description This module is the main module of the application.
+ * @exports AppModule
+ */
 
 @Module({
   imports: [
@@ -29,7 +34,7 @@ import { AuthModule } from './auth/auth.module';
           username: 'root',
           password: 'root',
           database: 'gaandeweg-dev',
-          entities: [Exercise, InfoElement, ModuleEntity, Profile, User],
+          entities: [Exercise, InfoElement, Category, Profile, User],
           synchronize: true,
           migrations: [__dirname, 'src/migrations'],
           migrationsRun: true,
@@ -41,12 +46,13 @@ import { AuthModule } from './auth/auth.module';
         };
       },
     }),
-    ModulesModule,
+    CategoryModule,
     ExerciseModule,
     UserModule,
     ProfileModule,
     InfoElementModule,
     AuthModule,
+    SeederModule,
   ],
   controllers: [AppController],
   providers: [AppService],

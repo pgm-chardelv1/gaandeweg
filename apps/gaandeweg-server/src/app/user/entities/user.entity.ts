@@ -85,7 +85,6 @@ export enum UserRole {
  */
 export interface UserInterface {
   id: string;
-  email: string;
   type: UserRole;
   createdAt: Date;
   updatedAt: Date;

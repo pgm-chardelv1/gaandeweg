@@ -5,6 +5,10 @@ import { ExerciseService } from './exercise.service';
 
 const moduleMocker = new ModuleMocker(global);
 
+/**
+ * A test suite for the ExerciseController class.
+ * @returns None
+ */
 describe('ExercisesController', () => {
   let controller: ExerciseController;
 

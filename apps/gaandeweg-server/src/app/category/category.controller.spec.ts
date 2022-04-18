@@ -1,23 +1,23 @@
 import { ModuleMocker, MockFunctionMetadata } from 'jest-mock';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ModulesController } from './modules.controller';
-import { ModulesService } from './modules.service';
+import { CategoryController } from './category.controller';
+import { CategoryService } from './category.service';
 
 const moduleMocker = new ModuleMocker(global);
 
 /**
- * Tests the ModulesController class.
+ * Tests the CategoryController class.
  * @returns None
  */
-describe('ModulesController', () => {
-  let controller: ModulesController;
+describe('CategoryController', () => {
+  let controller: CategoryController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [ModulesController],
+      controllers: [CategoryController],
     })
       .useMocker((token) => {
-        if (token === ModulesService) {
+        if (token === CategoryService) {
           return {
             findAll: () =>
               jest.fn().mockResolvedValue([
@@ -42,7 +42,7 @@ describe('ModulesController', () => {
       })
       .compile();
 
-    controller = module.get<ModulesController>(ModulesController);
+    controller = module.get<CategoryController>(CategoryController);
   });
 
   it('should be defined', () => {
