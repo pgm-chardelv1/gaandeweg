@@ -1,4 +1,4 @@
-export class CreateModuleDto {
+export class CreateCategoryDto {
   version: string;
 
   name: string;

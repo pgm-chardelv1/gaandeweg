@@ -6,7 +6,7 @@ import {
   ManyToOne,
   UpdateDateColumn,
 } from 'typeorm';
-import { Module } from '../../modules/entities/module.entity';
+import { Category } from '../../category/entities/category.entity';
 
 @Entity('exercise')
 export class Exercise {
@@ -40,10 +40,10 @@ export class Exercise {
   @Column('varchar', { length: 45 })
   publishedBy: string;
 
-  @ManyToOne(() => Module, (module) => module.exercises, {
+  @ManyToOne(() => Category, (category) => category.exercises, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     orphanedRowAction: 'nullify',
   })
-  module: Module;
+  category: Category;
 }

@@ -9,8 +9,8 @@ import {
 } from 'typeorm';
 
 import { Exercise } from '../../exercise/entities/exercise.entity';
-@Entity('module')
-export class Module {
+@Entity('category')
+export class Category {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -38,6 +38,6 @@ export class Module {
   @IsUUID()
   updatedBy: string;
 
-  @OneToMany(() => Exercise, (exercise) => exercise.module)
+  @OneToMany(() => Exercise, (exercise) => exercise.category)
   exercises: Exercise[];
 }
