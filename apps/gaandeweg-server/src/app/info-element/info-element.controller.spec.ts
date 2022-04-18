@@ -5,6 +5,9 @@ import { InfoElementService } from './info-element.service';
 
 const moduleMocker = new ModuleMocker(global);
 
+/**
+ * Tests the InfoElementController.
+ */
 describe('InfoElementController', () => {
   let controller: InfoElementController;
 

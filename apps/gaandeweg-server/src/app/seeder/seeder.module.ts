@@ -7,6 +7,14 @@ import { UserModule } from '../user/user.module';
 import { SeederService } from './seeder.service';
 import { SeederController } from './seeder.controller';
 
+/**
+ * The seeder module.
+ *
+ * @description This module contains all the seeder related services and controllers.
+ * @providers SeederService
+ * @controllers SeederController
+ * @exports SeederModule
+ */
 @Module({
   imports: [
     ExerciseModule,

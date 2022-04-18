@@ -17,6 +17,12 @@ import {
 
 import { Category, Exercise, InfoElement, Profile, User } from './app.entities';
 
+/**
+ * The main module of the application.
+ * @description This module is the main module of the application.
+ * @exports AppModule
+ */
+
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({

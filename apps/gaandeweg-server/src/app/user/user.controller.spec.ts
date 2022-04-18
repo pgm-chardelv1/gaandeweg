@@ -5,6 +5,10 @@ import { UserService } from './user.service';
 
 const moduleMocker = new ModuleMocker(global);
 
+/**
+ * A test suite for the UserController class.
+ * @returns None
+ */
 describe('UserController', () => {
   let controller: UserController;
 

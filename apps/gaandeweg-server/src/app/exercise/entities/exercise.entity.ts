@@ -8,6 +8,15 @@ import {
 } from 'typeorm';
 import { Category } from '../../category/entities/category.entity';
 
+/**
+ * @Entity('exercise')
+ * @class Exercise
+ * @property {number} id - The id of the exercise.
+ * @property {string} version - The version of the exercise.
+ * @property {number} categoryId - The id of the category the exercise belongs to.
+ * @property {string} publishedBy - The name of the user who published the exercise.
+ * @property {Category} category - The category the exercise belongs to.
+ */
 @Entity('exercise')
 export class Exercise {
   @PrimaryGeneratedColumn()

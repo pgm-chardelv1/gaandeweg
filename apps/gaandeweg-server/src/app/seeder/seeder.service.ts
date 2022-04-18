@@ -9,8 +9,24 @@ import { ProfileService } from '../profile/profile.service';
 import { UserRole } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 
+/**
+ * The seeder service.
+ *
+ * @class SeederService
+ * @description This service is used to seed the database with data.
+ * @exports SeederService
+ */
+
 @Injectable()
 export class SeederService {
+  /**
+   * Constructor for the InversionService.
+   * @param {ExerciseService} exerciseService - The ExerciseService instance.
+   * @param {InfoElementService} infoElementService - The InfoElementService instance.
+   * @param {CategoryService} categoryService - The CategoryService instance.
+   * @param {ProfileService} profileService - The ProfileService instance.
+   * @param {UserService} userService - The UserService instance.
+   */
   constructor(
     private readonly exerciseService: ExerciseService,
     private readonly infoElementService: InfoElementService,
@@ -19,6 +35,10 @@ export class SeederService {
     private readonly userService: UserService
   ) {}
 
+  /**
+   * Seeds the database with the default categories and exercises.
+   * @returns None
+   */
   async startSeed(): Promise<unknown> {
     try {
       const createUserIfDoesntExist =
@@ -47,6 +67,10 @@ export class SeederService {
     }
   }
 
+  /**
+   * Seeds the categories in the database.
+   * @returns None
+   */
   async seedCategories(): Promise<void> {
     try {
       const categories: CreateCategoryDto[] = [
@@ -73,6 +97,11 @@ export class SeederService {
     }
   }
 
+  /**
+   * Seeds the exercises for the user with the given id.
+   * @param {string} userId - the id of the user to seed the exercises for.
+   * @returns {Promise<{status: number, message: string, exercise: Exercise}>}
+   */
   async seedExercises(userId: string): Promise<{
     status: number;
     message: string;

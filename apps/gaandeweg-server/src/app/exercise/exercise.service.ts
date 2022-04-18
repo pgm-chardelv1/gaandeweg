@@ -6,6 +6,12 @@ import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
 
+/**
+ * Service for exercise resource.
+ *
+ * @description This service contains all the exercise related services and controllers.
+ * @exports ExerciseService
+ */
 @Injectable()
 export class ExerciseService {
   constructor(
@@ -13,6 +19,11 @@ export class ExerciseService {
     private readonly exerciseRepository: Repository<Exercise>
   ) {}
 
+  /**
+   * Creates a new exercise.
+   * @param {CreateExerciseDto} createExerciseDto - The exercise to create.
+   * @returns {Promise<Exercise>} The created exercise.
+   */
   async create(createExerciseDto: CreateExerciseDto) {
     try {
       const exercise = this.exerciseRepository.create(createExerciseDto);
@@ -26,6 +37,10 @@ export class ExerciseService {
     }
   }
 
+  /**
+   * Find all exercises in the database.
+   * @returns {Promise<Exercise[]>}
+   */
   async findAll() {
     try {
       const exercises = this.exerciseRepository.find();
@@ -35,6 +50,11 @@ export class ExerciseService {
     }
   }
 
+  /**
+   * Finds an exercise by id.
+   * @param {number} id - the id of the exercise to find
+   * @returns {Promise<Exercise>} - the exercise that was found
+   */
   async findOne(id: number) {
     try {
       const exercise = this.exerciseRepository.findOne(id);
@@ -47,6 +67,12 @@ export class ExerciseService {
     }
   }
 
+  /**
+   * Updates an exercise.
+   * @param {number} id - The id of the exercise to update.
+   * @param {UpdateExerciseDto} updateExerciseDto - The exercise to update.
+   * @returns {Promise<Exercise>} The updated exercise.
+   */
   async update(id: number, updateExerciseDto: UpdateExerciseDto) {
     try {
       const exercise = await this.exerciseRepository.findOne(id);
@@ -64,6 +90,11 @@ export class ExerciseService {
     }
   }
 
+  /**
+   * Removes the exercise with the given id.
+   * @param {number} id - the id of the exercise to remove
+   * @returns None
+   */
   async remove(id: number) {
     try {
       const exercise = await this.exerciseRepository.findOne(id);

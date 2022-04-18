@@ -2,6 +2,10 @@ import { Test } from '@nestjs/testing';
 
 import { AppService } from './app.service';
 
+/**
+ * A test function that tests the getData function.
+ * @returns None
+ */
 describe('AppService', () => {
   let service: AppService;
 

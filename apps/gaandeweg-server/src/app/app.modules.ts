@@ -6,6 +6,10 @@ import { ProfileModule } from './profile/profile.module';
 import { SeederModule } from './seeder/seeder.module';
 import { UserModule } from './user/user.module';
 
+/**
+ * Export all modules.
+ * @returns None
+ */
 export {
   AuthModule,
   CategoryModule,
