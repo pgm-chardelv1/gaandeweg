@@ -7,6 +7,7 @@ import { PracticingPage } from './practicing.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { PracticingPageRoutingModule } from './practicing-routing.module';
+import { FormsComponent } from './forms/forms.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { PracticingPageRoutingModule } from './practicing-routing.module';
     ExploreContainerComponentModule,
     PracticingPageRoutingModule,
   ],
-  declarations: [PracticingPage],
+  declarations: [PracticingPage, FormsComponent],
 })
 export class PracticingPageModule {}
