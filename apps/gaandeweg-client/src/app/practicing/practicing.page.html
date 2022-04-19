@@ -12,13 +12,18 @@
   </ion-header>
 
   <ion-list>
-    <ion-item>
-      <!-- <ion-label *ngFor="exercise of (exercises | async)">
+    <ion-item *ngFor="let exercise of (exercises | async)">
+      <ion-label button (click)="setActive(exercise.id)">
         <h2>{{exercise.name}}</h2>
         <p>{{exercise.summary}}</p>
+        <pre>{{exercise.template}}</pre>
       </ion-label>
- -->
-      <ion-icon icon="rocket" color="primary"></ion-icon>
+
+      <ion-icon icon="rocket" color="primary">
+      </ion-icon>
     </ion-item>
   </ion-list>
+  <div *ngrxLet="activeExercise; let ex">Something is here
+   <p *ngIf="ex && ex.name">{{ex.name}}</p>
+  </div>
 </ion-content>

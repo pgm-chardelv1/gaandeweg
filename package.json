@@ -71,6 +71,7 @@
     "@nestjs/passport": "^8.2.1",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.3",
+    "@ngrx/component": "^13.1.0",
     "@nrwl/nest": "^13.9.6",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",

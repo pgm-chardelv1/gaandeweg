@@ -9,10 +9,16 @@ import { Exercise } from './models/exercise.model';
   styleUrls: ['practicing.page.scss'],
 })
 export class PracticingPage implements OnInit {
-  exercises!: Observable<Exercise[] | any>;
+  exercises: Observable<Exercise[]> | undefined;
+  activeExercise: Observable<Exercise> | undefined;
   constructor(private exercisesService: ExercisesService) {}
 
   ngOnInit() {
     this.exercises = this.exercisesService.getExercises();
+  }
+
+  setActive(id: number) {
+    this.activeExercise = this.exercisesService.getExercise(id);
+    console.log('active exercise: ', this.activeExercise);
   }
 }

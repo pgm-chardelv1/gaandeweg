@@ -1,13 +1,14 @@
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
+import { ReactiveComponentModule } from '@ngrx/component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PracticingPage } from './practicing.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { PracticingPageRoutingModule } from './practicing-routing.module';
-import { FormsComponent } from './forms/forms.component';
+import { ExerciseFormsComponent } from './forms/exercise-forms.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,9 @@ import { FormsComponent } from './forms/forms.component';
     FormsModule,
     ExploreContainerComponentModule,
     PracticingPageRoutingModule,
+    ReactiveFormsModule,
+    ReactiveComponentModule,
   ],
-  declarations: [PracticingPage, FormsComponent],
+  declarations: [PracticingPage, ExerciseFormsComponent],
 })
 export class PracticingPageModule {}
