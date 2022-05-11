@@ -1,8 +1,11 @@
 {
   "version": 2,
   "projects": {
+    "gaandeweg-admin": "apps/gaandeweg-admin",
+    "gaandeweg-admin-e2e": "apps/gaandeweg-admin-e2e",
     "gaandeweg-client": "apps/gaandeweg-client",
     "gaandeweg-client-e2e": "apps/gaandeweg-client-e2e",
-    "gaandeweg-server": "apps/gaandeweg-server"
+    "gaandeweg-server": "apps/gaandeweg-server",
+    "ui": "libs/ui"
   }
 }

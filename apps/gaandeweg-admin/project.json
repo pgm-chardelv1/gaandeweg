@@ -1,0 +1,94 @@
+{
+  "projectType": "application",
+  "root": "apps/gaandeweg-admin",
+  "sourceRoot": "apps/gaandeweg-admin/src",
+  "prefix": "gaandeweg-ws",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/gaandeweg-admin",
+        "index": "apps/gaandeweg-admin/src/index.html",
+        "main": "apps/gaandeweg-admin/src/main.ts",
+        "polyfills": "apps/gaandeweg-admin/src/polyfills.ts",
+        "tsConfig": "apps/gaandeweg-admin/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/gaandeweg-admin/src/favicon.ico",
+          "apps/gaandeweg-admin/src/assets"
+        ],
+        "styles": ["apps/gaandeweg-admin/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/gaandeweg-admin/src/environments/environment.ts",
+              "with": "apps/gaandeweg-admin/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "gaandeweg-admin:build:production"
+        },
+        "development": {
+          "browserTarget": "gaandeweg-admin:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "gaandeweg-admin:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/gaandeweg-admin/src/**/*.ts",
+          "apps/gaandeweg-admin/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/gaandeweg-admin"],
+      "options": {
+        "jestConfig": "apps/gaandeweg-admin/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
