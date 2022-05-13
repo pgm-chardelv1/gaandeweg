@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { ExercisesService } from './services/exercises.service';
 import { Exercise } from './models/exercise.model';
 import {
@@ -15,7 +15,7 @@ import {
   styleUrls: ['practicing.page.scss'],
 })
 export class PracticingPage implements OnInit {
-  exercises: Observable<Exercise[]> | undefined;
+  exercises: Exercise[] = [];
   activeExercise: Observable<Exercise> | undefined;
 
   ionicForm!: FormGroup;
@@ -26,8 +26,9 @@ export class PracticingPage implements OnInit {
     public formBuilder: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.exercises = this.exercisesService.getExercises();
+  async ngOnInit() {
+    this.exercises = await firstValueFrom(this.exercisesService.getExercises());
+    console.log(this.exercises);
 
     this.ionicForm = this.formBuilder.group({
       date: ['', Validators.required],
