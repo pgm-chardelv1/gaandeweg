@@ -16,9 +16,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'gaandeweg-admin'`, () => {
+  it(`should have as title 'Gaandeweg Platform'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('gaandeweg-admin');
+    expect(app.title).toEqual('Gaandeweg Platform');
   });
 });
