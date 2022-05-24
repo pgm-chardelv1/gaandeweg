@@ -19,7 +19,7 @@
           "apps/gaandeweg-admin/src/assets"
         ],
         "styles": ["apps/gaandeweg-admin/src/styles.scss"],
-        "scripts": []
+        "scripts": ["node_modules/@ckeditor/ckeditor5-build-classic/build/translations/nl.js"]
       },
       "configurations": {
         "production": {
@@ -61,7 +61,8 @@
           "browserTarget": "gaandeweg-admin:build:production"
         },
         "development": {
-          "browserTarget": "gaandeweg-admin:build:development"
+          "browserTarget": "gaandeweg-admin:build:development",
+          "port": 4201
         }
       },
       "defaultConfiguration": "development"

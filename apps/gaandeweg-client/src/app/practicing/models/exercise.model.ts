@@ -48,3 +48,16 @@ export interface Category {
   publishedAt: Date;
   updatedBy: string;
 }
+
+export interface ExerciseForm {
+  fields: ExerciseFormField[];
+}
+
+export interface ExerciseFormField {
+  fieldId: number;
+  fieldType: string;
+  fieldName: string;
+  fieldText: string;
+  fieldValues?: string;
+  extraField?: boolean;
+}

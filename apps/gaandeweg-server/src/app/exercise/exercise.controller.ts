@@ -56,15 +56,15 @@ export class ExerciseController {
    * Find an exercise by id.
    *
    * @description This method is used to find an exercise by id.
-   * @param {string} id - the id of the exercise to find.
+   * @param {number} id - the id of the exercise to find.
    * @returns {Promise<{statusCode: number, message: string, exercise: Exercise}>} - a promise that resolves to a response object with the exercise
    * @memberof ExerciseController
    * @method get
    */
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    const exercise = await this.exerciseService.findOne(+id);
-    return exercise[0];
+  async findOne(@Param('id') id: number) {
+    const exercise = await this.exerciseService.findOne(id);
+    return exercise;
   }
 
   /**

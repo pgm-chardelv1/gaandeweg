@@ -1,5 +1,5 @@
 import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+
 import { ReactiveComponentModule } from '@ngrx/component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,7 +8,6 @@ import { PracticingPage } from './practicing.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { PracticingPageRoutingModule } from './practicing-routing.module';
-import { ExerciseFormsComponent } from './forms/exercise-forms.component';
 
 @NgModule({
   imports: [
@@ -20,6 +19,6 @@ import { ExerciseFormsComponent } from './forms/exercise-forms.component';
     ReactiveFormsModule,
     ReactiveComponentModule,
   ],
-  declarations: [PracticingPage, ExerciseFormsComponent],
+  declarations: [PracticingPage],
 })
 export class PracticingPageModule {}
