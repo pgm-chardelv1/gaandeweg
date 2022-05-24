@@ -7,7 +7,7 @@
     "sourceLocale": "en-US",
     "locales": {
       "nl": {
-        "translation": "apps/gaandeweg-admin/src/locale/messages.nl.xlf"
+        "translation": "apps/gaandeweg-admin/src/locale/messages.nl.json"
       }
     }
   },
