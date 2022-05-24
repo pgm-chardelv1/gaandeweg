@@ -3,11 +3,20 @@
   "root": "apps/gaandeweg-admin",
   "sourceRoot": "apps/gaandeweg-admin/src",
   "prefix": "gaandeweg-ws",
+  "i18n": {
+    "sourceLocale": "en-US",
+    "locales": {
+      "nl": {
+        "translation": "apps/gaandeweg-admin/src/locale/messages.nl.xlf"
+      }
+    }
+  },
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "localize": true,
         "outputPath": "dist/apps/gaandeweg-admin",
         "index": "apps/gaandeweg-admin/src/index.html",
         "main": "apps/gaandeweg-admin/src/main.ts",
@@ -22,6 +31,9 @@
         "scripts": ["node_modules/@ckeditor/ckeditor5-build-classic/build/translations/nl.js"]
       },
       "configurations": {
+        "nl": {
+          "localize": ["nl"]
+        },
         "production": {
           "budgets": [
             {
@@ -57,6 +69,9 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
+        "nl": {
+          "browserTarget": "gaandeweg-admin:build:development,nl"
+        },
         "production": {
           "browserTarget": "gaandeweg-admin:build:production"
         },
