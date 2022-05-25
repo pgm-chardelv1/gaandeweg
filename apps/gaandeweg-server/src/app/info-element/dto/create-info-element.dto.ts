@@ -23,5 +23,5 @@ export class CreateInfoElementDto {
 
   @IsOptional()
   @IsUUID()
-  publishedById: string;
+  publishedById?: string;
 }

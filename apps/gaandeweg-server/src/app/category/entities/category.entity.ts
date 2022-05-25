@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { InfoElement } from '../../app.entities';
 
 import { Exercise } from '../../exercise/entities/exercise.entity';
 /**
@@ -53,4 +54,7 @@ export class Category {
 
   @OneToMany(() => Exercise, (exercise) => exercise.category)
   exercises: Exercise[];
+
+  @OneToMany(() => InfoElement, (infoElement) => infoElement.category)
+  infoElements: InfoElement[];
 }

@@ -36,11 +36,7 @@ export class InfoElementController {
     const infoElement = await this.infoElementService.create(
       createInfoElementDto
     );
-    return {
-      statusCode: 201,
-      message: 'InfoElement created successfully',
-      infoElement,
-    };
+    return infoElement;
   }
 
   /**
@@ -54,11 +50,7 @@ export class InfoElementController {
   @Get()
   async findAll() {
     const infoElements = await this.infoElementService.findAll();
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'InfoElements found successfully',
-      infoElements,
-    };
+    return infoElements;
   }
 
   /**
@@ -73,11 +65,7 @@ export class InfoElementController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const infoElement = await this.infoElementService.findOne(+id);
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'InfoElement found successfully',
-      infoElement,
-    };
+    return infoElement;
   }
 
   /**
@@ -99,11 +87,7 @@ export class InfoElementController {
       +id,
       updateInfoElementDto
     );
-    return {
-      statusCode: 204,
-      message: 'InfoElement updated successfully',
-      infoElement,
-    };
+    infoElement;
   }
 
   /**
@@ -118,10 +102,6 @@ export class InfoElementController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const infoElement = await this.infoElementService.remove(+id);
-    return {
-      statusCode: 204,
-      message: 'InfoElement removed successfully',
-      infoElement,
-    };
+    return infoElement;
   }
 }
