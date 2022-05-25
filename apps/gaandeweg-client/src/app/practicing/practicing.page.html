@@ -11,7 +11,34 @@
     </ion-toolbar>
   </ion-header>
 
-  <gaandeweg-ws-explore-container
-    name="Practicing page"
-  ></gaandeweg-ws-explore-container>
-</ion-content>
+  <ion-list>
+    <ion-item *ngFor="let exercise of exercises">
+      <ion-label *ngIf="exercise && exercise.id" button (click)="setActive(exercise.id)">
+        <h2>{{exercise.name}}</h2>
+        <p>{{exercise.summary}}</p>
+      </ion-label>
+
+      <ion-icon icon="rocket" color="primary"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="activeExercise && activeExercise.name">
+   <p>Exercise found: <strong>{{activeExercise.name}}</strong></p>
+   <form [formGroup]="myGroup" (ngSubmit)="onSubmit()" novalidate>
+    <ion-list *ngFor="let field of activeExerciseForm?.fields" >
+      <ion-item-group>
+        <ion-item>
+          <ion-label>{{field.fieldText}}</ion-label>
+          <ion-input type="{{field.fieldType}}" formControlName="{{field.fieldName}}"></ion-input>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+    <ion-row>
+      <ion-col>
+          <ion-button type="submit" expand="block">Submit</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+  </div>
+
+  </ion-content>

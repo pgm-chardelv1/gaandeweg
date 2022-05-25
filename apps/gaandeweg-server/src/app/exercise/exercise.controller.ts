@@ -35,11 +35,7 @@ export class ExerciseController {
   @Post()
   async create(@Body() createExerciseDto: CreateExerciseDto) {
     const exercise = await this.exerciseService.create(createExerciseDto);
-    return {
-      statusCode: 201,
-      message: 'Exercise created successfully',
-      exercise,
-    };
+    exercise;
   }
 
   /**
@@ -53,30 +49,22 @@ export class ExerciseController {
   @Get()
   async findAll() {
     const exercises = await this.exerciseService.findAll();
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Exercises found successfully',
-      exercises,
-    };
+    return exercises;
   }
 
   /**
    * Find an exercise by id.
    *
    * @description This method is used to find an exercise by id.
-   * @param {string} id - the id of the exercise to find.
+   * @param {number} id - the id of the exercise to find.
    * @returns {Promise<{statusCode: number, message: string, exercise: Exercise}>} - a promise that resolves to a response object with the exercise
    * @memberof ExerciseController
    * @method get
    */
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    const exercise = await this.exerciseService.findOne(+id);
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Exercise found successfully',
-      exercise,
-    };
+  async findOne(@Param('id') id: number) {
+    const exercise = await this.exerciseService.findOne(id);
+    return exercise;
   }
 
   /**
@@ -95,11 +83,7 @@ export class ExerciseController {
     @Body() updateExerciseDto: UpdateExerciseDto
   ) {
     const exercise = this.exerciseService.update(+id, updateExerciseDto);
-    return {
-      statusCode: 204,
-      message: 'Exercise updated successfully',
-      exercise,
-    };
+    return exercise;
   }
 
   /**
@@ -114,10 +98,6 @@ export class ExerciseController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const exercise = await this.exerciseService.remove(+id);
-    return {
-      statusCode: 204,
-      message: 'Exercise removed successfully',
-      exercise,
-    };
+    return exercise;
   }
 }

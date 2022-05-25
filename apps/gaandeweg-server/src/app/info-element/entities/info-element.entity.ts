@@ -1,10 +1,12 @@
 import {
   Column,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Category } from '../../app.entities';
 
 /**
  * @Entity('info-element')
@@ -43,9 +45,16 @@ export class InfoElement {
   @Column({ type: 'tinyint', default: false })
   published: boolean;
 
-  @Column({ type: 'datetime' })
-  publishedAt: Date;
+  @Column({ type: 'datetime', default: null })
+  publishedAt?: Date;
 
   @Column({ type: 'varchar', length: 45, default: null })
   publishedById: string;
+
+  @ManyToOne(() => Category, (category) => category.infoElements, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    orphanedRowAction: 'nullify',
+  })
+  category: Category;
 }

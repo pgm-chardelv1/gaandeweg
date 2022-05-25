@@ -1,9 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { InfoElement } from '../app.entities';
 import { CategoryService } from '../category/category.service';
 import { CreateCategoryDto } from '../category/dto/create-category.dto';
 import { CreateExerciseDto } from '../exercise/dto/create-exercise.dto';
 import { Exercise } from '../exercise/entities/exercise.entity';
 import { ExerciseService } from '../exercise/exercise.service';
+import { CreateInfoElementDto } from '../info-element/dto/create-info-element.dto';
 import { InfoElementService } from '../info-element/info-element.service';
 import { ProfileService } from '../profile/profile.service';
 import { UserRole } from '../user/entities/user.entity';
@@ -59,7 +61,12 @@ export class SeederService {
         const exercisesSeeded = await this.seedExercises(
           createUserIfDoesntExist.id
         );
-        return exercisesSeeded;
+        const infoElementsSeeded = await this.seedInfoElements();
+        return {
+          categoriesSeeded,
+          exercisesSeeded,
+          infoElementsSeeded,
+        };
       }
       return categoriesSeeded;
     } catch (err) {
@@ -170,6 +177,41 @@ export class SeederService {
       };
     } catch (err) {
       Logger.log('Something went wrong while seeding the exercises: ', err);
+    }
+  }
+
+  async seedInfoElements(): Promise<{
+    status: number;
+    message: string;
+    infoElement: InfoElement;
+  }> {
+    try {
+      const infoElement: CreateInfoElementDto = {
+        version: '1',
+        name: 'Probleemgedrag',
+        definition: 'Elk gedrag dat niet helpend is voor het zelfbeheer',
+        text: 'Veel gedrag is niet helpend voor het zelfbeheer. Denk bijvoorbeeld aan middelenmisbruik, maar ook aan zelfverwondend gedrag, of suïcidale gedragingen.',
+        published: true,
+        publishedById: '',
+      };
+      const infoElementSeeded = await this.infoElementService.create(
+        infoElement
+      );
+      if (infoElementSeeded) {
+        return {
+          status: 201,
+          message: 'InfoElement seeded',
+          infoElement: infoElementSeeded,
+        };
+      } else {
+        return {
+          status: 500,
+          message: 'Something went wrong while seeding the info elements',
+          infoElement: null,
+        };
+      }
+    } catch (err) {
+      Logger.log('Something went wrong while seeding the info elements: ', err);
     }
   }
 }
