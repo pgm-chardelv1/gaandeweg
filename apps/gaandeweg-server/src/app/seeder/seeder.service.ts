@@ -360,6 +360,14 @@ export class SeederService {
     }
   }
 
+  /**
+   * Seeds the info elements table with the default info elements.
+   * @returns {Promise<{
+   *   status: number;
+   *   message: string;
+   *   infoElement: InfoElement;
+   * }>}
+   */
   async seedInfoElements(): Promise<{
     status: number;
     message: string;

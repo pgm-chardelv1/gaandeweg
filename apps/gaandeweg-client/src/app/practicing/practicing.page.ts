@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { ExercisesService } from './services/exercises.service';
 import {
   Exercise,
@@ -50,15 +50,14 @@ export class PracticingPage implements OnInit {
   async ngOnInit() {
     this.exercises = await firstValueFrom(this.exercisesService.getExercises());
     this.myGroup = this.formBuilder.group({});
-    /*     this.myGroup = this.formBuilder.group({
-      date: ['', Validators.required],
-      time: ['', Validators.required],
-      suicidalThoughts: ['', Validators.required],
-      selfHarm: ['', Validators.required],
-      alcohol: ['', Validators.required],
-    }); */
   }
 
+  /**
+   * This function is called when the form is submitted.
+   * It checks to make sure that all the required fields are filled in.
+   * If they are, it logs the form data to the console.
+   * @returns None
+   */
   onSubmit() {
     console.log('Form:', this.myGroup.value);
     this.isSubmitted = true;
@@ -72,6 +71,11 @@ export class PracticingPage implements OnInit {
     }
   }
 
+  /**
+   * Sets the active exercise to the one with the given id.
+   * @param {number} id - the id of the exercise to set as active
+   * @returns None
+   */
   async setActive(id: number) {
     this.activeExercise = await firstValueFrom(
       this.exercisesService.getExercise(id)
@@ -91,10 +95,19 @@ export class PracticingPage implements OnInit {
     });
   }
 
+  /**
+   * Get the error control object for the form group.
+   * @returns {FormGroup} The form group object.
+   */
   get errorControl() {
     return this.myGroup.controls;
   }
 
+  /**
+   * Adds a form control to the form group.
+   * @param {ExerciseFormField} field - the field to add to the form group.
+   * @returns None
+   */
   addFormControl(field: ExerciseFormField) {
     this.myGroup.registerControl(
       field.fieldName,

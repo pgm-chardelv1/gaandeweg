@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import {
   Exercise,
@@ -54,7 +53,12 @@ export class ExercisesService {
     }
   }
 
-  renderFormField(field: any): ExerciseFormField {
+  /**
+   * Takes in a field object and returns a form field object.
+   * @param {any} field - the field object
+   * @returns {ExerciseFormField} - the form field object
+   */
+  renderFormField(field: ExerciseFormField): ExerciseFormField {
     const formField: ExerciseFormField = {
       fieldId: field.fieldId,
       fieldType:
