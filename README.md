@@ -1,6 +1,6 @@
+[![Distributed Task Execution](https://github.com/pgm-chardelv1/gaandeweg/actions/workflows/dte.yml/badge.svg?branch=develop)](https://github.com/pgm-chardelv1/gaandeweg/actions/workflows/dte.yml)
 
-
-# GaandewegWs
+# Gaandeweg
 
 This project was generated using [Nx](https://nx.dev).
 
