@@ -112,68 +112,248 @@ export class SeederService {
   async seedExercises(userId: string): Promise<{
     status: number;
     message: string;
-    exercise: Exercise;
+    exercises: Exercise[];
   }> {
     try {
-      const exercise: CreateExerciseDto = {
-        version: '1',
-        categoryId: 1,
-        name: 'Dagboekkaart',
-        summary: 'Dagboekkaart en vaardighedenopvolging',
-        published: true,
-        publishedBy: userId,
-        template: JSON.stringify({
-          fields: [
-            {
-              fieldId: 1,
-              fieldName: 'date',
-              fieldText: 'Datum',
-              fieldType: 'DATE',
-            },
-            {
-              fieldId: 2,
-              fieldName: 'time',
-              fieldText: 'Tijd',
-              fieldType: 'TIME',
-            },
-            {
-              fieldId: 3,
-              fieldName: 'suicidalThoughts',
-              fieldText: 'Suïcidegedachten',
-              fieldType: 'SLIDER',
-              fieldValues: 'EMOTICONS',
-            },
-            {
-              fieldId: 4,
-              fieldName: 'selfHarm',
-              fieldText: 'Zelfverwonding',
-              fieldType: 'SLIDER',
-              fieldValues: 'NUMBERS',
-              extraField: true,
-            },
-            {
-              fieldId: 5,
-              fieldName: 'alcohol',
-              fieldText: 'Alcohol',
-              fieldType: 'SLIDER',
-              fieldValues: 'NUMBERS',
-            },
-            {
-              fieldId: 0,
-              fieldName: '',
-              fieldText: '',
-              fieldType: 'SLIDER',
-              fieldValues: 'NUMBERS',
-              extraField: true,
-            },
-          ],
-        }),
-      };
-      const exerciseSeeded = await this.exerciseService.create(exercise);
+      const exercises: CreateExerciseDto[] = [
+        {
+          version: '1',
+          categoryId: 5,
+          name: 'Dagboekkaart',
+          summary: 'Dagboekkaart en vaardighedenopvolging',
+          published: true,
+          publishedBy: userId,
+          template: JSON.stringify({
+            fields: [
+              {
+                fieldId: 1,
+                fieldName: 'date',
+                fieldText: 'Datum',
+                fieldType: 'DATE',
+              },
+              {
+                fieldId: 2,
+                fieldName: 'time',
+                fieldText: 'Tijd',
+                fieldType: 'TIME',
+              },
+              {
+                fieldId: 3,
+                fieldName: 'suicidalThoughts',
+                fieldText: 'Suïcidegedachten',
+                fieldType: 'SLIDER',
+                fieldValues: ['EMOTICONS'],
+                fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
+              },
+              {
+                fieldId: 4,
+                fieldName: 'selfHarm',
+                fieldText: 'Zelfverwonding',
+                fieldType: 'SLIDER',
+                fieldValues: ['1', '2', '3', '4', '5'],
+                fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
+                extraField: true,
+              },
+              {
+                fieldId: 5,
+                fieldName: 'alcohol',
+                fieldText: 'Alcohol',
+                fieldType: 'SLIDER',
+                fieldValues: ['1', '2', '3', '4', '5'],
+                fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
+              },
+              {
+                fieldId: 0,
+                fieldName: '',
+                fieldText: '',
+                fieldType: 'SLIDER',
+                fieldValues: ['1', '2', '3', '4', '5'],
+                fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
+              },
+            ],
+          }),
+        },
+        {
+          version: '1',
+          categoryId: 6,
+          name: 'KOV',
+          summary: 'Kernoplettendheidsvaardigheden',
+          published: true,
+          publishedBy: userId,
+          template: JSON.stringify({
+            fields: [
+              {
+                fieldId: 1,
+                fieldName: 'date',
+                fieldText: 'Datum',
+                fieldType: 'DATE',
+              },
+
+              {
+                fieldId: 3,
+                fieldName: 'cause',
+                fieldText: 'Aanleiding',
+                fieldInfo: 'Beschrijf de aanleiding tot de situatie',
+                fieldType: 'TEXT',
+              },
+              {
+                fieldId: 4,
+                fieldName: 'emotions',
+                fieldText: 'Emoties',
+                fieldInfo:
+                  'Beschrijf de emoties die aanwezig waren in de situatie. Je kan één van de voorbeelden uit de lijst selecteren of zelf iets invullen. Wat je invult wordt daarna in de lijst opgenomen.',
+                fieldType: 'SELECT',
+                fieldRepeatable: true,
+                fieldRepeat: 5,
+                fieldValues: [
+                  'Afschuw',
+                  'Angst',
+                  'Blijdschap',
+                  'Irritatie',
+                  'Kwaadheid',
+                  'Neutraal',
+                  'Schaamte',
+                  'Verdriet',
+                  'Verrassing',
+                  'Verwondering',
+                ],
+              },
+              {
+                fieldId: 5,
+                fieldName: 'thoughts',
+                fieldText: 'Gedachten / Oordelen / Interpretaties',
+                fieldInfo:
+                  'Welke gedachten / oordelen / interpretaties waren er in de situatie?',
+                fieldType: 'TEXT',
+              },
+              {
+                fieldId: 6,
+                fieldName: 'goal',
+                fieldText: 'Doel',
+                fieldInfo:
+                  'Welk doel hou je jezelf voor ogen in die situatie? Hoe zou je willen dat de situatie <strong>constructief</strong> verloopt? Wat zou je willen bereiken?',
+                fieldType: 'TEXT',
+              },
+              {
+                fieldId: 7,
+                fieldName: 'actions',
+                fieldText: 'Acties',
+                fieldInfo:
+                  'Wat heb je gedaan in die situatie? Wat heb je gezegd? Hoe was je houding?',
+                fieldType: 'TEXT',
+              },
+
+              {
+                fieldId: 9,
+                fieldName: 'observe-external',
+                fieldText: 'Observeren - extern',
+                fieldInfo:
+                  'Ben ik mij bewust van de dingen en gebeurtenissen om mij heen? Gebruik ik bij het waarnemen van de dingen om mij heen bewust mijn zintuigen? Kan ik bij het observeren van de dingen en gebeurtenissen om mij heen stilstaan bij de details en deze aandachtig in mijzelf opnemen?',
+                fieldType: 'TEXT',
+              },
+              {
+                fieldId: 10,
+                fieldName: 'observe-internal',
+                fieldText: 'Observeren - intern',
+                fieldInfo:
+                  'Ben ik mij bewust van innerlijke ervaringen en kan ik er bij stilstaan? Emoties en gedachten: Ervaar ik die bewust op het moment zelf? Kan ik er mij voor openstellen? Lichamelijke sensaties: Zijn er lichamelijke gewaarwordingen? Merk ik op wat ik voel in mijn lichaam?',
+                fieldType: 'TEXT',
+              },
+              {
+                fieldId: 11,
+                fieldName: 'distance',
+                fieldText: 'Kon ik hierdoor afstand nemen van de situatie?',
+                fieldType: 'RADIO',
+                fieldValues: ['Ja', 'Neen'],
+              },
+              {
+                fieldId: 12,
+                fieldName: 'describe',
+                fieldText: 'Beschrijven - onder woorden brengen',
+                fieldInfo:
+                  'Beschrijf je externe en interne observaties. Kan ik wat ik meemaak met woorden benoemen in gedachten? op papier? aan een ander?<strong>Zo objectief en zuiver mogelijk, zonder interpretaties</strong>',
+                fieldType: 'TEXT',
+              },
+              {
+                fieldId: 13,
+                fieldName: 'participate',
+                fieldText: 'Participeren',
+                fieldInfo:
+                  'Kan ik mij ten volle in verbinding stellen met het moment? Verzet ik mij niet tegen wat ik nu ervaar? Ga ik er niet van vluchten? Onderga ik de situatie niet zomaar?',
+                fieldType: 'TEXT',
+              },
+              {
+                fieldId: 14,
+                fieldName: 'judgment-free',
+                fieldText: 'Ben ik oordeelvrij?',
+                fieldType: 'RADIO',
+                fieldValues: ['Ja', 'Neen'],
+              },
+              {
+                fieldId: 15,
+                fieldName: 'non-judgmental-attitude',
+                fieldText: 'Kan ik een oordeelvrije houding aannemen?',
+                fieldInfo:
+                  'Kan ik mijn oordelen voor mij houden of spreek ik ze uit? Handel ik naar mijn oordelen?',
+                fieldType: 'RADIO',
+                fieldValues: ['Ja', 'Neen'],
+              },
+              {
+                fieldId: 16,
+                fieldName: 'one-thing',
+                fieldText: 'Eén ding tegelijkertijd',
+                fieldInfo:
+                  'Doe ik één ding tegelijk? Ben ik in mijn geest en gedachten ook met één iets bezig? Ben ik met mijn gedachten bij hetgeen ik doe of denk ik aan andere dingen?',
+                fieldType: 'TEXT',
+              },
+              {
+                fieldId: 17,
+                fieldName: 'effective',
+                fieldText: 'Effectief zijn en handelen',
+                fieldInfo:
+                  'Heb ik gedaan wat werkt om mijn doel te bereiken? Wou ik liever gelijk hebben dan doen wat nodig was? Wou ik liever koppig vasthouden aan iets? Wou ik enkel goed doen in de situatie?',
+                fieldType: 'TEXT',
+              },
+              {
+                fieldId: 18,
+                fieldName: 'minds-present',
+                fieldText: 'Verhouding van de geesten',
+                fieldInfo:
+                  'Rangschik de volgorde van aanwezigheid van de geesten.',
+                fieldRepeatable: true,
+                fieldType: 'SELECT',
+                fieldRepeat: 3,
+                fieldValues: [
+                  'Emotionele geest',
+                  'Rationele geest',
+                  'Wijze geest',
+                ],
+              },
+              {
+                fieldId: 19,
+                fieldName: 'prefer-change',
+                fieldText: 'Had ik iets anders gewild in deze situatie?',
+                fieldType: 'TEXT',
+              },
+              {
+                fieldId: 20,
+                fieldName: 'happy-about',
+                fieldText: 'Waar ben je tevreden over?',
+                fieldType: 'TEXT',
+              },
+            ],
+          }),
+        },
+      ];
+      const exercisesSeeded = [];
+      exercises.forEach(async (ex) => {
+        const exSeeded = await this.exerciseService.create(ex);
+        exercisesSeeded.push(exSeeded);
+      });
       return {
         status: 201,
         message: 'Exercise seeded',
-        exercise: exerciseSeeded,
+        exercises: exercisesSeeded,
       };
     } catch (err) {
       Logger.log('Something went wrong while seeding the exercises: ', err);

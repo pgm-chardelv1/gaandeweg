@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
 import { ExercisesService } from './services/exercises.service';
-import { Exercise, ExerciseForm } from './models/exercise.model';
 import {
+  Exercise,
+  ExerciseForm,
+  ExerciseFormField,
+} from './models/exercise.model';
+import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -18,8 +23,20 @@ import { LoggingService } from '../logging.service';
 })
 export class PracticingPage implements OnInit {
   exercises: Exercise[] = [];
-  activeExercise: Partial<Exercise> = {};
+  activeExercise: Exercise = {
+    id: 0,
+    version: '',
+    categoryId: 0,
+    name: '',
+    summary: '',
+    template: '',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    published: false,
+    publishedBy: '',
+  };
   activeExerciseForm: Partial<ExerciseForm> = {};
+  formControls = new FormArray([]);
 
   myGroup!: FormGroup;
   isSubmitted = false;
@@ -32,19 +49,14 @@ export class PracticingPage implements OnInit {
 
   async ngOnInit() {
     this.exercises = await firstValueFrom(this.exercisesService.getExercises());
-    console.log(this.exercises);
-
-    this.activeExerciseForm = this.exercisesService.renderExerciseTemplate(
-      this.exercises[0]
-    );
-
-    this.myGroup = this.formBuilder.group({
+    this.myGroup = this.formBuilder.group({});
+    /*     this.myGroup = this.formBuilder.group({
       date: ['', Validators.required],
       time: ['', Validators.required],
       suicidalThoughts: ['', Validators.required],
       selfHarm: ['', Validators.required],
       alcohol: ['', Validators.required],
-    });
+    }); */
   }
 
   onSubmit() {
@@ -64,14 +76,29 @@ export class PracticingPage implements OnInit {
     this.activeExercise = await firstValueFrom(
       this.exercisesService.getExercise(id)
     );
-    console.log('active exercise: ', this.activeExercise);
-    console.log('active exercise form: ', this.activeExerciseForm);
+    this.activeExerciseForm = this.exercisesService.renderExerciseTemplate(
+      this.activeExercise
+    );
     this.loggingService.log(
       `Active exercise set to: #${this.activeExercise.id} - ${this.activeExercise.name}`
     );
+
+    this.activeExerciseForm?.fields?.forEach((field) => {
+      this.myGroup.registerControl(
+        field.fieldName,
+        new FormControl('', Validators.required)
+      );
+    });
   }
 
   get errorControl() {
     return this.myGroup.controls;
+  }
+
+  addFormControl(field: ExerciseFormField) {
+    this.myGroup.registerControl(
+      field.fieldName,
+      new FormControl(field.fieldName, Validators.required)
+    );
   }
 }

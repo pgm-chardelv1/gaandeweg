@@ -22,7 +22,7 @@ export interface Exercise {
   updatedAt: Date;
   published: boolean;
   publishedBy: string;
-  category: Category;
+  category?: Category;
 }
 
 /**
@@ -58,6 +58,8 @@ export interface ExerciseFormField {
   fieldType: string;
   fieldName: string;
   fieldText: string;
-  fieldValues?: string;
+  fieldInfo?: string;
+  subFields?: ExerciseFormField[];
+  fieldValues?: string[];
   extraField?: boolean;
 }

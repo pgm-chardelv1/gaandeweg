@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Exercise, ExerciseForm } from '../models/exercise.model';
+import {
+  Exercise,
+  ExerciseForm,
+  ExerciseFormField,
+} from '../models/exercise.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,20 +43,32 @@ export class ExercisesService {
 
     if (exercise?.template) {
       const parsedExercise = JSON.parse(exercise?.template);
-      for (let i = 0; i < parsedExercise.fields.length - 1; i++) {
+      for (let i = 0; i < parsedExercise.fields.length; i++) {
         const field = parsedExercise.fields[i];
-        form?.fields?.push({
-          fieldId: field.fieldId,
-          fieldType: field.fieldType === 'SLIDER' ? 'range' : field.fieldType,
-          fieldName: field.fieldName,
-          fieldText: field.fieldText,
-          fieldValues: field.fieldValues,
-          extraField: field.extraField,
-        });
+        form?.fields?.push(this.renderFormField(field));
       }
+      console.log(form);
       return form;
     } else {
       return form;
     }
+  }
+
+  renderFormField(field: any): ExerciseFormField {
+    const formField: ExerciseFormField = {
+      fieldId: field.fieldId,
+      fieldType:
+        field.fieldType === 'SLIDER'
+          ? 'range'
+          : field.fieldType === 'COLLAPSABLE'
+          ? 'text'
+          : field.fieldType,
+      fieldName: field.fieldName,
+      fieldText: field.fieldText,
+      fieldInfo: field.fieldInfo,
+      fieldValues: field.fieldValues,
+      extraField: field.extraField,
+    };
+    return formField;
   }
 }
