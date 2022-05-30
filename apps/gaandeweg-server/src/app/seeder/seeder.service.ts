@@ -118,7 +118,7 @@ export class SeederService {
       const exercises: CreateExerciseDto[] = [
         {
           version: '1',
-          categoryId: 5,
+          categoryId: 1,
           name: 'Dagboekkaart',
           summary: 'Dagboekkaart en vaardighedenopvolging',
           published: true,
@@ -142,7 +142,28 @@ export class SeederService {
                 fieldName: 'suicidalThoughts',
                 fieldText: 'Suïcidegedachten',
                 fieldType: 'SLIDER',
-                fieldValues: ['EMOTICONS'],
+                fieldValues: [
+                  {
+                    fieldLabel: '1',
+                    fieldValue: 1
+                  },
+                  { 
+                    fieldLabel: '2',
+                    fieldValue: 2
+                  },
+                  {
+                    fieldLabel: '3',
+                    fieldValue: 3
+                  }, 
+                  {
+                    fieldLabel: '4',
+                    fieldValue: 4
+                  }, 
+                  { 
+                    fieldLabel: '5',
+                    fieldValue: 5
+                  }
+              ],,
                 fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
               },
               {
@@ -150,7 +171,28 @@ export class SeederService {
                 fieldName: 'selfHarm',
                 fieldText: 'Zelfverwonding',
                 fieldType: 'SLIDER',
-                fieldValues: ['1', '2', '3', '4', '5'],
+                fieldValues: [
+                  {
+                    fieldLabel: '1',
+                    fieldValue: 1
+                  },
+                  { 
+                    fieldLabel: '2',
+                    fieldValue: 2
+                  },
+                  {
+                    fieldLabel: '3',
+                    fieldValue: 3
+                  }, 
+                  {
+                    fieldLabel: '4',
+                    fieldValue: 4
+                  }, 
+                  { 
+                    fieldLabel: '5',
+                    fieldValue: 5
+                  }
+              ],,
                 fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
                 extraField: true,
               },
@@ -159,7 +201,28 @@ export class SeederService {
                 fieldName: 'alcohol',
                 fieldText: 'Alcohol',
                 fieldType: 'SLIDER',
-                fieldValues: ['1', '2', '3', '4', '5'],
+                fieldValues: [
+                  {
+                    fieldLabel: '1',
+                    fieldValue: 1
+                  },
+                  { 
+                    fieldLabel: '2',
+                    fieldValue: 2
+                  },
+                  {
+                    fieldLabel: '3',
+                    fieldValue: 3
+                  }, 
+                  {
+                    fieldLabel: '4',
+                    fieldValue: 4
+                  }, 
+                  { 
+                    fieldLabel: '5',
+                    fieldValue: 5
+                  }
+              ],,
                 fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
               },
               {
@@ -167,7 +230,28 @@ export class SeederService {
                 fieldName: '',
                 fieldText: '',
                 fieldType: 'SLIDER',
-                fieldValues: ['1', '2', '3', '4', '5'],
+                fieldValues: [
+                  {
+                    fieldLabel: '1',
+                    fieldValue: 1
+                  },
+                  { 
+                    fieldLabel: '2',
+                    fieldValue: 2
+                  },
+                  {
+                    fieldLabel: '3',
+                    fieldValue: 3
+                  }, 
+                  {
+                    fieldLabel: '4',
+                    fieldValue: 4
+                  }, 
+                  { 
+                    fieldLabel: '5',
+                    fieldValue: 5
+                  }
+              ],
                 fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
               },
             ],
@@ -175,7 +259,7 @@ export class SeederService {
         },
         {
           version: '1',
-          categoryId: 6,
+          categoryId: 2,
           name: 'KOV',
           summary: 'Kernoplettendheidsvaardigheden',
           published: true,
@@ -206,16 +290,46 @@ export class SeederService {
                 fieldRepeatable: true,
                 fieldRepeat: 5,
                 fieldValues: [
-                  'Afschuw',
-                  'Angst',
-                  'Blijdschap',
-                  'Irritatie',
-                  'Kwaadheid',
-                  'Neutraal',
-                  'Schaamte',
-                  'Verdriet',
-                  'Verrassing',
-                  'Verwondering',
+                  {
+                    fieldLabel: 'Afschuw',
+                    fieldValue: 1
+                  },
+                  {
+                    fieldLabel: 'Angst',
+                    fieldValue: 2
+                  },
+                  { 
+                    fieldLabel: 'Blijdschap',
+                    fieldValue: 3
+                  },
+                  {
+                    fieldLabel: 'Irritatie',
+                    fieldValue: 4
+                  },
+                  {
+                    fieldLabel: 'Kwaadheid',
+                    fieldValue: 5
+                  },
+                  {
+                    fieldLabel: 'Neutraal',
+                    fieldValue: 6
+                  },
+                  {
+                    fieldLabel: 'Schaamte',
+                    fieldValue: 7
+                  },
+                  {
+                    fieldLabel: 'Verdriet',
+                    fieldValue: 8
+                  },
+                  { 
+                    fieldLabel: 'Verrassing',
+                    fieldValue: 9
+                  },
+                  {
+                    fieldLabel: 'Verwondering',
+                    fieldValue: 10
+                  },
                 ],
               },
               {
@@ -264,7 +378,7 @@ export class SeederService {
                 fieldName: 'distance',
                 fieldText: 'Kon ik hierdoor afstand nemen van de situatie?',
                 fieldType: 'RADIO',
-                fieldValues: ['Ja', 'Neen'],
+                fieldValues: [{fieldLabel: 'Ja', fieldValue: true}, { fieldLabel: 'Neen', fieldValue: false}],
               },
               {
                 fieldId: 12,
@@ -287,7 +401,7 @@ export class SeederService {
                 fieldName: 'judgment-free',
                 fieldText: 'Ben ik oordeelvrij?',
                 fieldType: 'RADIO',
-                fieldValues: ['Ja', 'Neen'],
+                fieldValues: [{fieldLabel: 'Ja', fieldValue: true}, { fieldLabel: 'Neen', fieldValue: false}],
               },
               {
                 fieldId: 15,
@@ -296,7 +410,7 @@ export class SeederService {
                 fieldInfo:
                   'Kan ik mijn oordelen voor mij houden of spreek ik ze uit? Handel ik naar mijn oordelen?',
                 fieldType: 'RADIO',
-                fieldValues: ['Ja', 'Neen'],
+                fieldValues: [{fieldLabel: 'Ja', fieldValue: true}, { fieldLabel: 'Neen', fieldValue: false}],
               },
               {
                 fieldId: 16,
@@ -324,10 +438,10 @@ export class SeederService {
                 fieldType: 'SELECT',
                 fieldRepeat: 3,
                 fieldValues: [
-                  'Emotionele geest',
-                  'Rationele geest',
-                  'Wijze geest',
-                ],
+                  {fieldLabel: 'Emotionele geest', fieldValue: 1},
+                  {fieldLabel: 'Rationele geest', fieldValue: 2},
+                  {fieldLabel: 'Wijze geest', fieldValue: 3}
+                ]
               },
               {
                 fieldId: 19,
