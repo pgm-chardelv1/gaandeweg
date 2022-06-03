@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { ExercisesService } from './services/exercises.service';
+
 import {
   Exercise,
   ExerciseForm,
   ExerciseFormField,
-} from './models/exercise.model';
+  ExercisesService,
+} from '@gaandeweg-ws/data-access';
 import {
   FormArray,
   FormBuilder,
@@ -34,6 +35,17 @@ export class PracticingPage implements OnInit {
     updatedAt: new Date(),
     published: false,
     publishedBy: '',
+    category: {
+      id: 0,
+      version: '',
+      name: '',
+      summary: '',
+      description: '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      publishedAt: new Date(),
+      updatedBy: '',
+    },
   };
   activeExerciseForm: Partial<ExerciseForm> = {};
   formControls = new FormArray([]);

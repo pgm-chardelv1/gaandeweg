@@ -11,6 +11,9 @@ import { ProfileService } from '../profile/profile.service';
 import { UserRole } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 
+import { exercises } from './data/exercises';
+import { categories } from './data/categories';
+
 /**
  * The seeder service.
  *
@@ -80,23 +83,10 @@ export class SeederService {
    */
   async seedCategories(): Promise<void> {
     try {
-      const categories: CreateCategoryDto[] = [
-        {
-          version: '1.0',
-          name: 'Pre-Treatment',
-          summary: 'Voorbereidende DGT-module',
-          description:
-            'Voorbereidende DGT-module waarin samen met de therapeuten wordt gekeken naar de behandeldoelen en verwachtingen. De focus ligt op het doen afnemen van destructief gedrag.',
-        },
-        {
-          version: '1.0',
-          name: 'KOV',
-          summary: 'Kernoplettendheidsvaardigheden',
-          description:
-            'Module die je in staat stelt om meer mindful om te gaan met situaties. Aan de hand van een aantal vragen gaan we op zoek naar meer bewustzijn.',
-        },
-      ];
-      categories.forEach(async (m) => await this.categoryService.create(m));
+      const categoriesToSeed: CreateCategoryDto[] = categories;
+      categoriesToSeed.forEach(async (m) => {
+        await this.categoryService.create(m);
+      });
 
       return;
     } catch (err) {
@@ -115,352 +105,23 @@ export class SeederService {
     exercises: Exercise[];
   }> {
     try {
-      const exercises: CreateExerciseDto[] = [
-        {
-          version: '1',
-          categoryId: 1,
-          name: 'Dagboekkaart',
-          summary: 'Dagboekkaart en vaardighedenopvolging',
-          published: true,
-          publishedBy: userId,
-          template: JSON.stringify({
-            fields: [
-              {
-                fieldId: 1,
-                fieldName: 'date',
-                fieldText: 'Datum',
-                fieldType: 'DATE',
-              },
-              {
-                fieldId: 2,
-                fieldName: 'time',
-                fieldText: 'Tijd',
-                fieldType: 'TIME',
-              },
-              {
-                fieldId: 3,
-                fieldName: 'suicidalThoughts',
-                fieldText: 'Suïcidegedachten',
-                fieldType: 'SLIDER',
-                fieldValues: [
-                  {
-                    fieldLabel: '1',
-                    fieldValue: 1
-                  },
-                  { 
-                    fieldLabel: '2',
-                    fieldValue: 2
-                  },
-                  {
-                    fieldLabel: '3',
-                    fieldValue: 3
-                  }, 
-                  {
-                    fieldLabel: '4',
-                    fieldValue: 4
-                  }, 
-                  { 
-                    fieldLabel: '5',
-                    fieldValue: 5
-                  }
-              ],,
-                fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
-              },
-              {
-                fieldId: 4,
-                fieldName: 'selfHarm',
-                fieldText: 'Zelfverwonding',
-                fieldType: 'SLIDER',
-                fieldValues: [
-                  {
-                    fieldLabel: '1',
-                    fieldValue: 1
-                  },
-                  { 
-                    fieldLabel: '2',
-                    fieldValue: 2
-                  },
-                  {
-                    fieldLabel: '3',
-                    fieldValue: 3
-                  }, 
-                  {
-                    fieldLabel: '4',
-                    fieldValue: 4
-                  }, 
-                  { 
-                    fieldLabel: '5',
-                    fieldValue: 5
-                  }
-              ],,
-                fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
-                extraField: true,
-              },
-              {
-                fieldId: 5,
-                fieldName: 'alcohol',
-                fieldText: 'Alcohol',
-                fieldType: 'SLIDER',
-                fieldValues: [
-                  {
-                    fieldLabel: '1',
-                    fieldValue: 1
-                  },
-                  { 
-                    fieldLabel: '2',
-                    fieldValue: 2
-                  },
-                  {
-                    fieldLabel: '3',
-                    fieldValue: 3
-                  }, 
-                  {
-                    fieldLabel: '4',
-                    fieldValue: 4
-                  }, 
-                  { 
-                    fieldLabel: '5',
-                    fieldValue: 5
-                  }
-              ],,
-                fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
-              },
-              {
-                fieldId: 0,
-                fieldName: '',
-                fieldText: '',
-                fieldType: 'SLIDER',
-                fieldValues: [
-                  {
-                    fieldLabel: '1',
-                    fieldValue: 1
-                  },
-                  { 
-                    fieldLabel: '2',
-                    fieldValue: 2
-                  },
-                  {
-                    fieldLabel: '3',
-                    fieldValue: 3
-                  }, 
-                  {
-                    fieldLabel: '4',
-                    fieldValue: 4
-                  }, 
-                  { 
-                    fieldLabel: '5',
-                    fieldValue: 5
-                  }
-              ],
-                fieldInfo: '1 = niet aanwezig, 5 = zeer sterk aanwezig',
-              },
-            ],
-          }),
-        },
-        {
-          version: '1',
-          categoryId: 2,
-          name: 'KOV',
-          summary: 'Kernoplettendheidsvaardigheden',
-          published: true,
-          publishedBy: userId,
-          template: JSON.stringify({
-            fields: [
-              {
-                fieldId: 1,
-                fieldName: 'date',
-                fieldText: 'Datum',
-                fieldType: 'DATE',
-              },
+      const categories = await this.categoryService.findAll();
 
-              {
-                fieldId: 3,
-                fieldName: 'cause',
-                fieldText: 'Aanleiding',
-                fieldInfo: 'Beschrijf de aanleiding tot de situatie',
-                fieldType: 'TEXT',
-              },
-              {
-                fieldId: 4,
-                fieldName: 'emotions',
-                fieldText: 'Emoties',
-                fieldInfo:
-                  'Beschrijf de emoties die aanwezig waren in de situatie. Je kan één van de voorbeelden uit de lijst selecteren of zelf iets invullen. Wat je invult wordt daarna in de lijst opgenomen.',
-                fieldType: 'SELECT',
-                fieldRepeatable: true,
-                fieldRepeat: 5,
-                fieldValues: [
-                  {
-                    fieldLabel: 'Afschuw',
-                    fieldValue: 1
-                  },
-                  {
-                    fieldLabel: 'Angst',
-                    fieldValue: 2
-                  },
-                  { 
-                    fieldLabel: 'Blijdschap',
-                    fieldValue: 3
-                  },
-                  {
-                    fieldLabel: 'Irritatie',
-                    fieldValue: 4
-                  },
-                  {
-                    fieldLabel: 'Kwaadheid',
-                    fieldValue: 5
-                  },
-                  {
-                    fieldLabel: 'Neutraal',
-                    fieldValue: 6
-                  },
-                  {
-                    fieldLabel: 'Schaamte',
-                    fieldValue: 7
-                  },
-                  {
-                    fieldLabel: 'Verdriet',
-                    fieldValue: 8
-                  },
-                  { 
-                    fieldLabel: 'Verrassing',
-                    fieldValue: 9
-                  },
-                  {
-                    fieldLabel: 'Verwondering',
-                    fieldValue: 10
-                  },
-                ],
-              },
-              {
-                fieldId: 5,
-                fieldName: 'thoughts',
-                fieldText: 'Gedachten / Oordelen / Interpretaties',
-                fieldInfo:
-                  'Welke gedachten / oordelen / interpretaties waren er in de situatie?',
-                fieldType: 'TEXT',
-              },
-              {
-                fieldId: 6,
-                fieldName: 'goal',
-                fieldText: 'Doel',
-                fieldInfo:
-                  'Welk doel hou je jezelf voor ogen in die situatie? Hoe zou je willen dat de situatie <strong>constructief</strong> verloopt? Wat zou je willen bereiken?',
-                fieldType: 'TEXT',
-              },
-              {
-                fieldId: 7,
-                fieldName: 'actions',
-                fieldText: 'Acties',
-                fieldInfo:
-                  'Wat heb je gedaan in die situatie? Wat heb je gezegd? Hoe was je houding?',
-                fieldType: 'TEXT',
-              },
+      const getCategoryId = (name: string) => {
+        return categories.find((c) => c.name === name).id;
+      };
 
-              {
-                fieldId: 9,
-                fieldName: 'observe-external',
-                fieldText: 'Observeren - extern',
-                fieldInfo:
-                  'Ben ik mij bewust van de dingen en gebeurtenissen om mij heen? Gebruik ik bij het waarnemen van de dingen om mij heen bewust mijn zintuigen? Kan ik bij het observeren van de dingen en gebeurtenissen om mij heen stilstaan bij de details en deze aandachtig in mijzelf opnemen?',
-                fieldType: 'TEXT',
-              },
-              {
-                fieldId: 10,
-                fieldName: 'observe-internal',
-                fieldText: 'Observeren - intern',
-                fieldInfo:
-                  'Ben ik mij bewust van innerlijke ervaringen en kan ik er bij stilstaan? Emoties en gedachten: Ervaar ik die bewust op het moment zelf? Kan ik er mij voor openstellen? Lichamelijke sensaties: Zijn er lichamelijke gewaarwordingen? Merk ik op wat ik voel in mijn lichaam?',
-                fieldType: 'TEXT',
-              },
-              {
-                fieldId: 11,
-                fieldName: 'distance',
-                fieldText: 'Kon ik hierdoor afstand nemen van de situatie?',
-                fieldType: 'RADIO',
-                fieldValues: [{fieldLabel: 'Ja', fieldValue: true}, { fieldLabel: 'Neen', fieldValue: false}],
-              },
-              {
-                fieldId: 12,
-                fieldName: 'describe',
-                fieldText: 'Beschrijven - onder woorden brengen',
-                fieldInfo:
-                  'Beschrijf je externe en interne observaties. Kan ik wat ik meemaak met woorden benoemen in gedachten? op papier? aan een ander?<strong>Zo objectief en zuiver mogelijk, zonder interpretaties</strong>',
-                fieldType: 'TEXT',
-              },
-              {
-                fieldId: 13,
-                fieldName: 'participate',
-                fieldText: 'Participeren',
-                fieldInfo:
-                  'Kan ik mij ten volle in verbinding stellen met het moment? Verzet ik mij niet tegen wat ik nu ervaar? Ga ik er niet van vluchten? Onderga ik de situatie niet zomaar?',
-                fieldType: 'TEXT',
-              },
-              {
-                fieldId: 14,
-                fieldName: 'judgment-free',
-                fieldText: 'Ben ik oordeelvrij?',
-                fieldType: 'RADIO',
-                fieldValues: [{fieldLabel: 'Ja', fieldValue: true}, { fieldLabel: 'Neen', fieldValue: false}],
-              },
-              {
-                fieldId: 15,
-                fieldName: 'non-judgmental-attitude',
-                fieldText: 'Kan ik een oordeelvrije houding aannemen?',
-                fieldInfo:
-                  'Kan ik mijn oordelen voor mij houden of spreek ik ze uit? Handel ik naar mijn oordelen?',
-                fieldType: 'RADIO',
-                fieldValues: [{fieldLabel: 'Ja', fieldValue: true}, { fieldLabel: 'Neen', fieldValue: false}],
-              },
-              {
-                fieldId: 16,
-                fieldName: 'one-thing',
-                fieldText: 'Eén ding tegelijkertijd',
-                fieldInfo:
-                  'Doe ik één ding tegelijk? Ben ik in mijn geest en gedachten ook met één iets bezig? Ben ik met mijn gedachten bij hetgeen ik doe of denk ik aan andere dingen?',
-                fieldType: 'TEXT',
-              },
-              {
-                fieldId: 17,
-                fieldName: 'effective',
-                fieldText: 'Effectief zijn en handelen',
-                fieldInfo:
-                  'Heb ik gedaan wat werkt om mijn doel te bereiken? Wou ik liever gelijk hebben dan doen wat nodig was? Wou ik liever koppig vasthouden aan iets? Wou ik enkel goed doen in de situatie?',
-                fieldType: 'TEXT',
-              },
-              {
-                fieldId: 18,
-                fieldName: 'minds-present',
-                fieldText: 'Verhouding van de geesten',
-                fieldInfo:
-                  'Rangschik de volgorde van aanwezigheid van de geesten.',
-                fieldRepeatable: true,
-                fieldType: 'SELECT',
-                fieldRepeat: 3,
-                fieldValues: [
-                  {fieldLabel: 'Emotionele geest', fieldValue: 1},
-                  {fieldLabel: 'Rationele geest', fieldValue: 2},
-                  {fieldLabel: 'Wijze geest', fieldValue: 3}
-                ]
-              },
-              {
-                fieldId: 19,
-                fieldName: 'prefer-change',
-                fieldText: 'Had ik iets anders gewild in deze situatie?',
-                fieldType: 'TEXT',
-              },
-              {
-                fieldId: 20,
-                fieldName: 'happy-about',
-                fieldText: 'Waar ben je tevreden over?',
-                fieldType: 'TEXT',
-              },
-            ],
-          }),
-        },
-      ];
+      const exercisesToSeed: CreateExerciseDto[] = exercises.map((e) => {
+        return {
+          ...e,
+          categoryId: getCategoryId(e.categoryId as string),
+          publishedBy: userId,
+          template: JSON.stringify(e.template),
+        };
+      });
+
       const exercisesSeeded = [];
-      exercises.forEach(async (ex) => {
+      exercisesToSeed.forEach(async (ex) => {
         const exSeeded = await this.exerciseService.create(ex);
         exercisesSeeded.push(exSeeded);
       });

@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@gaandeweg-ws/data-access": ["libs/data-access/src/index.ts"],
       "@gaandeweg-ws/ui": ["libs/ui/src/index.ts"]
     }
   },

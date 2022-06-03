@@ -39,19 +39,19 @@
             <ion-input *ngIf="field.fieldType !== 'RADIO' && field.fieldType !== 'SELECT' && field.fieldType !== 'TEXT'" type="{{field.fieldType}}" formControlName="{{field.fieldName}}"></ion-input>
 
             <!-- Field type is Text -->
-            <ion-textarea formControlName="{{field.fieldName}}"></ion-textarea>
+            <ion-textarea *ngIf="field.fieldType === 'TEXT'" formControlName="{{field.fieldName}}"></ion-textarea>
             
             <!-- Field type is Radio -->
             <ion-radio-group *ngIf="field.fieldValues && field.fieldType === 'RADIO'" formControlName="{{field.fieldName}}">
               <ion-item *ngFor="let value of (field.fieldValues)">
-                <ion-label>{{value}}</ion-label>
-                <ion-radio value="{{value}}"></ion-radio>
+                <ion-label>{{value.fieldLabel}}</ion-label>
+                <ion-radio value="{{value.fieldValue}}"></ion-radio>
               </ion-item>
             </ion-radio-group>
 
             <!-- Field type is Select -->
             <ion-select *ngIf="field.fieldValues && field.fieldType === 'SELECT'" formControlName="{{field.fieldName}}" multiple="true">
-              <ion-select-option *ngFor="let value of (field.fieldValues)" value="{{value}}">{{value}}</ion-select-option>
+              <ion-select-option *ngFor="let value of (field.fieldValues)" value="{{value.fieldValue}}">{{value.fieldLabel}}</ion-select-option>
             </ion-select>
           </ion-item>
           

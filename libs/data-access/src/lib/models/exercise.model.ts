@@ -1,4 +1,4 @@
-import { Category } from './category.model';
+import { Category } from './';
 /**
  * The Exercise interface.
  * @interface
@@ -35,6 +35,12 @@ export interface ExerciseFormField {
   fieldType: string;
   fieldName: string;
   fieldText: string;
-  fieldValues?: string;
+  fieldInfo?: string;
+  fieldValues?: ExerciseOption[];
   extraField?: boolean;
+}
+
+export interface ExerciseOption {
+  fieldLabel: string;
+  fieldValue: string;
 }

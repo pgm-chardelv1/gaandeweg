@@ -8,6 +8,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { AbilityFactory } from '../ability/ability.factory';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -21,7 +22,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
  */
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private abilityFactory: AbilityFactory,
+    private readonly userService: UserService
+  ) {}
 
   /**
    * Create a new user.

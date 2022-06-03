@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { InfoElement } from './info.model';
+import { InfoElement } from '../models';
 
 @Injectable({
   providedIn: 'root',

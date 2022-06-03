@@ -20,7 +20,9 @@
           "apps/gaandeweg-admin/src/assets"
         ],
         "styles": ["apps/gaandeweg-admin/src/styles.scss"],
-        "scripts": ["node_modules/@ckeditor/ckeditor5-build-classic/build/translations/nl.js"]
+        "scripts": [
+          "node_modules/@ckeditor/ckeditor5-build-classic/build/translations/nl.js"
+        ]
       },
       "configurations": {
         "production": {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { firstValueFrom, Observable } from 'rxjs';
-import { InfoService } from './info.service';
-import { InfoElement } from './info.model';
+import { firstValueFrom } from 'rxjs';
+import { InfoService } from '@gaandeweg-ws/data-access';
+import { InfoElement } from '@gaandeweg-ws/data-access';
 
 @Component({
   selector: 'gaandeweg-ws-info-elements',

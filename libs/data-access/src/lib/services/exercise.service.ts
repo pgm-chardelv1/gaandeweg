@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Exercise, ExerciseForm } from '../models/exercise.model';
+import { Exercise, ExerciseForm } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +45,7 @@ export class ExercisesService {
           fieldType: field.fieldType === 'SLIDER' ? 'range' : field.fieldType,
           fieldName: field.fieldName,
           fieldText: field.fieldText,
+          fieldInfo: field.fieldInfo,
           fieldValues: field.fieldValues,
           extraField: field.extraField,
         });
