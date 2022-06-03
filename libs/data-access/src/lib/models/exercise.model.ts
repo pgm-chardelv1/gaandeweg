@@ -36,6 +36,15 @@ export interface ExerciseFormField {
   fieldName: string;
   fieldText: string;
   fieldInfo?: string;
+  fieldRepeat: number;
+  fieldRepeatable?: boolean;
+  fieldOptions?: {
+    min: number;
+    max: number;
+    step: number;
+    snaps: boolean;
+    icons: RangeLabel[];
+  };
   fieldValues?: ExerciseOption[];
   extraField?: boolean;
 }
@@ -43,4 +52,10 @@ export interface ExerciseFormField {
 export interface ExerciseOption {
   fieldLabel: string;
   fieldValue: string;
+}
+
+export interface RangeLabel {
+  slot: string;
+  icon: boolean;
+  value: string;
 }

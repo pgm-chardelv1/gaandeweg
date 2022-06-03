@@ -57,9 +57,7 @@ export class SeederService {
             type: UserRole.SUPERUSER,
           },
         });
-      const categoriesSeeded = await this.seedCategories().then(() => {
-        return 'Success!';
-      });
+      const categoriesSeeded = await this.seedCategories();
       if (categoriesSeeded) {
         const exercisesSeeded = await this.seedExercises(
           createUserIfDoesntExist.id
@@ -81,14 +79,14 @@ export class SeederService {
    * Seeds the categories in the database.
    * @returns None
    */
-  async seedCategories(): Promise<void> {
+  async seedCategories(): Promise<boolean> {
     try {
       const categoriesToSeed: CreateCategoryDto[] = categories;
       categoriesToSeed.forEach(async (m) => {
         await this.categoryService.create(m);
       });
 
-      return;
+      return true;
     } catch (err) {
       Logger.log('Something went wrong while seeding the categories: ', err);
     }

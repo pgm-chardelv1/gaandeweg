@@ -42,11 +42,14 @@ export class ExercisesService {
         const field = parsedExercise.fields[i];
         form?.fields?.push({
           fieldId: field.fieldId,
-          fieldType: field.fieldType === 'SLIDER' ? 'range' : field.fieldType,
+          fieldType: field.fieldType,
           fieldName: field.fieldName,
           fieldText: field.fieldText,
           fieldInfo: field.fieldInfo,
+          fieldRepeat: field.fieldRepeat,
+          fieldRepeatable: field.fieldRepeatable,
           fieldValues: field.fieldValues,
+          fieldOptions: field.fieldOptions,
           extraField: field.extraField,
         });
       }
