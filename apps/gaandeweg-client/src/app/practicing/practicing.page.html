@@ -36,14 +36,20 @@
             <ion-label>{{field.fieldText}}</ion-label>
 
             <!-- Field input type is Range -->
-            <ion-range *ngIf="field && field.fieldType === 'RANGE' && field.fieldOptions" min="{{field.fieldOptions?.min}}" max="{{field.fieldOptions?.max}}" step="{{field.fieldOptions?.step}}" snaps="true" formControlName="{{field.fieldName}}">
-              <ion-label slot="start">{{field?.fieldOptions?.min}}</ion-label>
+            <ion-range *ngIf="fieldIsRange(field)" min="{{field.fieldOptions?.min}}" max="{{field.fieldOptions?.max}}" step="{{field.fieldOptions?.step}}" snaps="true" formControlName="{{field.fieldName}}">
+
+              <!-- Field uses values -->
               <ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === false" slot="start">{{field.fieldOptions.icons[0].value}}</ion-label>
               <ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === false" slot="end">{{field.fieldOptions.icons[1].value}}</ion-label>
+
+              <!-- Field uses icons -->
+              <ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === true" slot="start" name="thumbs-down-outline"></ion-icon>
+              <ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === true" name="thumbs-up-outline" slot="end"></ion-icon>
+
             </ion-range>
 
-            <!-- Field type is not Radio or Select -->
-            <ion-input *ngIf="field.fieldType === 'DATE' || field.fieldType === 'TIME'" type="{{field.fieldType}}" formControlName="{{field.fieldName}}"></ion-input>
+            <!-- Field type is Date or Number or Time -->
+            <ion-input *ngIf="field.fieldType === 'DATE' || field.fieldType === 'TIME' || field.fieldType === 'NUMBER'" type="{{field.fieldType}}" formControlName="{{field.fieldName}}"></ion-input>
 
             <!-- Field type is Text -->
             <ion-textarea *ngIf="field.fieldType === 'TEXT'" formControlName="{{field.fieldName}}"></ion-textarea>

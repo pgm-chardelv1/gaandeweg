@@ -126,4 +126,26 @@ export class PracticingPage implements OnInit {
       new FormControl(field.fieldName, Validators.required)
     );
   }
+
+  fieldIsRange(field: ExerciseFormField) {
+    if (field.fieldType === 'RANGE') {
+      if (field.fieldOptions) {
+        if (
+          field.fieldOptions.max &&
+          (field.fieldOptions.min == 0 || field.fieldOptions.min == 1) &&
+          field.fieldOptions.step &&
+          field.fieldOptions.icons &&
+          field.fieldOptions.icons.length === 2
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 }
