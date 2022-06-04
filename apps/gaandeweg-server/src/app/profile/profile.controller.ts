@@ -35,11 +35,7 @@ export class ProfileController {
   @Post()
   async create(@Body() createProfileDto: CreateProfileDto) {
     const profile = await this.profileService.create(createProfileDto);
-    return {
-      statusCode: 201,
-      message: 'Profile created successfully',
-      profile,
-    };
+    return profile;
   }
 
   /**
@@ -53,11 +49,7 @@ export class ProfileController {
   @Get()
   async findAll() {
     const profiles = await this.profileService.findAll();
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Profiles found successfully',
-      profiles,
-    };
+    return profiles;
   }
 
   /**
@@ -72,11 +64,7 @@ export class ProfileController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const profile = await this.profileService.findOne(id);
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Profile found successfully',
-      profile,
-    };
+    return profile;
   }
 
   /**
@@ -95,11 +83,7 @@ export class ProfileController {
     @Body() updateProfileDto: UpdateProfileDto
   ) {
     const profile = await this.profileService.update(id, updateProfileDto);
-    return {
-      statusCode: 204,
-      message: 'Profile updated successfully',
-      profile,
-    };
+    return profile;
   }
 
   /**
@@ -114,10 +98,6 @@ export class ProfileController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const profile = await this.profileService.remove(id);
-    return {
-      statusCode: 204,
-      message: 'Profile deleted successfully',
-      profile,
-    };
+    return profile;
   }
 }

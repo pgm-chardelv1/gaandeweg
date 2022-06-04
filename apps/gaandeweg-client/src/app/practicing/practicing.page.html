@@ -11,73 +11,83 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
-    <ion-item *ngFor="let exercise of exercises">
-      <ion-label *ngIf="exercise && exercise.id" button (click)="setActive(exercise.id)">
-        <h2>{{exercise.name}}</h2>
-        <p>{{exercise.summary}}</p>
-      </ion-label>
+  <ion-row>
+    <ion-col>
+      <!-- Search by Exercise name -->
+      <ion-searchbar class="searchIcon" [formControl]="searchKey"  (ionChange)="search()" debounce="100" (ionCancel)="resetChanges()" placeholder="Zoek"></ion-searchbar>
 
-      <ion-icon icon="rocket" color="primary"></ion-icon>
-    </ion-item>
-  </ion-list>
+      <!-- List of exercises -->
+      <ion-list>
+        <ion-item lines="full" *ngFor="let exercise of exercises">
+          <ion-label *ngIf="exercise && exercise.id" button (click)="setActive(exercise.id)" slot="start">
+            <h2>{{exercise.name}}</h2>
+            <p>{{exercise.summary}}</p>
+          </ion-label>
 
-  <ion-card *ngIf="activeExercise && activeExercise.name">
-   <ion-card-header>
-     <ion-card-title>
-       {{activeExercise.name}}
-     </ion-card-title>
-    </ion-card-header>
-
-    <form [formGroup]="myGroup" (ngSubmit)="onSubmit()" novalidate>
-      <ion-list *ngFor="let field of activeExerciseForm?.fields" >
-        <ion-item-group>
-          <ion-item>
-            <ion-label>{{field.fieldText}}</ion-label>
-
-            <!-- Field input type is Range -->
-            <ion-range *ngIf="fieldIsRange(field)" min="{{field.fieldOptions?.min}}" max="{{field.fieldOptions?.max}}" step="{{field.fieldOptions?.step}}" snaps="true" formControlName="{{field.fieldName}}">
-
-              <!-- Field uses values -->
-              <ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === false" slot="start">{{field.fieldOptions.icons[0].value}}</ion-label>
-              <ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === false" slot="end">{{field.fieldOptions.icons[1].value}}</ion-label>
-
-              <!-- Field uses icons -->
-              <ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === true" slot="start" name="thumbs-down-outline"></ion-icon>
-              <ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === true" name="thumbs-up-outline" slot="end"></ion-icon>
-
-            </ion-range>
-
-            <!-- Field type is Date or Number or Time -->
-            <ion-input *ngIf="field.fieldType === 'DATE' || field.fieldType === 'TIME' || field.fieldType === 'NUMBER'" type="{{field.fieldType}}" formControlName="{{field.fieldName}}"></ion-input>
-
-            <!-- Field type is Text -->
-            <ion-textarea *ngIf="field.fieldType === 'TEXT'" formControlName="{{field.fieldName}}"></ion-textarea>
-            
-            <!-- Field type is Radio -->
-            <ion-radio-group *ngIf="field.fieldValues && field.fieldType === 'RADIO'" formControlName="{{field.fieldName}}">
-              <ion-item *ngFor="let value of (field.fieldValues)">
-                <ion-label>{{value.fieldLabel}}</ion-label>
-                <ion-radio slot="start" value="{{value.fieldValue}}"></ion-radio>
-              </ion-item>
-            </ion-radio-group>
-
-            <!-- Field type is Select -->
-            <ion-select *ngIf="field.fieldValues && field.fieldType === 'SELECT'" formControlName="{{field.fieldName}}" multiple="{{field.fieldRepeatable}}">
-              <ion-select-option *ngFor="let value of (field.fieldValues)" value="{{value.fieldValue}}">{{value.fieldLabel}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          
-          <ion-note *ngIf="field.fieldInfo">{{field.fieldInfo}}</ion-note>
-        </ion-item-group>
+          <ion-label slot="end">{{getCategoryName(exercise.categoryId)}}</ion-label>
+        </ion-item>
       </ion-list>
-      
-      <ion-row>
-        <ion-col>
-            <ion-button type="submit" expand="block">Submit</ion-button>
-        </ion-col>
-      </ion-row>
-    </form>
-  </ion-card>
+    </ion-col>
 
-  </ion-content>
+    <ion-col>
+      <!-- Active exercise form -->
+      <ion-card *ngIf="activeExercise && activeExercise.name">
+      <ion-card-header>
+        <ion-card-title>
+          {{activeExercise.name}}
+        </ion-card-title>
+        </ion-card-header>
+
+        <form [formGroup]="myGroup" (ngSubmit)="onSubmit()" novalidate>
+          <ion-list *ngFor="let field of activeExerciseForm?.fields" >
+            <ion-item-group>
+              <ion-item>
+                <ion-label slot="start">{{field.fieldText}}</ion-label>
+
+                <!-- Field input type is Range -->
+                <ion-range slot="end" *ngIf="fieldIsRange(field)" min="{{field.fieldOptions?.min}}" max="{{field.fieldOptions?.max}}" step="{{field.fieldOptions?.step}}" snaps="true" formControlName="{{field.fieldName}}">
+
+                  <!-- Field uses values -->
+                  <ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === false" slot="start">{{field.fieldOptions.icons[0].value}}</ion-label>
+                  <ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === false" slot="end">{{field.fieldOptions.icons[1].value}}</ion-label>
+
+                  <!-- Field uses icons -->
+                  <ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === true" slot="start" name="thumbs-down-outline"></ion-icon>
+                  <ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === true" name="thumbs-up-outline" slot="end"></ion-icon>
+
+                </ion-range>
+
+                <!-- Field type is Date, Number or Time -->
+                <ion-input slot="end" *ngIf="field.fieldType === 'DATE' || field.fieldType === 'TIME' || field.fieldType === 'NUMBER'" type="{{field.fieldType}}" formControlName="{{field.fieldName}}"></ion-input>
+
+                <!-- Field type is Text -->
+                <ion-textarea slot="end" *ngIf="field.fieldType === 'TEXT'" formControlName="{{field.fieldName}}"></ion-textarea>
+                
+                <!-- Field type is Radio -->
+                <ion-radio-group slot="end" *ngIf="field.fieldValues && field.fieldType === 'RADIO'" formControlName="{{field.fieldName}}">
+                  <ion-item *ngFor="let value of (field.fieldValues)">
+                    <ion-label>{{value.fieldLabel}}</ion-label>
+                    <ion-radio slot="start" value="{{value.fieldValue}}"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+
+                <!-- Field type is Select -->
+                <ion-select slot="end" *ngIf="field.fieldValues && field.fieldType === 'SELECT'" formControlName="{{field.fieldName}}" multiple="{{field.fieldRepeatable}}">
+                  <ion-select-option *ngFor="let value of (field.fieldValues)" value="{{value.fieldValue}}">{{value.fieldLabel}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              
+              <ion-note *ngIf="field.fieldInfo">{{field.fieldInfo}}</ion-note>
+            </ion-item-group>
+          </ion-list>
+          
+          <ion-row>
+            <ion-col>
+                <ion-button color="secondary" type="submit" expand="block">Submit</ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-card>
+    </ion-col> 
+  </ion-row>
+</ion-content>

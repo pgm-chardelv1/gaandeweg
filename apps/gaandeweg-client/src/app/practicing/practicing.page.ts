@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
 import {
+  Category,
+  CategoriesService,
   Exercise,
   ExerciseForm,
   ExerciseFormField,
@@ -24,6 +26,7 @@ import { LoggingService } from '../logging.service';
 })
 export class PracticingPage implements OnInit {
   exercises: Exercise[] = [];
+  categories: Category[] = [];
   activeExercise: Exercise = {
     id: 0,
     version: '',
@@ -49,19 +52,44 @@ export class PracticingPage implements OnInit {
   };
   activeExerciseForm: Partial<ExerciseForm> = {};
   formControls = new FormArray([]);
+  public searchKey: FormControl;
 
   myGroup!: FormGroup;
   isSubmitted = false;
+  searchListCopy: Exercise[] = [];
+  searchTerms = '';
 
   constructor(
     private exercisesService: ExercisesService,
+    private categoriesService: CategoriesService,
     public formBuilder: FormBuilder,
     private loggingService: LoggingService
-  ) {}
+  ) {
+    this.searchKey = new FormControl('');
+  }
+
+  search = () => {
+    this.resetChanges();
+    this.searchTerms = this.searchKey.value;
+
+    this.exercises = this.exercises.filter((item) => {
+      return item.name.toLowerCase().includes(this.searchTerms.toLowerCase());
+    });
+  };
+
+  resetChanges = () => {
+    this.exercises = this.searchListCopy;
+    this.searchTerms = '';
+  };
 
   async ngOnInit() {
     this.exercises = await firstValueFrom(this.exercisesService.getExercises());
+    this.searchListCopy = this.exercises;
+    this.categories = await firstValueFrom(
+      this.categoriesService.getCategories()
+    );
     this.myGroup = this.formBuilder.group({});
+    this.searchTerms = this.searchKey.value;
   }
 
   /**
@@ -128,24 +156,27 @@ export class PracticingPage implements OnInit {
   }
 
   fieldIsRange(field: ExerciseFormField) {
-    if (field.fieldType === 'RANGE') {
-      if (field.fieldOptions) {
-        if (
-          field.fieldOptions.max &&
-          (field.fieldOptions.min == 0 || field.fieldOptions.min == 1) &&
-          field.fieldOptions.step &&
-          field.fieldOptions.icons &&
-          field.fieldOptions.icons.length === 2
-        ) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
+    return (
+      field.fieldType === 'RANGE' &&
+      field.fieldOptions &&
+      field.fieldOptions.max &&
+      (field.fieldOptions.min === 0 || field.fieldOptions.min === 1) &&
+      field.fieldOptions.step &&
+      field.fieldOptions.icons &&
+      field.fieldOptions.icons.length === 2
+    );
+  }
+
+  getCategoryName(categoryId: number): string {
+    const category = this.categories.find(
+      (category) => category.id === categoryId
+    );
+    return category?.name || '';
+  }
+
+  searchExercises(input: string) {
+    this.exercises = this.exercises.filter((exercise) =>
+      exercise.name.toLowerCase().includes(input.toLowerCase())
+    );
   }
 }

@@ -1,5 +1,4 @@
 import { IonicModule } from '@ionic/angular';
-
 import { ReactiveComponentModule } from '@ngrx/component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
