@@ -85,6 +85,7 @@
     "class-validator": "^0.13.2",
     "dayjs": "^1.11.2",
     "jwt-decode": "^3.1.2",
+    "mdb-ui-kit": "^4.1.0",
     "mysql": "^2.18.1",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
