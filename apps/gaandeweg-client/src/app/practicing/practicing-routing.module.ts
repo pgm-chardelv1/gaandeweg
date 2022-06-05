@@ -6,6 +6,14 @@ const routes: Routes = [
   {
     path: '',
     component: PracticingPage,
+    pathMatch: 'full',
+  },
+  {
+    path: 'new-exercise',
+    loadChildren: () =>
+      import('./new-exercise/new-exercise.module').then(
+        (m) => m.NewExerciseComponentModule
+      ),
   },
 ];
 

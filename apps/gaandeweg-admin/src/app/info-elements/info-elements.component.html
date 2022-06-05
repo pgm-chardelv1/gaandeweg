@@ -3,8 +3,8 @@
     <ul>
         <li *ngFor="let info of infoElements">
             <h2>{{ info.name }}</h2>
-            <p>{{ info.definition }}</p>
-            <p>{{ info.text }}</p>
+            <gaandeweg-ws-wysiwyg [data]="infoElement.definition"></gaandeweg-ws-wysiwyg>
+            <gaandeweg-ws-wysiwyg [data]="infoElement.text"></gaandeweg-ws-wysiwyg>
         </li>
     </ul>
 </div> 

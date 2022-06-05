@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { InfoService } from '@gaandeweg-ws/data-access';
 import { InfoElement } from '@gaandeweg-ws/data-access';
@@ -9,9 +15,10 @@ import { InfoElement } from '@gaandeweg-ws/data-access';
   styleUrls: ['./info-elements.component.scss'],
   providers: [InfoService],
 })
-export class InfoElementsComponent implements OnInit {
+export class InfoElementsComponent implements OnInit, OnChanges {
+  @Input() dataChange!: string;
   infoElements: InfoElement[] = [];
-  infoElement: Partial<InfoElement> = {};
+  infoElement!: InfoElement;
 
   constructor(private infoService: InfoService) {}
 
@@ -21,5 +28,9 @@ export class InfoElementsComponent implements OnInit {
     );
 
     this.infoElement = await firstValueFrom(this.infoService.getInfoElement(1));
+  }
+
+  ngOnChanges(dataChange: SimpleChanges): void {
+    console.log(dataChange);
   }
 }

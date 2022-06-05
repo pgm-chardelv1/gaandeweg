@@ -7,6 +7,7 @@ import { PracticingPage } from './practicing.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { PracticingPageRoutingModule } from './practicing-routing.module';
+import { NewExerciseComponentModule } from './new-exercise/new-exercise.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { PracticingPageRoutingModule } from './practicing-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
+    NewExerciseComponentModule,
     PracticingPageRoutingModule,
     ReactiveFormsModule,
     ReactiveComponentModule,

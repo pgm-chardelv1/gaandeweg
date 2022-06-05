@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExercisesService } from './services/exercise.service';
+import { ExerciseService } from './services/exercise.service';
 
 @NgModule({
   imports: [CommonModule],
-  providers: [ExercisesService],
+  providers: [ExerciseService],
 })
 export class DataAccessModule {}

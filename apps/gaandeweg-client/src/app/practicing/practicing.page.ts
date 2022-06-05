@@ -1,14 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-
-import {
-  Category,
-  CategoriesService,
-  Exercise,
-  ExerciseForm,
-  ExerciseFormField,
-  ExercisesService,
-} from '@gaandeweg-ws/data-access';
 import {
   FormArray,
   FormBuilder,
@@ -16,13 +7,30 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+
+import { NewExerciseComponent } from './new-exercise/new-exercise.component';
+import {
+  Category,
+  CategoriesService,
+  Exercise,
+  ExerciseForm,
+  ExerciseFormField,
+  ExerciseFormFieldRange,
+  ExerciseFormService,
+  ExerciseService,
+} from '@gaandeweg-ws/data-access';
 import { LoggingService } from '../logging.service';
 
 @Component({
   selector: 'gaandeweg-ws-practicing',
   templateUrl: 'practicing.page.html',
   styleUrls: ['practicing.page.scss'],
-  providers: [ExercisesService, LoggingService],
+  providers: [
+    ExerciseService,
+    ExerciseFormService,
+    LoggingService,
+    NewExerciseComponent,
+  ],
 })
 export class PracticingPage implements OnInit {
   exercises: Exercise[] = [];
@@ -58,9 +66,11 @@ export class PracticingPage implements OnInit {
   isSubmitted = false;
   searchListCopy: Exercise[] = [];
   searchTerms = '';
+  activeId = 1;
 
   constructor(
-    private exercisesService: ExercisesService,
+    private exerciseService: ExerciseService,
+    private exerciseFormService: ExerciseFormService,
     private categoriesService: CategoriesService,
     public formBuilder: FormBuilder,
     private loggingService: LoggingService
@@ -83,7 +93,7 @@ export class PracticingPage implements OnInit {
   };
 
   async ngOnInit() {
-    this.exercises = await firstValueFrom(this.exercisesService.getExercises());
+    this.exercises = await firstValueFrom(this.exerciseService.getExercises());
     this.searchListCopy = this.exercises;
     this.categories = await firstValueFrom(
       this.categoriesService.getCategories()
@@ -117,22 +127,7 @@ export class PracticingPage implements OnInit {
    * @returns None
    */
   async setActive(id: number) {
-    this.activeExercise = await firstValueFrom(
-      this.exercisesService.getExercise(id)
-    );
-    this.activeExerciseForm = this.exercisesService.renderExerciseTemplate(
-      this.activeExercise
-    );
-    this.loggingService.log(
-      `Active exercise set to: #${this.activeExercise.id} - ${this.activeExercise.name}`
-    );
-
-    this.activeExerciseForm?.fields?.forEach((field) => {
-      this.myGroup.registerControl(
-        field.fieldName,
-        new FormControl('', Validators.required)
-      );
-    });
+    this.activeId = id;
   }
 
   /**
@@ -156,6 +151,7 @@ export class PracticingPage implements OnInit {
   }
 
   fieldIsRange(field: ExerciseFormField) {
+    console.log(field as ExerciseFormFieldRange);
     return (
       field.fieldType === 'RANGE' &&
       field.fieldOptions &&
@@ -178,5 +174,9 @@ export class PracticingPage implements OnInit {
     this.exercises = this.exercises.filter((exercise) =>
       exercise.name.toLowerCase().includes(input.toLowerCase())
     );
+  }
+
+  isActive(id: number) {
+    return this.activeExercise.id === id;
   }
 }

@@ -49,6 +49,17 @@ export interface ExerciseFormField {
   extraField?: boolean;
 }
 
+export interface ExerciseFormFieldRange extends ExerciseFormField {
+  fieldType: 'RANGE';
+  fieldOptions: {
+    min: 0 | 1;
+    max: number;
+    step: number;
+    snaps: boolean;
+    icons: RangeLabel[];
+  };
+}
+
 export interface ExerciseOption {
   fieldLabel: string;
   fieldValue: string;
