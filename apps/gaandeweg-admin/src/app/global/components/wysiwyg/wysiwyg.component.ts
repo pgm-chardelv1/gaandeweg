@@ -17,6 +17,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 })
 export class WysiwygComponent implements OnChanges {
   public isDisabled = false;
+  isLoading = true;
   public Editor = ClassicEditorBuild;
   public config = {
     language: {

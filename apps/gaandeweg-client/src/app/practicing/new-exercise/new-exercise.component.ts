@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -18,7 +12,6 @@ import {
   Exercise,
   ExerciseForm,
   ExerciseFormField,
-  ExerciseFormFieldRange,
   ExerciseFormService,
   ExerciseService,
 } from '@gaandeweg-ws/data-access';
@@ -46,7 +39,7 @@ export class NewExerciseComponent implements OnChanges {
   ) {}
 
   async ngOnChanges(exerciseId: SimpleChanges): Promise<void> {
-    console.log(this.exerciseId);
+    console.log(exerciseId);
     this.exercise = await firstValueFrom(
       this.exerciseService.getExercise(this.exerciseId)
     );

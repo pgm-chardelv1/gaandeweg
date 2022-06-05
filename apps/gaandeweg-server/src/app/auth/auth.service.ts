@@ -18,9 +18,16 @@ export class AuthService {
   ) {}
 
   login(user: User) {
-    const payload = { email: user.email, sub: user.id };
+    const payload = {
+      email: user.email,
+      sub: {
+        id: user.id,
+        type: user.type,
+      },
+      expiresIn: '1d',
+    };
     const jwt = this.jwtService.sign(payload);
-    return jwt;
+    return { token: jwt, expiresIn: payload.expiresIn };
   }
 
   async register(registerDto: CreateUserDto) {

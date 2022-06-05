@@ -17,6 +17,7 @@ import { InfoElement } from '@gaandeweg-ws/data-access';
 })
 export class InfoElementsComponent implements OnInit, OnChanges {
   @Input() dataChange!: string;
+  isLoading = true;
   infoElements: InfoElement[] = [];
   infoElement!: InfoElement;
 
@@ -28,6 +29,10 @@ export class InfoElementsComponent implements OnInit, OnChanges {
     );
 
     this.infoElement = await firstValueFrom(this.infoService.getInfoElement(1));
+
+    if (this.infoElement && this.infoElements) {
+      this.isLoading = false;
+    }
   }
 
   ngOnChanges(dataChange: SimpleChanges): void {

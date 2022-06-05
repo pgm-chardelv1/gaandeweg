@@ -33,10 +33,11 @@ export class AuthController {
       loginDto.email,
       loginDto.password
     );
-    const login = this.authService.login(user);
+    const { token, expiresIn } = this.authService.login(user);
     return {
       message: 'Successfully logged in',
-      access_token: login,
+      access_token: token,
+      expiresIn,
     };
   }
 }
