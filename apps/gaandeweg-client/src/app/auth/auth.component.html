@@ -1,0 +1,56 @@
+<ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Login</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <div class="alert alert-danger" *ngIf="error">
+        <p>{{ error }}</p>
+      </div>
+      <div *ngIf="isLoading" style="text-align: center;">
+        <ion-spinner></ion-spinner>
+      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+        <div class="form-group">
+          <ion-label for="email">E-Mail</ion-label>
+          <ion-input
+            type="email"
+            id="email"
+            class="form-control"
+            formControlName="email"
+            autocomplete="username"
+            required
+            email
+          ></ion-input>
+        </div>
+        <div class="form-group">
+          <ion-label for="password">Password</ion-label>
+          <ion-input
+            type="password"
+            id="password"
+            class="form-control"
+            formControlName="password"
+            autocomplete="current-password"
+            required
+            minlength="5"
+          ></ion-input>
+        </div>
+        <div>
+          <ion-button color="primary"
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="!loginForm.valid"
+          >
+            {{ isLoginMode ? 'Login' : 'Sign Up' }}
+          </ion-button>
+          |
+          <ion-button color="secondary" class="btn btn-primary" (click)="onSwitchMode()" type="button">
+            Switch to {{ isLoginMode ? 'Sign Up' : 'Login' }}
+          </ion-button>
+        </div>
+      </form>
+    </div>
+  </ion-content>
+  
