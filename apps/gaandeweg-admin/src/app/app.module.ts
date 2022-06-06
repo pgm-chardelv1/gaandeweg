@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { HeaderComponent } from './header/header.component';
-import { LoggingService } from '../../../../libs/data-access/src';
+import { LoggingService } from '@gaandeweg-ws/data-access';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({

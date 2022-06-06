@@ -17,8 +17,6 @@ export class ExerciseFormComponent implements OnChanges {
   @Input() exerciseFormValid!: boolean;
   @Input() exerciseFormSubmitting!: boolean;
 
-  constructor() {}
-
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
   }

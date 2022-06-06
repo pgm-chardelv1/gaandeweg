@@ -22,8 +22,20 @@
           {
             "type": "element",
             "prefix": "gaandeweg-ws",
-            "style": "kebab-case",
-            "suffixes": ["Component", "Directive", "Pipe", "Service", "Page"]
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/component-class-suffix": [
+          "error",
+          {
+            "suffixes": [
+              "Component",
+              "Directive",
+              "Page",
+              "Pipe",
+              "Service",
+              "Module"
+            ]
           }
         ]
       }

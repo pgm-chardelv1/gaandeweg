@@ -17,8 +17,6 @@ export class InfoElementFormComponent implements OnChanges {
   @Input() infoElementFormValid!: boolean;
   @Input() infoElementFormSubmitting!: boolean;
 
-  constructor() {}
-
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
   }
