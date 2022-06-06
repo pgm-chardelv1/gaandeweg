@@ -7,7 +7,6 @@ import {
 import { Router } from '@angular/router';
 import { throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import * as jwt_decode from 'jwt-decode';
 import * as dayjs from 'dayjs';
 import { environment } from '../../environments/environment';
 

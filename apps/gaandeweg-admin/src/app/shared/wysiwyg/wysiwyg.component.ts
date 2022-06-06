@@ -37,7 +37,7 @@ export class WysiwygComponent implements OnChanges {
   }
 
   ngOnChanges(data: SimpleChanges): void {
-    console.log(this.data);
+    console.log(data);
   }
 
   onSubmit(): void {
