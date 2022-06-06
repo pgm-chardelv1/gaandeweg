@@ -7,8 +7,8 @@
     <ul>
         <li *ngFor="let info of infoElements">
             <h2>{{ info.name }}</h2>
-            <gaandeweg-ws-wysiwyg [data]="infoElement.definition"></gaandeweg-ws-wysiwyg>
-            <gaandeweg-ws-wysiwyg [data]="infoElement.text"></gaandeweg-ws-wysiwyg>
+            <gaandeweg-ws-wysiwyg *ngIf="info && infoElement" [data]="infoElement.definition"></gaandeweg-ws-wysiwyg>
+            <gaandeweg-ws-wysiwyg *ngIf="info && infoElement" [data]="infoElement.text"></gaandeweg-ws-wysiwyg>
         </li>
     </ul>
 </div> 

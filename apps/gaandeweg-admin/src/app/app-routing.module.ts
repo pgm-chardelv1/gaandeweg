@@ -29,6 +29,14 @@ const routes: Routes = [
         (m) => m.ExercisePageModule
       ),
   },
+  {
+    path: 'category',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./category-page/category.module').then(
+        (m) => m.CategoryPageModule
+      ),
+  },
 ];
 @NgModule({
   imports: [

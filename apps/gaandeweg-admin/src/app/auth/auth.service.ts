@@ -140,7 +140,7 @@ export class AuthService {
    * @param {string} expiresIn - the time until the token expires.
    * @returns None
    */
-  private handleAuthentication(token: string, expiresIn: string) {
+  private handleAuthentication(token: string, expiresIn: string = '1d') {
     const expirationDate = this.getExpirationDuration(expiresIn);
     const user = new User(token, expirationDate);
     this.user.next(user);

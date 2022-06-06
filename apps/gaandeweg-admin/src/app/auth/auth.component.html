@@ -20,7 +20,7 @@
           />
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Wachtwoord</label>
           <input
             type="password"
             id="password"
@@ -37,11 +37,7 @@
             type="submit"
             [disabled]="!loginForm.valid"
           >
-            {{ isLoginMode ? 'Login' : 'Sign Up' }}
-          </button>
-          |
-          <button class="btn btn-primary" (click)="onSwitchMode()" type="button">
-            Switch to {{ isLoginMode ? 'Sign Up' : 'Login' }}
+            Login
           </button>
         </div>
       </form>

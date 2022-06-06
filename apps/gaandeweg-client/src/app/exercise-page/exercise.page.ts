@@ -11,7 +11,7 @@ import {
 import { NewExerciseComponent } from './new-exercise/new-exercise.component';
 import {
   Category,
-  CategoriesService,
+  CategoryService,
   Exercise,
   ExerciseForm,
   ExerciseFormField,
@@ -70,7 +70,7 @@ export class ExercisePage implements OnInit {
 
   constructor(
     private exerciseService: ExerciseService,
-    private categoriesService: CategoriesService,
+    private categoryService: CategoryService,
     public formBuilder: FormBuilder,
     private logger: LoggingService
   ) {
@@ -95,7 +95,7 @@ export class ExercisePage implements OnInit {
     this.exercises = await firstValueFrom(this.exerciseService.getExercises());
     this.searchListCopy = this.exercises;
     this.categories = await firstValueFrom(
-      this.categoriesService.getCategories()
+      this.categoryService.getCategories()
     );
     this.myGroup = this.formBuilder.group({});
     this.searchTerms = this.searchKey.value;
