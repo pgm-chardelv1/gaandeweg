@@ -20,6 +20,13 @@
           "libs/data-access/src/**/*.html"
         ]
       }
+    },
+    "generate-docs": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx compodoc -p libs/data-access/tsconfig.json -d dist/docs/gaandeweg-lib-data-access -n \"Gaandeweg Library Data Access\" -r 80",
+        "color": true
+      }
     }
   },
   "tags": []

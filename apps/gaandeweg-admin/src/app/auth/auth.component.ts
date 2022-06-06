@@ -8,6 +8,11 @@ import { AuthResponseData, AuthService } from './auth.service';
   selector: 'gaandeweg-ws-auth',
   templateUrl: './auth.component.html',
 })
+/**
+ * The AuthComponent class.
+ * @class AuthComponent
+ * @implements OnInit
+ */
 export class AuthComponent implements OnInit {
   isLoginMode = true;
   isLoading = false;
@@ -20,17 +25,29 @@ export class AuthComponent implements OnInit {
     public formBuilder: FormBuilder
   ) {}
 
+  /**
+   * Initializes the login form.
+   * @returns None
+   */
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
     });
   }
 
+  /**
+   * Switches the mode of the app between login and signup.
+   * @returns None
+   */
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
 
+  /**
+   * Takes in the form and logs the values of the form.
+   * @returns None
+   */
   onSubmit() {
     console.log(this.loginForm.value);
     const form = this.loginForm;

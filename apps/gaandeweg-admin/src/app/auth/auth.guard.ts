@@ -12,6 +12,12 @@ import { map, take } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
 
+/**
+ * A guard that checks if the user is authenticated.
+ * @param {AuthService} authService - The auth service to check if the user is authenticated.
+ * @param {Router} router - The router to redirect the user to the login page if they are not authenticated.
+ * @returns A boolean or a UrlTree.
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}

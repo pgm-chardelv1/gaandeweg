@@ -2,26 +2,32 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './auth/auth.guard';
-import { InfoElementsComponent } from './info-elements/info-elements.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'info-elements',
+    redirectTo: 'auth',
     pathMatch: 'full',
   },
   {
-    path: 'info-elements',
-    component: InfoElementsComponent,
+    path: 'info-element',
     canActivate: [AuthGuard],
-    children: [
-      { path: '', component: InfoElementsComponent },
-      { path: ':id', component: InfoElementsComponent },
-    ],
+    loadChildren: () =>
+      import('./info-element-page/info-element.module').then(
+        (m) => m.InfoElementModule
+      ),
   },
   {
     path: 'auth',
     component: AuthComponent,
+  },
+  {
+    path: 'exercise',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./exercise-page/exercise.module').then(
+        (m) => m.ExercisePageModule
+      ),
   },
 ];
 @NgModule({

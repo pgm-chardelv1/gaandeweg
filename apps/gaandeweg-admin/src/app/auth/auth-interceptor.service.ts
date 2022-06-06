@@ -11,6 +11,12 @@ import { AuthService } from './auth.service';
 import { User } from './user.model';
 
 @Injectable()
+/**
+ * An interceptor that adds the auth token to the request.
+ * @param {HttpRequest<any>} req - the request to modify
+ * @param {HttpHandler} next - the next interceptor in the chain
+ * @returns {Observable<HttpEvent<any>>} - the modified request
+ */
 export class AuthInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 

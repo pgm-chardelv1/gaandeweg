@@ -1,7 +1,0 @@
-<ckeditor [disabled]="isDisabled" [editor]="Editor" [data]="data" (change)="onChange($event)" [config]="config"></ckeditor>
-
-<button color="primary" type="submit" (click)="onSubmit()">Save changes</button>
-
-<button (click)="toggleDisabled()">
-    {{ isDisabled ? 'Bewerken inschakelen' : 'Bewerken uitschakelen' }}
-</button>

@@ -22,7 +22,8 @@
           {
             "type": "element",
             "prefix": "gaandeweg-ws",
-            "style": "kebab-case"
+            "style": "kebab-case",
+            "suffixes": ["Component", "Directive", "Pipe", "Service", "Page"]
           }
         ]
       }

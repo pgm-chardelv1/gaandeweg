@@ -33,11 +33,48 @@ export class AuthController {
       loginDto.email,
       loginDto.password
     );
-    const { token, expiresIn } = this.authService.login(user);
+    if (user) {
+      const { token, expiresIn } = this.authService.login(user);
+      return {
+        message: 'Successfully logged in',
+        access_token: token,
+        expiresIn,
+      };
+    } else {
+      return {
+        message: 'Invalid credentials',
+      };
+    }
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @HttpCode(200)
+  @Post('logout')
+  async logout() {
     return {
-      message: 'Successfully logged in',
-      access_token: token,
-      expiresIn,
+      message: 'Successfully logged out',
     };
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @HttpCode(200)
+  @Post('admin-login')
+  async adminLogin(@Body() loginDto: LoginDto) {
+    const user = await this.authService.validateAdmin(
+      loginDto.email,
+      loginDto.password
+    );
+    if (user) {
+      const { token, expiresIn } = this.authService.login(user);
+      return {
+        message: 'Successfully logged in',
+        access_token: token,
+        expiresIn: expiresIn,
+      };
+    } else {
+      return {
+        message: 'Invalid credentials',
+      };
+    }
   }
 }

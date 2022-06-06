@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { Exercise, ExerciseForm } from '../models';
 import { ExerciseService } from './exercise.service';
 
@@ -50,7 +51,7 @@ export class ExerciseFormService {
     };
     this.http
       .patch<Exercise>(
-        `http://localhost:3333/api/exercise/${!exercise?.id}`,
+        `${environment.API_BASEURL}/exercise/${!exercise?.id}`,
         body,
         options
       )
