@@ -1,9 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { Exercise, ExerciseForm } from '../models';
-import { ExerciseService } from './exercise.service';
+import {
+  ExerciseFormFieldDefaultTemplate,
+  ExerciseFormFieldRadioTemplate,
+  ExerciseFormFieldRangeTemplate,
+  ExerciseFormFieldSelectTemplate,
+} from '../models/field.model';
+import { fieldTypeValidator } from '../validators/field-type.validator';
 
 @Injectable({
   providedIn: 'root',
@@ -58,5 +64,188 @@ export class ExerciseFormService {
       .subscribe((data) => {
         console.log(data);
       });
+  }
+
+  generateDefaultFormControls(
+    field: ExerciseFormFieldDefaultTemplate,
+    formGroup: FormGroup
+  ) {
+    formGroup.addControl(
+      'id' + field.fieldId,
+      new FormControl('', [Validators.required, Validators.min(1)])
+    );
+    formGroup.addControl(
+      'type' + field.fieldId,
+      new FormControl('', [Validators.required, fieldTypeValidator])
+    );
+    formGroup.addControl(
+      'name' + field.fieldId,
+      new FormControl('', [
+        Validators.required,
+        // eslint-disable-next-line no-useless-escape
+        Validators.pattern('/(?:($.*):)/'),
+      ])
+    );
+    formGroup.addControl(
+      'text' + field.fieldId,
+      new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(250),
+      ])
+    );
+    if (field.fieldInfo) {
+      formGroup.addControl(
+        'info' + field.fieldId,
+        new FormControl('', [
+          Validators.minLength(1),
+          Validators.maxLength(250),
+        ])
+      );
+    }
+  }
+
+  generateRangeField(field: ExerciseFormFieldRangeTemplate) {
+    const rangeField = {
+      fieldId: field.fieldId,
+      fieldType: field.fieldType,
+      fieldName: field.fieldName,
+      fieldText: field.fieldText,
+      fieldInfo: field.fieldInfo,
+      fieldOptions: {
+        min: field.fieldOptions.min,
+        max: field.fieldOptions.max,
+        step: field.fieldOptions.step,
+        icons: field.fieldOptions.icons,
+      },
+    };
+    return rangeField;
+  }
+
+  generateRangeFieldFormControls(
+    field: ExerciseFormFieldRangeTemplate,
+    formGroup: FormGroup
+  ) {
+    this.generateDefaultFormControls(field, formGroup);
+    formGroup.addControl(
+      'min' + field.fieldId,
+      new FormControl('', [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(1),
+      ])
+    );
+    formGroup.addControl(
+      'max' + field.fieldId,
+      new FormControl('', [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(100),
+      ])
+    );
+    formGroup.addControl(
+      'step' + field.fieldId,
+      new FormControl('', [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(5),
+      ])
+    );
+    formGroup.addControl(
+      'icon1_isIcon' + field.fieldId,
+      new FormControl('', [
+        Validators.required,
+        Validators.pattern(
+          '/^(?:(1|y(?:es)?|t(?:rue)?|on)|(0|n(?:o)?|f(?:alse)?|off))$/i'
+        ),
+      ])
+    );
+    formGroup.addControl(
+      'icon2_isIcon' + field.fieldId,
+      new FormControl('', [
+        Validators.required,
+        Validators.pattern(
+          '/^(?:(1|y(?:es)?|t(?:rue)?|on)|(0|n(?:o)?|f(?:false)?|off))$/i'
+        ),
+      ])
+    );
+    formGroup.addControl(
+      'icon1_value' + field.fieldId,
+      new FormControl('', [
+        Validators.required,
+        Validators.pattern('/(?:($.*):)/'),
+      ])
+    );
+    formGroup.addControl(
+      'icon2_value' + field.fieldId,
+      new FormControl('', [
+        Validators.required,
+        Validators.pattern('/(?:($.*):)/'),
+      ])
+    );
+  }
+
+  generateField(field: ExerciseFormFieldSelectTemplate) {
+    const selectField = {
+      fieldId: field.fieldId,
+      fieldType: field.fieldType,
+      fieldName: field.fieldName,
+      fieldText: field.fieldText,
+      fieldInfo: field.fieldInfo,
+      fieldValues: field.fieldValues,
+    };
+    return selectField;
+  }
+
+  generateFieldValues(
+    field: ExerciseFormFieldSelectTemplate | ExerciseFormFieldRadioTemplate,
+    formGroup: FormGroup
+  ) {
+    field.fieldValues.forEach((v, i) => {
+      formGroup.addControl(
+        'value' + i + '_' + field.fieldId,
+        // eslint-disable-next-line no-useless-escape
+        new FormControl('', [
+          Validators.required,
+          Validators.pattern('/[0-9]/'),
+          Validators.min(1),
+          Validators.max(10),
+        ])
+      );
+      formGroup.addControl(
+        'label' + i + '_' + field.fieldId,
+        new FormControl('', [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(50),
+          Validators.pattern('/[a-zA-Z0-9]/'),
+        ])
+      );
+    });
+  }
+
+  generateSelectFieldFormControls(
+    field: ExerciseFormFieldSelectTemplate,
+    formGroup: FormGroup
+  ) {
+    this.generateDefaultFormControls(field, formGroup);
+    this.generateFieldValues(field, formGroup);
+    formGroup.addControl(
+      'repeat' + field.fieldId,
+      new FormControl('', [
+        Validators.required,
+        Validators.pattern(
+          '/(?:(1|y(?:es)?|t(?:rue)?|on)|(0|n(?:o)?|f(?:alse)?|off))$/i'
+        ),
+      ])
+    );
+  }
+
+  generateRadioFieldFormControls(
+    field: ExerciseFormFieldRadioTemplate,
+    formGroup: FormGroup
+  ) {
+    this.generateDefaultFormControls(field, formGroup);
+    this.generateFieldValues(field, formGroup);
   }
 }

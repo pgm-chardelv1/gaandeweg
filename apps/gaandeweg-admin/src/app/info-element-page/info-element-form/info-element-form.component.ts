@@ -1,7 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { InfoElement } from '@gaandeweg-ws/data-access';
+import { firstValueFrom } from 'rxjs';
+import { InfoService } from '@gaandeweg-ws/data-access';
+import { logger } from 'nx/src/shared/logger';
 
 @Component({
   selector: 'gaandeweg-ws-info-element-form-component',
@@ -9,15 +12,43 @@ import { InfoElement } from '@gaandeweg-ws/data-access';
   styleUrls: ['./info-element-form.component.scss'],
 })
 export class InfoElementFormComponent implements OnChanges {
-  @Input() infoElement!: InfoElement;
-  @Input() infoElementForm!: FormGroup;
-  @Input() infoElementFormErrors!: { [key: string]: string };
-  @Input() infoElementFormTouched!: boolean;
-  @Input() infoElementFormSubmitted!: boolean;
-  @Input() infoElementFormValid!: boolean;
-  @Input() infoElementFormSubmitting!: boolean;
+  @Input() infoId!: number;
+  @Input() dataChanged!: string;
+  infoElement!: InfoElement;
+  infoElementForm!: FormGroup;
+  infoElementFormErrors!: { [key: string]: string };
+  infoElementFormTouched!: boolean;
+  infoElementFormSubmitted!: boolean;
+  infoElementFormValid!: boolean;
+  infoElementFormSubmitting!: boolean;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+  constructor(
+    public formBuilder: FormBuilder,
+    private infoElementService: InfoService
+  ) {
+    this.infoElementForm = this.formBuilder.group({
+      id: ['', Validators.required],
+      name: ['', Validators.required],
+      definition: ['', Validators.required],
+      text: ['', Validators.required],
+    });
+  }
+
+  async ngOnChanges(infoId: SimpleChanges): Promise<void> {
+    this.infoElement = await firstValueFrom(
+      this.infoElementService.getInfoElement(this.infoId)
+    );
+    console.log(this.dataChanged);
+    // this.dataChanged = this.infoElement.text;
+    this.infoElementForm.patchValue(this.infoElement);
+  }
+
+  async dataChangedHandler(dataChanged: string): Promise<void> {
+    console.log('change data', this.dataChanged);
+    this.infoElementForm.patchValue({ text: this.dataChanged });
+  }
+
+  async onSubmit(): Promise<void> {
+    logger.log('form submitted', this.infoElementForm.value);
   }
 }

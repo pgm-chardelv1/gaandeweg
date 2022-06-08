@@ -15,7 +15,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
   templateUrl: './wysiwyg.component.html',
   styleUrls: ['./wysiwyg.component.scss'],
 })
-export class WysiwygComponent implements OnChanges {
+export class WysiwygComponent {
   public isDisabled = false;
   isLoading = true;
   public Editor = ClassicEditorBuild;
@@ -25,23 +25,15 @@ export class WysiwygComponent implements OnChanges {
       content: 'nl',
     },
   };
+  public model = {
+    editorData: '<p>Hello, world!</p>',
+  };
   @Input() data!: string;
-  @Output() dataChange = new EventEmitter<string>();
+  @Output() dataChanged = new EventEmitter<string>();
 
-  toggleDisabled(): void {
-    this.isDisabled = !this.isDisabled;
-  }
-
-  public onChange({ editor }: ChangeEvent) {
+  public onContentChange({ editor }: ChangeEvent) {
     this.data = editor.getData();
-  }
-
-  ngOnChanges(data: SimpleChanges): void {
-    console.log(data);
-  }
-
-  onSubmit(): void {
-    console.log('submit');
-    this.dataChange.emit(this.data);
+    console.log(this.data);
+    this.dataChanged.emit(this.data);
   }
 }

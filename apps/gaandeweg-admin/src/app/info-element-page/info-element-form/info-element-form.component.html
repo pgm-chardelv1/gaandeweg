@@ -1,0 +1,19 @@
+<form [formGroup]="infoElementForm" *ngIf="infoElement" (submit)="onSubmit()">
+    <input type="hidden" formControlName="id" [value]="infoElement.id" />
+    <div class="form-group mb-2">
+        <label class="label">Naam van het info element</label>
+        <input type="text" class="form-control" formControlName="name" [value]="infoElement.name"/>
+    </div>
+    
+    <div class="form-group mb-2">
+        <label class="label">Definitie van het info element</label>
+        <textarea class="form-control" formControlName="definition" [value]="infoElement.definition"></textarea>
+    </div>
+
+    <div class="form-group mb-2">
+        <label class="label">Tekstinhoud van het info element</label>
+        <gaandeweg-ws-wysiwyg *ngIf="infoElement" [data]="infoElement.text" (changes)="dataChangedHandler(dataChanged)"></gaandeweg-ws-wysiwyg>
+    </div>
+
+    <input type="submit" class="btn btn-secondary" value="Opslaan" />
+</form>
