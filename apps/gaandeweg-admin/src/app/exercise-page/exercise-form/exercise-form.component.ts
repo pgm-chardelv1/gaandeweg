@@ -1,23 +1,72 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Exercise } from '@gaandeweg-ws/data-access';
+import {
+  Category,
+  CategoryService,
+  Exercise,
+  ExerciseFormService,
+  ExerciseService,
+} from '@gaandeweg-ws/data-access';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'gaandeweg-ws-exercise-form-component',
   templateUrl: './exercise-form.component.html',
   styleUrls: ['./exercise-form.component.scss'],
+  providers: [ExerciseService, ExerciseFormService],
 })
-export class ExerciseFormComponent implements OnChanges {
-  @Input() exercise!: Exercise;
-  @Input() exerciseForm!: FormGroup;
-  @Input() exerciseFormErrors!: { [key: string]: string };
-  @Input() exerciseFormTouched!: boolean;
-  @Input() exerciseFormSubmitted!: boolean;
-  @Input() exerciseFormValid!: boolean;
-  @Input() exerciseFormSubmitting!: boolean;
+export class ExerciseFormComponent implements OnChanges, OnInit {
+  @Input() exerciseId = 1;
+  categories: Category[] = [];
+  isLoading = true;
+  exercise!: Exercise;
+  exerciseForm!: FormGroup;
+  exerciseFormErrors!: { [key: string]: string };
+  exerciseFormTouched!: boolean;
+  exerciseFormSubmitted!: boolean;
+  exerciseFormValid!: boolean;
+  exerciseFormSubmitting!: boolean;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+  constructor(
+    public formBuilder: FormBuilder,
+    private categoryService: CategoryService,
+    private exerciseService: ExerciseService,
+    private exerciseFormService: ExerciseFormService
+  ) {
+    this.exerciseForm = this.formBuilder.group({
+      id: [1, Validators.required],
+      version: ['1', Validators.required],
+      categoryId: [0, Validators.required],
+      name: ['', Validators.required],
+      summary: ['', Validators.required],
+      template: ['', Validators.required],
+    });
+  }
+
+  async ngOnChanges(exerciseId: SimpleChanges): Promise<void> {
+    this.exercise = await firstValueFrom(
+      this.exerciseService.getExercise(this.exerciseId)
+    );
+    this.exerciseForm.patchValue(this.exercise);
+    this.isLoading = false;
+  }
+
+  async ngOnInit(): Promise<void> {
+    this.exercise = await firstValueFrom(this.exerciseService.getExercise(1));
+    this.categories = await firstValueFrom(
+      this.categoryService.getCategories()
+    );
+    this.isLoading = false;
+  }
+
+  async onSubmit(): Promise<void> {
+    console.log('submit', this.exerciseForm.value);
   }
 }

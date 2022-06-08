@@ -70,15 +70,15 @@ export class ExerciseFormService {
     field: ExerciseFormFieldDefaultTemplate,
     formGroup: FormGroup
   ) {
-    formGroup.addControl(
+    formGroup.registerControl(
       'id' + field.fieldId,
       new FormControl('', [Validators.required, Validators.min(1)])
     );
-    formGroup.addControl(
+    formGroup.registerControl(
       'type' + field.fieldId,
       new FormControl('', [Validators.required, fieldTypeValidator])
     );
-    formGroup.addControl(
+    formGroup.registerControl(
       'name' + field.fieldId,
       new FormControl('', [
         Validators.required,
@@ -86,7 +86,7 @@ export class ExerciseFormService {
         Validators.pattern('/(?:($.*):)/'),
       ])
     );
-    formGroup.addControl(
+    formGroup.registerControl(
       'text' + field.fieldId,
       new FormControl('', [
         Validators.required,
@@ -95,7 +95,7 @@ export class ExerciseFormService {
       ])
     );
     if (field.fieldInfo) {
-      formGroup.addControl(
+      formGroup.registerControl(
         'info' + field.fieldId,
         new FormControl('', [
           Validators.minLength(1),
@@ -127,7 +127,7 @@ export class ExerciseFormService {
     formGroup: FormGroup
   ) {
     this.generateDefaultFormControls(field, formGroup);
-    formGroup.addControl(
+    formGroup.registerControl(
       'min' + field.fieldId,
       new FormControl('', [
         Validators.required,
@@ -135,7 +135,7 @@ export class ExerciseFormService {
         Validators.max(1),
       ])
     );
-    formGroup.addControl(
+    formGroup.registerControl(
       'max' + field.fieldId,
       new FormControl('', [
         Validators.required,
@@ -143,7 +143,7 @@ export class ExerciseFormService {
         Validators.max(100),
       ])
     );
-    formGroup.addControl(
+    formGroup.registerControl(
       'step' + field.fieldId,
       new FormControl('', [
         Validators.required,
@@ -151,7 +151,7 @@ export class ExerciseFormService {
         Validators.max(5),
       ])
     );
-    formGroup.addControl(
+    formGroup.registerControl(
       'icon1_isIcon' + field.fieldId,
       new FormControl('', [
         Validators.required,
@@ -160,7 +160,7 @@ export class ExerciseFormService {
         ),
       ])
     );
-    formGroup.addControl(
+    formGroup.registerControl(
       'icon2_isIcon' + field.fieldId,
       new FormControl('', [
         Validators.required,
@@ -169,14 +169,14 @@ export class ExerciseFormService {
         ),
       ])
     );
-    formGroup.addControl(
+    formGroup.registerControl(
       'icon1_value' + field.fieldId,
       new FormControl('', [
         Validators.required,
         Validators.pattern('/(?:($.*):)/'),
       ])
     );
-    formGroup.addControl(
+    formGroup.registerControl(
       'icon2_value' + field.fieldId,
       new FormControl('', [
         Validators.required,
@@ -202,8 +202,8 @@ export class ExerciseFormService {
     formGroup: FormGroup
   ) {
     field.fieldValues.forEach((v, i) => {
-      formGroup.addControl(
-        'value' + i + '_' + field.fieldId,
+      formGroup.registerControl(
+        'value_' + field.fieldId,
         // eslint-disable-next-line no-useless-escape
         new FormControl('', [
           Validators.required,
@@ -212,8 +212,8 @@ export class ExerciseFormService {
           Validators.max(10),
         ])
       );
-      formGroup.addControl(
-        'label' + i + '_' + field.fieldId,
+      formGroup.registerControl(
+        'label_' + field.fieldId,
         new FormControl('', [
           Validators.required,
           Validators.minLength(1),
@@ -230,7 +230,7 @@ export class ExerciseFormService {
   ) {
     this.generateDefaultFormControls(field, formGroup);
     this.generateFieldValues(field, formGroup);
-    formGroup.addControl(
+    formGroup.registerControl(
       'repeat' + field.fieldId,
       new FormControl('', [
         Validators.required,

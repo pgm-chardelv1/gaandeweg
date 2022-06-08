@@ -1,0 +1,46 @@
+<form [formGroup]="exerciseTemplateForm" *ngIf="exercise">
+    <div class="mb-2" *ngFor="let field of template.fields">
+        <h3>{{field.fieldId}} - {{field.fieldText}}</h3>
+        <div class="ps-2">
+            <div class="form-group mb-2">
+                <label class="label">Naam</label>
+                <input type="text" 
+                formControlName="id{{field.fieldId}}" class="form-control" placeholder="{{field.fieldName}}" [value]="field.fieldName">
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="label">Type</label>
+                <select class="form-control" formControlName="type{{field.fieldId}}" [value]="field.fieldType">
+                    <option value="RANGE">Range</option>
+                    <option value="TEXT">Tekst</option>
+                    <option value="DATE">Datum</option>
+                    <option value="TIME">Tijd</option>
+                    <option value="NUMBER">Getal</option>
+                    <option value="RADIO">Radio</option>
+                    <option value="SELECT">Select</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="label">Tekst</label>
+                <input type="text" 
+                formControlName="text{{field.fieldId}}" class="form-control" placeholder="{{field.fieldText}}" [value]="field.fieldText" />
+            </div>
+        
+
+            <div class="form-group mb-2" *ngIf="field.fieldInfo">
+                <label class="label">Info</label>
+                <textarea class="form-control" formControlName="info{{field.fieldId}}" placeholder="{{field.fieldInfo}}" [value]="field.fieldInfo"></textarea>
+            </div>
+
+            <div class="form-group mb-2" *ngIf="field.fieldType === 'RADIO'">
+                <label class="label">Opties</label>
+                <div class="form-group mb-2" *ngFor="let option of field.fieldOptions">
+                    <label class="label">Waarde</label>
+                    <input type="text" 
+                    formControlName="value_{{field.fieldId}}" class="form-control" placeholder="{{option}}" [value]="option" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

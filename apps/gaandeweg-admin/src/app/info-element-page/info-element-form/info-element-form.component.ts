@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { InfoElement } from '@gaandeweg-ws/data-access';
 import { firstValueFrom } from 'rxjs';
-import { InfoService } from '@gaandeweg-ws/data-access';
-import { logger } from 'nx/src/shared/logger';
+import { InfoService, LoggingService } from '@gaandeweg-ws/data-access';
 
 @Component({
   selector: 'gaandeweg-ws-info-element-form-component',
@@ -24,7 +23,8 @@ export class InfoElementFormComponent implements OnChanges {
 
   constructor(
     public formBuilder: FormBuilder,
-    private infoElementService: InfoService
+    private infoElementService: InfoService,
+    private logger: LoggingService
   ) {
     this.infoElementForm = this.formBuilder.group({
       id: ['', Validators.required],
@@ -49,6 +49,6 @@ export class InfoElementFormComponent implements OnChanges {
   }
 
   async onSubmit(): Promise<void> {
-    logger.log('form submitted', this.infoElementForm.value);
+    this.logger.log('admin', this.infoElementForm.value);
   }
 }

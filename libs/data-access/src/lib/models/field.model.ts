@@ -58,14 +58,14 @@ export interface ExerciseFormFieldNumberTemplate
   fieldType: 'NUMBER';
 }
 
-export interface ExerciseFormFIeldTimeTemplate
+export interface ExerciseFormFieldTimeTemplate
   extends ExerciseFormFieldDefaultTemplate {
   fieldType: 'TIME';
 }
 
 export type ExerciseFormFieldTemplate =
   | ExerciseFormFieldDefaultTemplate
-  | ExerciseFormFIeldTimeTemplate
+  | ExerciseFormFieldTimeTemplate
   | ExerciseFormFieldRangeTemplate
   | ExerciseFormFieldSelectTemplate
   | ExerciseFormFieldTextTemplate

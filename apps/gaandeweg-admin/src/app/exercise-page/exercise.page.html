@@ -1,1 +1,16 @@
-<h1>Exercise</h1>
+<h1 class="text-primary pb-3">Oefeningen</h1>
+<div *ngIf="isLoading" style="text-align: center;">
+    <gaandeweg-ws-loading-spinner></gaandeweg-ws-loading-spinner>
+</div>
+<div class="container-fluid d-flex ps-0">
+    <div *ngIf="exercises">
+        <ul class="list-group ps-0">
+            <li class="list-group-item" *ngFor="let exercise of exercises" (click)="setActive(exercise.id)">
+                <h5>{{exercise.name}}</h5>
+            </li>
+        </ul>
+    </div>
+    <div class="ps-3">
+        <gaandeweg-ws-exercise-form-component [exerciseId]="activeId"></gaandeweg-ws-exercise-form-component>
+    </div>
+</div>

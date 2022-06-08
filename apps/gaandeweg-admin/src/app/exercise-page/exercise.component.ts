@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  Exercise,
   ExerciseFormService,
   ExerciseService,
   LoggingService,
 } from '@gaandeweg-ws/data-access';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'gaandeweg-ws-exercise-page-component',
@@ -12,12 +14,26 @@ import {
   providers: [ExerciseService, ExerciseFormService, LoggingService],
 })
 export class ExercisePage implements OnInit {
+  isLoading = true;
+  exercises: Exercise[] = [];
+  activeId = 0;
+
   constructor(
     private exerciseService: ExerciseService,
     private exerciseFormService: ExerciseFormService,
     private logger: LoggingService
   ) {}
-  ngOnInit(): void {
-    this.logger.log('admin', 'Loaded exercises');
+
+  async ngOnInit(): Promise<void> {
+    this.exercises = await firstValueFrom(this.exerciseService.getExercises());
+    this.isLoading = false;
+  }
+
+  async setActive(id: number) {
+    this.activeId = id;
+  }
+
+  isActive(id: number): boolean {
+    return this.activeId === id;
   }
 }

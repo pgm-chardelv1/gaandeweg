@@ -5,6 +5,7 @@ import {
   ExerciseFormField,
   ExerciseFormFieldRange,
 } from './exercise.model';
+export * from './field.model';
 import { InfoElement } from './info.model';
 import { User, AppUser, UserRole } from './user.model';
 
