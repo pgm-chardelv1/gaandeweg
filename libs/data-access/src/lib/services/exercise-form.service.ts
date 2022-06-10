@@ -126,7 +126,6 @@ export class ExerciseFormService {
     field: ExerciseFormFieldRangeTemplate,
     formGroup: FormGroup
   ) {
-    this.generateDefaultFormControls(field, formGroup);
     formGroup.registerControl(
       'min' + field.fieldId,
       new FormControl('', [
@@ -183,6 +182,7 @@ export class ExerciseFormService {
         Validators.pattern('/(?:($.*):)/'),
       ])
     );
+    this.generateDefaultFormControls(field, formGroup);
   }
 
   generateField(field: ExerciseFormFieldSelectTemplate) {
@@ -203,8 +203,7 @@ export class ExerciseFormService {
   ) {
     field.fieldValues.forEach((v, i) => {
       formGroup.registerControl(
-        'value_' + field.fieldId,
-        // eslint-disable-next-line no-useless-escape
+        `value_${i}_${field.fieldId}`,
         new FormControl('', [
           Validators.required,
           Validators.pattern('/[0-9]/'),
@@ -213,7 +212,7 @@ export class ExerciseFormService {
         ])
       );
       formGroup.registerControl(
-        'label_' + field.fieldId,
+        `label_${i}_${field.fieldId}`,
         new FormControl('', [
           Validators.required,
           Validators.minLength(1),

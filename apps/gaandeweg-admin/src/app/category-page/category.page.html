@@ -1,1 +1,7 @@
 <h1>Category</h1>
+
+<ul class="list-group" *ngIf="categories">
+    <li class="list-group-item" *ngFor="let category of categories">
+        {{category.name}}
+    </li>
+</ul>

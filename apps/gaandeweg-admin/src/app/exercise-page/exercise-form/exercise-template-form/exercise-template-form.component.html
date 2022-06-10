@@ -10,7 +10,8 @@
 
             <div class="form-group mb-2">
                 <label class="label">Type</label>
-                <select class="form-control" formControlName="type{{field.fieldId}}" [value]="field.fieldType">
+                {{field.fieldType}}
+                <select class="form-control" formControlName="type{{field.fieldId}}" [value]="field.fieldType" value="{{field.fieldType}}">
                     <option value="RANGE">Range</option>
                     <option value="TEXT">Tekst</option>
                     <option value="DATE">Datum</option>
@@ -33,12 +34,50 @@
                 <textarea class="form-control" formControlName="info{{field.fieldId}}" placeholder="{{field.fieldInfo}}" [value]="field.fieldInfo"></textarea>
             </div>
 
-            <div class="form-group mb-2" *ngIf="field.fieldType === 'RADIO'">
+            <div class="form-group mb-2" *ngIf="field.fieldType === 'RADIO'" (click)="getFormInfo()">
                 <label class="label">Opties</label>
-                <div class="form-group mb-2" *ngFor="let option of field.fieldOptions">
+                <div class="form-group mb-2" *ngFor="let option of field.fieldValues; let i = index">
                     <label class="label">Waarde</label>
                     <input type="text" 
-                    formControlName="value_{{field.fieldId}}" class="form-control" placeholder="{{option}}" [value]="option" />
+                    class="form-control" placeholder="{{option.fieldLabel}}" [value]="option.fieldLabel" />
+                </div>
+            </div>
+           
+            <div class="form-group mb-2" *ngIf="field.fieldType === 'SELECT'" (click)="getFormInfo()">
+                <label class="label">Opties</label>
+                <div class="form-group mb-2" *ngFor="let option of field.fieldValues; let i = index">
+                    <label class="label">Waarde</label>
+                    <input type="text" 
+                    class="form-control" placeholder="{{option.fieldLabel}}" [value]="option.fieldLabel" />
+                </div>
+            </div>
+
+            <div class="form-group mb-2" *ngIf="field.fieldType === 'RANGE'" (click)="getFormInfo()">
+                <label class="label">Min</label>
+                <input type="number" 
+                class="form-control" placeholder="{{field.fieldOptions.min}}" [value]="field.fieldOptions.min" min="0" max="1"/>
+
+                <label class="label">Max</label>
+                <input type="number"
+                class="form-control" placeholder="{{field.fieldOptions.max}}" [value]="field.fieldOptions.max" min="1" max="100"/>
+
+                <label class="label">Step</label>
+                <input type="number" 
+                class="form-control" placeholder="{{field.fieldOptions.step}}" [value]="field.fieldOptions.step" min="1" max="5"/>
+
+                <div class="form-check pt-2">
+                    <input type="checkbox"
+                    class="form-control form-check-input p-1" [checked]="field.fieldOptions.icons[0].icon" [value]="field.fieldOptions.icons[0].icon" />
+                    <label class="form-check-label">Gebruikt icoontjes</label>
+                </div>
+
+                <div class="form-group">
+                    <label class="label">Begin- en eindwaarde</label>
+                    <div class="form-group mb-2" *ngFor="let icon of field.fieldOptions.icons; let i = index">
+                        <label class="label">Waarde</label>
+                        <input type="text" 
+                        class="form-control" placeholder="{{icon.value}}" [value]="icon.value" />
+                    </div>
                 </div>
             </div>
         </div>

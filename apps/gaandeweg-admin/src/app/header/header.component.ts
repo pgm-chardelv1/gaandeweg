@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LoggingService } from '@gaandeweg-ws/data-access';
 import { AuthService } from '../auth/auth.service';
@@ -11,6 +11,7 @@ import { AuthService } from '../auth/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   isLoading = true;
   isAuthenticated = false;
+  @Output() isAuthenticated$ = this.isAuthenticated;
   private userSub!: Subscription;
 
   constructor(

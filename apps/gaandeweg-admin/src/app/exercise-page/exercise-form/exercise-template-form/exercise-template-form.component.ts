@@ -61,6 +61,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
           field as ExerciseFormFieldRangeTemplate,
           this.exerciseTemplateForm
         );
+        console.log(field);
         break;
       case 'select':
         this.exerciseFormService.generateSelectFieldFormControls(
@@ -80,5 +81,9 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
           this.exerciseTemplateForm
         );
     }
+  }
+
+  getFormInfo() {
+    console.log(this.exerciseTemplateForm.controls);
   }
 }

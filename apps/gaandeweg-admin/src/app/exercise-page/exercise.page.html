@@ -6,7 +6,8 @@
     <div *ngIf="exercises">
         <ul class="list-group ps-0">
             <li class="list-group-item" *ngFor="let exercise of exercises" (click)="setActive(exercise.id)">
-                <h5>{{exercise.name}}</h5>
+                <h5 *ngIf="activeId === exercise.id" class="text-primary text-opacity-75">{{exercise.name}}</h5>
+                <h5 *ngIf="activeId !== exercise.id">{{exercise.name}}</h5>
             </li>
         </ul>
     </div>
