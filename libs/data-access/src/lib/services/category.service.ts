@@ -35,11 +35,18 @@ export class CategoryService {
    * @param {Category} category - the category to update
    * @returns {Observable<Category>} - the updated category
    */
-  updateCategory(id: number, category: Category): Observable<Category> {
-    return this.http.put<Category>(
-      `${environment.API_BASEURL}/categories/${id}`,
-      category
-    );
+  updateCategory(id: number, category: Category) {
+    const body = category;
+    return this.http
+      .patch<Category>(`${environment.API_BASEURL}/categories/${id}`, body)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   /**

@@ -1,7 +1,9 @@
-<h1>Category</h1>
-
-<ul class="list-group" *ngIf="categories">
-    <li class="list-group-item" *ngFor="let category of categories">
-        {{category.name}}
-    </li>
-</ul>
+<div class="row">
+    <h1 class="text-primary pb-3">Categorieën</h1>
+    <div class="col-md-5">
+        <gaandeweg-ws-category-list></gaandeweg-ws-category-list>
+    </div>
+    <div class="col-md-7">
+        <router-outlet></router-outlet>
+    </div>
+</div>

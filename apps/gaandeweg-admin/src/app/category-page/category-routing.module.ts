@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
-import { CategoryDetailComponent } from './category-detail/category-detail.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
+import { CategoryResolverService } from './category-resolver.service';
+import { CategoryStartComponent } from './category-start/category-start.component';
 import { CategoryPage } from './category.page';
 
 const routes: Routes = [
@@ -10,18 +11,23 @@ const routes: Routes = [
     path: '',
     component: CategoryPage,
     canActivate: [AuthGuard],
-    pathMatch: 'full',
-  },
-  {
-    path: ':id',
-    component: CategoryDetailComponent,
-    canActivate: [AuthGuard],
-    children: [{ path: 'edit', component: CategoryFormComponent }],
-  },
-  {
-    path: 'new',
-    component: CategoryFormComponent,
-    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        component: CategoryStartComponent,
+      },
+      {
+        path: ':id/edit',
+        component: CategoryFormComponent,
+        canActivate: [AuthGuard],
+        resolve: [CategoryResolverService],
+      },
+      {
+        path: 'new',
+        component: CategoryFormComponent,
+        canActivate: [AuthGuard],
+      },
+    ],
   },
 ];
 

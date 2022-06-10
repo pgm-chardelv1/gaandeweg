@@ -2,10 +2,12 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import {
   Category,
@@ -14,7 +16,7 @@ import {
   ExerciseFormService,
   ExerciseService,
 } from '@gaandeweg-ws/data-access';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 
 @Component({
   selector: 'gaandeweg-ws-exercise-form-component',
@@ -22,8 +24,10 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./exercise-form.component.scss'],
   providers: [ExerciseService, ExerciseFormService],
 })
-export class ExerciseFormComponent implements OnChanges, OnInit {
+export class ExerciseFormComponent implements OnDestroy, OnInit {
   @Input() exerciseId = 1;
+  id = 0;
+  exerciseSub = new Subscription();
   categories: Category[] = [];
   isLoading = true;
   exercise!: Exercise;
@@ -38,6 +42,8 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
     public formBuilder: FormBuilder,
     private categoryService: CategoryService,
     private exerciseService: ExerciseService,
+    private route: ActivatedRoute,
+    private router: Router,
     private exerciseFormService: ExerciseFormService
   ) {
     this.exerciseForm = this.formBuilder.group({
@@ -50,16 +56,16 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
     });
   }
 
-  async ngOnChanges(exerciseId: SimpleChanges): Promise<void> {
-    this.exercise = await firstValueFrom(
-      this.exerciseService.getExercise(this.exerciseId)
-    );
-    this.exerciseForm.patchValue(this.exercise);
-    this.isLoading = false;
-  }
-
   async ngOnInit(): Promise<void> {
-    this.exercise = await firstValueFrom(this.exerciseService.getExercise(1));
+    this.route.params.subscribe(async (params: Params) => {
+      this.id = +params['id'];
+      this.exerciseSub = this.exerciseService
+        .getExercise(this.id)
+        .subscribe((exercise: Exercise) => {
+          this.exercise = exercise;
+          this.exerciseForm.patchValue(exercise);
+        });
+    });
     this.categories = await firstValueFrom(
       this.categoryService.getCategories()
     );
@@ -67,6 +73,17 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    console.log('submit', this.exerciseForm.value);
+    this.exerciseFormSubmitted = true;
+    this.exerciseFormValid = this.exerciseForm.valid;
+    if (this.exerciseForm.valid) {
+      const exercise = this.exerciseForm.value;
+      /*       this.exerciseService.updateExercise(this.id, exercise); */
+      console.log(exercise);
+      this.router.navigate(['/exercise', this.id, 'edit']);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.exerciseSub.unsubscribe();
   }
 }

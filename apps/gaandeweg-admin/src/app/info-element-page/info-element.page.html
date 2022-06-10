@@ -2,10 +2,4 @@
 <div *ngIf="isLoading" style="text-align: center;">
     <gaandeweg-ws-loading-spinner></gaandeweg-ws-loading-spinner>
 </div>
-<div *ngIf="infoElements">
-    <ul class="list-group">
-        <li class="list-group-item" *ngFor="let info of infoElements">
-            <gaandeweg-ws-info-element-form-component [infoId]="info.id"></gaandeweg-ws-info-element-form-component>
-        </li>
-    </ul>
-</div> 
+<router-outlet></router-outlet>
