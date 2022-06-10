@@ -13,17 +13,17 @@ import { Category } from './';
  * @property {Category} category - The category the exercise belongs to.
  */
 export interface Exercise {
-  id: number;
+  id: number | null;
   version: string;
   categoryId: number;
   name: string;
   summary: string;
   template: string;
-  createdAt: Date;
-  updatedAt: Date;
-  published: boolean;
-  publishedBy: string;
-  category: Category;
+  createdAt?: Date;
+  updatedAt?: Date;
+  published?: boolean;
+  publishedBy?: string;
+  category?: Category;
 }
 
 export interface ExerciseForm {

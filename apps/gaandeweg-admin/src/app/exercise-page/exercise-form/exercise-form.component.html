@@ -2,9 +2,9 @@
     <gaandeweg-ws-loading-spinner></gaandeweg-ws-loading-spinner>
 </div>
 <div class="container-fluid" *ngIf="!isLoading">
-    <div class="card-header" *ngIf="exercise && exerciseForm">
+    <div class="card-header" *ngIf="exerciseForm">
         <form [formGroup]="exerciseForm" (submit)="onSubmit()">
-            <input type="hidden" formControlName="id" [value]="exercise.id">
+            <input *ngIf="exercise.id" type="hidden" formControlName="id" [value]="exercise.id">
 
             <div class="form-group mb-2">
                 <label class="label">Versie van de oefening</label>
@@ -32,7 +32,7 @@
 
             <div class="form-group mb-2">
                 <label class="label">Velden</label>
-                <gaandeweg-ws-exercise-template-form-component [exerciseId]="exercise.id"></gaandeweg-ws-exercise-template-form-component>
+                <gaandeweg-ws-exercise-template-form-component [id]="exercise.id"></gaandeweg-ws-exercise-template-form-component>
             </div>
 
 

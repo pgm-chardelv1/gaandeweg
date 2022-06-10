@@ -34,7 +34,7 @@ export class ExerciseService {
    * @returns {Observable<Exercise>} - the updated exercise
    */
   updateExercise(id: number, exercise: Exercise): Observable<Exercise> {
-    return this.http.put<Exercise>(
+    return this.http.patch<Exercise>(
       `${environment.API_BASEURL}/exercise/${id}`,
       exercise
     );

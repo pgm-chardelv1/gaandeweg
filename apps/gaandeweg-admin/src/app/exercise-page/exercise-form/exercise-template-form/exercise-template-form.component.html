@@ -1,17 +1,15 @@
 <form [formGroup]="exerciseTemplateForm" *ngIf="exercise">
-    <div class="mb-2" *ngFor="let field of template.fields">
-        <h3>{{field.fieldId}} - {{field.fieldText}}</h3>
-        <div class="ps-2">
-            <div class="form-group mb-2">
-                <label class="label">Naam</label>
-                <input type="text" 
-                formControlName="id{{field.fieldId}}" class="form-control" placeholder="{{field.fieldName}}" [value]="field.fieldName">
+    <div formArrayName="fields">
+        <div class="mb-2" *ngFor="let field of fields.controls; let i=index" [formGroupName]="i">
+            <h3>Field {{i+1}}</h3>
+            <div class="form-group mb-2" *ngIf="field.get('fieldName')?.value">    
+                <label class="label">Veldnaam</label>
+                <input class="form-control" formControlName="fieldName" value="{{field.get('fieldName')?.value}}"/>
             </div>
 
-            <div class="form-group mb-2">
+            <div class="form-group mb-2" *ngIf="field.get('fieldType')?.value">    
                 <label class="label">Type</label>
-                {{field.fieldType}}
-                <select class="form-control" formControlName="type{{field.fieldId}}" [value]="field.fieldType" value="{{field.fieldType}}">
+                <select class="form-control" formControlName="fieldType" [value]="field.get('fieldType')?.value" >
                     <option value="RANGE">Range</option>
                     <option value="TEXT">Tekst</option>
                     <option value="DATE">Datum</option>
@@ -21,20 +19,24 @@
                     <option value="SELECT">Select</option>
                 </select>
             </div>
-
-            <div class="form-group mb-2">
+       
+            <div class="form-group mb-2" *ngIf="field.get('fieldText')?.value">
                 <label class="label">Tekst</label>
                 <input type="text" 
-                formControlName="text{{field.fieldId}}" class="form-control" placeholder="{{field.fieldText}}" [value]="field.fieldText" />
+                formControlName="fieldText" class="form-control"[value]="field.get('fieldText')?.value" />
             </div>
         
 
-            <div class="form-group mb-2" *ngIf="field.fieldInfo">
+            <div class="form-group mb-2" *ngIf="field.get('fieldInfo')?.value">
                 <label class="label">Info</label>
-                <textarea class="form-control" formControlName="info{{field.fieldId}}" placeholder="{{field.fieldInfo}}" [value]="field.fieldInfo"></textarea>
+                <textarea class="form-control" formControlName="fieldInfo" [value]="field.get('fieldInfo')?.value"></textarea>
             </div>
 
-            <div class="form-group mb-2" *ngIf="field.fieldType === 'RADIO'" (click)="getFormInfo()">
+            <div class="form-group mb-2" *ngIf="(field.get('fieldType')?.value === 'RANGE' || field.get('fieldType')?.value === 'RADIO') && field.get('fieldValues')">
+                Dit is een radio of range veld met veldwaarden
+            </div>
+
+           <!--  <div class="form-group mb-2" *ngIf="field.fieldType === 'RADIO'" (click)="getFormInfo()">
                 <label class="label">Opties</label>
                 <div class="form-group mb-2" *ngFor="let option of field.fieldValues; let i = index">
                     <label class="label">Waarde</label>
@@ -79,7 +81,7 @@
                         class="form-control" placeholder="{{icon.value}}" [value]="icon.value" />
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </form>

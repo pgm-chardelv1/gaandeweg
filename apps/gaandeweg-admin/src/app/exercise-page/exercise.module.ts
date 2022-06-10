@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { ExerciseFormComponent } from './exercise-form/exercise-form.component';
+import { ExerciseTemplateFormComponent } from './exercise-form/exercise-template-form/exercise-template-form.component';
 import { ExerciseListComponent } from './exercise-list/exercise-list.component';
 import { ExercisePageRoutingModule } from './exercise-routing.module';
 import { ExerciseStartComponent } from './exercise-start/exercise-start.component';
@@ -23,6 +24,7 @@ import { ExercisePage } from './exercise.component';
     ExerciseListComponent,
     ExerciseFormComponent,
     ExerciseStartComponent,
+    ExerciseTemplateFormComponent,
   ],
 })
 export class ExercisePageModule {}

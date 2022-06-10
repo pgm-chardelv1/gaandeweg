@@ -41,7 +41,7 @@ export class InfoService {
     id: number,
     infoElement: InfoElement
   ): Observable<InfoElement> {
-    return this.http.put<InfoElement>(
+    return this.http.patch<InfoElement>(
       `${environment.API_BASEURL}/info-element/${id}`,
       infoElement
     );
