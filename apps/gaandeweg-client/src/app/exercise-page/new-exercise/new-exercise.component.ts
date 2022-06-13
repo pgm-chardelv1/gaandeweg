@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -14,16 +20,25 @@ import {
   ExerciseFormService,
   ExerciseService,
   LoggingService,
+  UserExercise,
+  UserExerciseService,
 } from '@gaandeweg-ws/data-access';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
+import { AuthService } from '../../auth/auth.service';
+import { User } from '../../auth/user.model';
 
 @Component({
   selector: 'gaandeweg-ws-new-exercise',
   templateUrl: './new-exercise.component.html',
   styleUrls: ['./new-exercise.component.scss'],
-  providers: [ExerciseService, ExerciseFormService, LoggingService],
+  providers: [
+    ExerciseService,
+    ExerciseFormService,
+    LoggingService,
+    UserExerciseService,
+  ],
 })
-export class NewExerciseComponent implements OnChanges {
+export class NewExerciseComponent implements OnChanges, OnInit {
   @Input() exerciseId!: number;
   exercise!: Exercise;
   exerciseForm: Partial<ExerciseForm> = {};
@@ -31,12 +46,16 @@ export class NewExerciseComponent implements OnChanges {
   myGroup!: FormGroup;
   isSubmitted = false;
   validation_messages: any = {};
+  user: User = new User('', new Date(), '');
+  userSub!: Subscription;
 
   constructor(
+    private authService: AuthService,
     private exerciseFormService: ExerciseFormService,
     private exerciseService: ExerciseService,
-    private loggingService: LoggingService,
-    public formBuilder: FormBuilder
+    private logger: LoggingService,
+    public formBuilder: FormBuilder,
+    private userExerciseService: UserExerciseService
   ) {}
 
   async ngOnChanges(exerciseId: SimpleChanges): Promise<void> {
@@ -50,6 +69,13 @@ export class NewExerciseComponent implements OnChanges {
     );
     this.exerciseForm?.fields?.forEach((field) => {
       this.registerControl(field);
+    });
+  }
+
+  ngOnInit(): void {
+    this.userSub = this.authService.user.subscribe((user) => {
+      this.logger.log('client', user.token as string);
+      this.user = user;
     });
   }
 
@@ -153,7 +179,7 @@ export class NewExerciseComponent implements OnChanges {
     }
   }
 
-  onSubmit() {
+  async onSubmit(): Promise<boolean> {
     console.log('Form:', this.myGroup.value);
 
     this.isSubmitted = true;
@@ -163,8 +189,20 @@ export class NewExerciseComponent implements OnChanges {
       console.log('Please provide all the required values!');
       return false;
     } else {
-      console.log(this.myGroup.value);
-      this.loggingService.log('client', this.myGroup.value);
+      this.logger.log('client', this.myGroup.value);
+      const userExercise: UserExercise = {
+        exerciseName: this.exercise.name,
+        exerciseTemplate: this.exercise.template,
+        exerciseData: JSON.stringify(this.myGroup.value),
+        userId: this.user.id
+          ? this.user.id
+          : '91645816-60ad-41d8-b287-e843d3f408b7',
+      };
+      this.userExerciseService
+        .createUserExercise(userExercise)
+        .subscribe((data) => {
+          this.logger.log('client', `Created user exercise: ${data}`);
+        });
       return true;
     }
   }

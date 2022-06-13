@@ -7,7 +7,7 @@
  * @property {string} exerciseData - The data of the exercise.
  */
 export interface UserExercise {
-  id: number;
+  id?: number;
   userId: string;
   exerciseName: string;
   exerciseTemplate: string;

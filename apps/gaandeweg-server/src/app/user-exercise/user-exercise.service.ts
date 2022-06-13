@@ -30,7 +30,11 @@ export class UserExerciseService {
       }
       return userExercise;
     } catch (err) {
-      Logger.log(`Could not create userExercise. ${err}`);
+      Logger.log(
+        `Could not create userExercise. ${err} ${JSON.stringify(
+          createUserExerciseDto
+        )}`
+      );
     }
   }
 

@@ -7,6 +7,7 @@ import {
 } from './exercise.model';
 export * from './field.model';
 import { InfoElement } from './info.model';
+import { UserExercise } from './user-exercise.model';
 import { User, AppUser, UserRole } from './user.model';
 
 export {
@@ -18,5 +19,6 @@ export {
   ExerciseFormFieldRange,
   InfoElement,
   User,
+  UserExercise,
   UserRole,
 };

@@ -9,6 +9,7 @@ import { throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import * as dayjs from 'dayjs';
 import { environment } from '../../environments/environment';
+import jwt_decode from 'jwt-decode';
 
 import { User } from './user.model';
 
@@ -95,9 +96,12 @@ export class AuthService {
       return;
     }
 
+    const tokenData = this.getDecodedAccessToken(userData._token);
+
     const loadedUser = new User(
       userData._token,
-      new Date(userData._tokenExpirationDate)
+      new Date(userData._tokenExpirationDate),
+      tokenData.sub.id
     );
 
     if (loadedUser.token) {
@@ -106,6 +110,14 @@ export class AuthService {
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
       this.autoLogout(expirationDuration);
+    }
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (error) {
+      return null;
     }
   }
 
@@ -142,7 +154,8 @@ export class AuthService {
    */
   private handleAuthentication(token: string, expiresIn: string) {
     const expirationDate = this.getExpirationDuration(expiresIn);
-    const user = new User(token, expirationDate);
+    const userId = this.getDecodedAccessToken(token).sub.id;
+    const user = new User(token, expirationDate, userId);
     this.user.next(user);
     this.autoLogout(dayjs(expirationDate).unix());
     localStorage.setItem('userData', JSON.stringify(user));

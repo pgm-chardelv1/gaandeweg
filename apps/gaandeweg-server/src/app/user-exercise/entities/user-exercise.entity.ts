@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { promisify } from 'util';
 import { User } from '../../app.entities';
+import * as dotenv from 'dotenv';
 
 @Entity('user_exercise')
 export class UserExercise {
@@ -19,7 +20,7 @@ export class UserExercise {
     onUpdate: 'CASCADE',
     orphanedRowAction: 'nullify',
   })
-  user: User;
+  user?: User;
 
   @Column('varchar', { length: 45 })
   exerciseName: string;
@@ -32,13 +33,12 @@ export class UserExercise {
 
   @Column('varchar')
   userId: string;
-  static userId: string;
 
   @BeforeInsert()
   async encryptData() {
     const iv = randomBytes(16);
     const key = (await promisify(scrypt)(
-      this.user.password,
+      `${process.env.ENC_SECRET}`,
       'salt',
       32
     )) as Buffer;

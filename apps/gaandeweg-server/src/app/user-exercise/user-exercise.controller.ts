@@ -11,7 +11,7 @@ import { CreateUserExerciseDto } from './dto/create-user-exercise.dto';
 import { UpdateUserExerciseDto } from './dto/update-user-exercise.dto';
 import { UserExerciseService } from './user-exercise.service';
 
-@Controller('user-exercise')
+@Controller('userExercise')
 export class UserExerciseController {
   constructor(private readonly userExerciseService: UserExerciseService) {}
 

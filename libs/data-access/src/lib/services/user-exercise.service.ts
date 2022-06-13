@@ -16,7 +16,7 @@ export class UserExerciseService {
    */
   getUserExercises(): Observable<UserExercise[]> {
     return this.http.get<UserExercise[]>(
-      `${environment.API_BASEURL}/user-exercise`
+      `${environment.API_BASEURL}/userExercise`
     );
   }
 
@@ -27,7 +27,7 @@ export class UserExerciseService {
    */
   getUserExercise(id: number): Observable<UserExercise> {
     return this.http.get<UserExercise>(
-      `${environment.API_BASEURL}/user-exercise/${id}`
+      `${environment.API_BASEURL}/userExercise/${id}`
     );
   }
 
@@ -42,7 +42,7 @@ export class UserExerciseService {
     userExercise: UserExercise
   ): Observable<UserExercise> {
     return this.http.patch<UserExercise>(
-      `${environment.API_BASEURL}/user-exercise/${id}`,
+      `${environment.API_BASEURL}/userExercise/${id}`,
       userExercise
     );
   }
@@ -54,7 +54,7 @@ export class UserExerciseService {
    */
   createUserExercise(userExercise: UserExercise): Observable<UserExercise> {
     return this.http.post<UserExercise>(
-      `${environment.API_BASEURL}/user-exercise`,
+      `${environment.API_BASEURL}/userExercise`,
       userExercise
     );
   }
@@ -66,7 +66,7 @@ export class UserExerciseService {
    */
   deleteUserExercise(id: number): Observable<UserExercise> {
     return this.http.delete<UserExercise>(
-      `${environment.API_BASEURL}/user-exercise/${id}`
+      `${environment.API_BASEURL}/userExercise/${id}`
     );
   }
 }

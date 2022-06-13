@@ -7,6 +7,7 @@ import { AuthResponseData, AuthService } from './auth.service';
 @Component({
   selector: 'gaandeweg-ws-auth',
   templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.scss'],
 })
 /**
  * The AuthComponent class.
