@@ -8,16 +8,9 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  Exercise,
-  ExerciseFormFieldRadioTemplate,
-  ExerciseFormFieldRangeTemplate,
-  ExerciseFormFieldSelectTemplate,
-  ExerciseFormFieldTemplate,
-  ExerciseFormService,
-  ExerciseService,
-} from '@gaandeweg-ws/data-access';
+import { Exercise, ExerciseService } from '@gaandeweg-ws/data-access';
 import { firstValueFrom } from 'rxjs';
+import { ExerciseFormFieldTemplate } from './field.model';
 
 @Component({
   selector: 'gaandeweg-ws-exercise-template-form-component',
@@ -63,6 +56,42 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
             fieldValue: 'value',
             fieldLabel: 'label',
           },
+          {
+            fieldValue: 'value',
+            fieldLabel: 'label',
+          },
+          {
+            fieldValue: 'value',
+            fieldLabel: 'label',
+          },
+          {
+            fieldValue: 'value',
+            fieldLabel: 'label',
+          },
+          {
+            fieldValue: 'value',
+            fieldLabel: 'label',
+          },
+          {
+            fieldValue: 'value',
+            fieldLabel: 'label',
+          },
+          {
+            fieldValue: 'value',
+            fieldLabel: 'label',
+          },
+          {
+            fieldValue: 'value',
+            fieldLabel: 'label',
+          },
+          {
+            fieldValue: 'value',
+            fieldLabel: 'label',
+          },
+          {
+            fieldValue: 'value',
+            fieldLabel: 'label',
+          },
         ],
       },
     ],
@@ -72,7 +101,6 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
   constructor(
     public formBuilder: FormBuilder,
     private exerciseService: ExerciseService,
-    private exerciseFormService: ExerciseFormService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -93,7 +121,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
       );
       this.data = JSON.parse(this.exercise.template);
       this.setFields(JSON.parse(this.exercise.template));
-      console.log(this.exerciseTemplateForm.controls);
+      console.log(this.data);
     }
   }
 
@@ -105,6 +133,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
       );
       this.data = JSON.parse(this.exercise.template);
       this.setFields(JSON.parse(this.exercise.template));
+      console.log(this.exerciseTemplateForm);
     }
   }
 
@@ -116,13 +145,13 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
     return this.exerciseTemplateForm.controls['fields'] as FormArray;
   }
 
-  addField() {
+  addField(field: ExerciseFormFieldTemplate) {
     const fieldForm = this.formBuilder.group({
-      fieldId: [0, Validators.required],
-      fieldType: ['', Validators.required],
-      fieldName: ['', Validators.required],
-      fieldText: ['', Validators.required],
-      fieldInfo: [''],
+      fieldId: [field.fieldId, Validators.required],
+      fieldType: [field.fieldType, Validators.required],
+      fieldName: [field.fieldName, Validators.required],
+      fieldText: [field.fieldText, Validators.required],
+      fieldInfo: [field.fieldInfo],
       fieldOptions: this.formBuilder.group({
         min: [0],
         max: [0],
@@ -174,12 +203,24 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
     icons.removeAt(iconIndex);
   }
 
-  setFields(data: { fields: [] }) {
+  setFields(data: { fields: ExerciseFormFieldTemplate[] }) {
     this.exerciseTemplateForm = this.formBuilder.group({
       fields: this.formBuilder.array([]),
     });
     const control = <FormArray>this.exerciseTemplateForm.controls['fields'];
     data.fields.forEach((field) => {
+      if (field.fieldType === 'RADIO' || field.fieldType === 'SELECT') {
+        const fieldValues = this.formBuilder.array([]);
+        field.fieldValues?.forEach((value) => {
+          console.log(value);
+          fieldValues.push(
+            this.formBuilder.group({
+              fieldValue: [value.fieldValue],
+              fieldLabel: [value.fieldLabel],
+            })
+          );
+        });
+      }
       control.push(this.formBuilder.group(field));
     });
   }
@@ -195,8 +236,27 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
     const control = this.fields.controls[index];
     const fieldValues = control.get('fieldValues') as FormArray;
     const field = this.data.fields[index];
+    fieldValues.patchValue(field.fieldValues);
+    /* const fields = this.exerciseTemplateForm.get('fields') as FormArray;
+
+    fields.controls.forEach((f, i) => {
+      const control = f.get('fieldValues') as FormArray;
+      const values = this.data.fields[i].fieldValues;
+      values.forEach((v) => {
+        console.log(v);
+        control.push(this.formBuilder.group(v));
+      });
+      console.log(control);
+    }); */
+  }
+
+  /* const field = this.data.fields[index];
     field.fieldValues.forEach((value) => {
       fieldValues.push(this.formBuilder.group(value));
-    });
+    }); */
+
+  get fieldValues() {
+    const fields = this.exerciseTemplateForm.get('fields') as FormArray;
+    return fields.controls.forEach((f) => f.get('fieldValues') as FormArray);
   }
 }

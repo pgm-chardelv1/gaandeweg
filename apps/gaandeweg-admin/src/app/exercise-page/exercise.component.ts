@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
   Exercise,
-  ExerciseFormService,
   ExerciseService,
   LoggingService,
 } from '@gaandeweg-ws/data-access';
@@ -11,7 +10,7 @@ import { firstValueFrom } from 'rxjs';
   selector: 'gaandeweg-ws-exercise-page-component',
   templateUrl: './exercise.page.html',
   styleUrls: ['./exercise.page.scss'],
-  providers: [ExerciseService, ExerciseFormService, LoggingService],
+  providers: [ExerciseService, LoggingService],
 })
 export class ExercisePage implements OnInit {
   isLoading = true;
@@ -20,7 +19,6 @@ export class ExercisePage implements OnInit {
 
   constructor(
     private exerciseService: ExerciseService,
-    private exerciseFormService: ExerciseFormService,
     private logger: LoggingService
   ) {}
 

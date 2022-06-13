@@ -13,7 +13,7 @@ import { Category } from './';
  * @property {Category} category - The category the exercise belongs to.
  */
 export interface Exercise {
-  id: number | null;
+  id: number;
   version: string;
   categoryId: number;
   name: string;

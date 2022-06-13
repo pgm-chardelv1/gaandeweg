@@ -19,13 +19,13 @@ import { firstValueFrom, Subscription } from 'rxjs';
 })
 export class ExerciseFormComponent implements OnDestroy, OnInit {
   @Input() exerciseId = 1;
-  id: number | null = null;
+  id = 0;
   exerciseSub = new Subscription();
   categories: Category[] = [];
   isLoading = true;
   editMode = false;
   exercise: Exercise = {
-    id: null,
+    id: 0,
     version: '1',
     categoryId: 1,
     name: '',

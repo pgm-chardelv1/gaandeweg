@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { Exercise, ExerciseForm } from '../models';
+import { ExerciseOption, RangeLabel } from '../models/exercise.model';
 import {
   ExerciseFormFieldDefaultTemplate,
   ExerciseFormFieldRadioTemplate,
@@ -201,7 +202,7 @@ export class ExerciseFormService {
     field: ExerciseFormFieldSelectTemplate | ExerciseFormFieldRadioTemplate,
     formGroup: FormGroup
   ) {
-    field.fieldValues.forEach((v, i) => {
+    field.fieldValues.forEach((v: ExerciseOption, i: number) => {
       formGroup.registerControl(
         `value_${i}_${field.fieldId}`,
         new FormControl('', [

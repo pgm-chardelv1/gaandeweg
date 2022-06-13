@@ -7,6 +7,7 @@ import {
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
 import { Category, Exercise, InfoElement, Profile } from '../app.entities';
+import { UserExercise } from '../user-exercise/entities/user-exercise.entity';
 import { User, UserRole } from '../user/entities/user.entity';
 
 export enum Action {
@@ -21,6 +22,7 @@ export type Subjects =
   | InferSubjects<
       | typeof User
       | typeof Exercise
+      | typeof UserExercise
       | typeof InfoElement
       | typeof Category
       | typeof Profile

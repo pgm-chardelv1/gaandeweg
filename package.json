@@ -89,6 +89,7 @@
     "jwt-decode": "^3.1.2",
     "mdb-ui-kit": "^4.1.0",
     "mysql": "^2.18.1",
+    "nest-casl": "^1.6.9",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

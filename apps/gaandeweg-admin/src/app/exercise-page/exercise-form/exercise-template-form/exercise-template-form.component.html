@@ -33,7 +33,10 @@
             </div>
 
             <div class="form-group mb-2" *ngIf="(field.get('fieldType')?.value === 'RANGE' || field.get('fieldType')?.value === 'RADIO') && field.get('fieldValues')">
-                Dit is een radio of range veld met veldwaarden
+
+                    <!-- <div *ngFor="let value of fieldValues.controls; let j=index">
+                    </div>  -->
+
             </div>
 
            <!--  <div class="form-group mb-2" *ngIf="field.fieldType === 'RADIO'" (click)="getFormInfo()">
