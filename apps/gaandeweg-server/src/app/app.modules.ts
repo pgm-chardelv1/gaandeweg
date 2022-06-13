@@ -4,6 +4,7 @@ import { ExerciseModule } from './exercise/exercise.module';
 import { InfoElementModule } from './info-element/info-element.module';
 import { ProfileModule } from './profile/profile.module';
 import { SeederModule } from './seeder/seeder.module';
+import { UserExerciseModule } from './user-exercise/user-exercise.module';
 import { UserModule } from './user/user.module';
 
 /**
@@ -17,5 +18,6 @@ export {
   InfoElementModule,
   ProfileModule,
   SeederModule,
+  UserExerciseModule,
   UserModule,
 };

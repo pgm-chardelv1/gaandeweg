@@ -18,9 +18,16 @@ export class AuthService {
   ) {}
 
   login(user: User) {
-    const payload = { email: user.email, sub: user.id };
+    const payload = {
+      email: user.email,
+      sub: {
+        id: user.id,
+        type: user.type,
+      },
+      expiresIn: '1d',
+    };
     const jwt = this.jwtService.sign(payload);
-    return jwt;
+    return { token: jwt, expiresIn: payload.expiresIn };
   }
 
   async register(registerDto: CreateUserDto) {
@@ -48,6 +55,31 @@ export class AuthService {
       return user;
     } else {
       Logger.log('Password is invalid');
+      return null;
+    }
+  }
+
+  async validateAdmin(email: string, password: string): Promise<User> | null {
+    try {
+      const user: User = await this.validate(email, password);
+      if (user.type <= 1) {
+        Logger.log(
+          `User with email ${email} is not an admin, type: ${user.type}`
+        );
+        return null;
+      } else if (user.type === 2 || user.type === 3) {
+        Logger.log(
+          `Logged in an admin with email ${email}, type: ${user.type}`
+        );
+        return user;
+      } else {
+        Logger.log(
+          `Unexpected user type: ${user.type} for ${email} attempted to login.`
+        );
+        return null;
+      }
+    } catch (err) {
+      Logger.log(`Error validating admin: ${err}`);
       return null;
     }
   }

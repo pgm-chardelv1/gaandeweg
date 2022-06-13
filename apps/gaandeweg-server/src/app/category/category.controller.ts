@@ -35,11 +35,7 @@ export class CategoryController {
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto) {
     const category = await this.categoryService.create(createCategoryDto);
-    return {
-      statusCode: 201,
-      message: 'Category created successfully',
-      category,
-    };
+    return category;
   }
 
   /**
@@ -53,11 +49,7 @@ export class CategoryController {
   @Get()
   async findAll() {
     const categories = await this.categoryService.findAll();
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Categories found successfully',
-      categories,
-    };
+    return categories;
   }
 
   /**
@@ -72,11 +64,7 @@ export class CategoryController {
   @Get(':id')
   async findOne(@Param('id') id: number) {
     const category = await this.categoryService.findOne(+id);
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Category found successfully',
-      category,
-    };
+    return category;
   }
 
   /**
@@ -95,11 +83,7 @@ export class CategoryController {
     @Body() updateCategoryDto: UpdateCategoryDto
   ) {
     const category = await this.categoryService.update(+id, updateCategoryDto);
-    return {
-      statusCode: 204,
-      message: 'Category updated successfully',
-      category,
-    };
+    return category;
   }
 
   /**
@@ -114,10 +98,6 @@ export class CategoryController {
   @Delete(':id')
   async remove(@Param('id') id: number) {
     const category = await this.categoryService.remove(+id);
-    return {
-      statusCode: 204,
-      message: 'Category removed successfully',
-      category,
-    };
+    return category;
   }
 }

@@ -1,4 +1,11 @@
-<h1>{{ title }}</h1>
-<router-outlet></router-outlet>
-<gaandeweg-ws-wysiwyg></gaandeweg-ws-wysiwyg>
-<gaandeweg-ws-info-elements></gaandeweg-ws-info-elements>
+<gaandeweg-ws-header-component></gaandeweg-ws-header-component>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

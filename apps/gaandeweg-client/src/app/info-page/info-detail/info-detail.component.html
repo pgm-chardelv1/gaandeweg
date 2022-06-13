@@ -1,0 +1,11 @@
+<ion-content>
+    <ion-card *ngIf="infoElement">
+        <ion-card-header>
+            <ion-card-title>{{infoElement.name}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <p><strong>{{infoElement.definition}}</strong></p>
+            <p>{{infoElement.text}}</p>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

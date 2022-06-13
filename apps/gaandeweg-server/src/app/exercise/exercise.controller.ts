@@ -7,10 +7,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ExerciseService } from './exercise.service';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 /**
  * Controller for exercise resource
@@ -32,6 +34,7 @@ export class ExerciseController {
    * @memberof ExerciseController
    * @method post
    */
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createExerciseDto: CreateExerciseDto) {
     const exercise = await this.exerciseService.create(createExerciseDto);
@@ -77,6 +80,7 @@ export class ExerciseController {
    * @memberof ExerciseController
    * @method patch
    */
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -95,6 +99,7 @@ export class ExerciseController {
    * @memberof ExerciseController
    * @method delete
    */
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const exercise = await this.exerciseService.remove(+id);

@@ -1,0 +1,26 @@
+<div class="row" *ngIf="category && categoryForm">
+    <form [formGroup]="categoryForm" (submit)="onSubmit()">
+        <div class="col-xs-12">
+            <input type="hidden" formControlName="id" [value]="category.id">
+
+            <div class="form-group mb-2">
+                <label for="name">Naam</label>
+                <input type="text" class="form-control" id="name" formControlName="name" />
+            </div>
+
+            <div class="form-group mb-2">
+                <label for="name">Samenvatting</label>
+                <input type="text" class="form-control" id="summary" formControlName="summary" />
+            </div>
+
+            <div class="form-group mb-2">
+                <label for="name">Beschrijving</label>
+                <input type="text" class="form-control" id="description" formControlName="description" />
+            </div>
+
+            <div class="form-group mb-2">
+                <button type="submit" class="btn btn-secondary">Opslaan</button>
+            </div>
+        </div>
+    </form> 
+</div>

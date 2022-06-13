@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "data-access": "libs/data-access",
     "gaandeweg-admin": "apps/gaandeweg-admin",
     "gaandeweg-admin-e2e": "apps/gaandeweg-admin-e2e",
     "gaandeweg-client": "apps/gaandeweg-client",

@@ -1,0 +1,39 @@
+<gaandeweg-ws-loading-spinner *ngIf="isLoading"></gaandeweg-ws-loading-spinner>
+<nav class="navbar navbar-expand-lg navbar-light bg-white" *ngIf="!isLoading">
+    <div class="container-fluid">
+
+        <a routerLink="/" class="navbar-brand" href="#">
+            <img style="height: 5rem; width: auto;" alt="Brand" src="../../assets/Gaandeweg-trans-square.png" />
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isAuthenticated">
+                <li routerLinkActive="active" class="nav-item">
+                    <a routerLink="/exercise" class="nav-link">Exercises</a>
+                </li>
+                
+                <li routerLinkActive="active" class="nav-item">
+                    <a routerLink="/info-element" class="nav-link">Info Elements</a>
+                </li>
+
+                <li routerLinkActive="active" class="nav-item">
+                    <a routerLink="/category" class="nav-link">Categories</a>
+                </li> 
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li *ngIf="isAuthenticated" class="nav-item">
+                    <a class="nav-link" style="cursor: pointer;" (click)="onLogout()" routerLink="/auth">Logout</a>
+                </li>
+
+                <li class="nav-item" *ngIf="!isAuthenticated">
+                    <a class="nav-link" routerLink="/auth">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

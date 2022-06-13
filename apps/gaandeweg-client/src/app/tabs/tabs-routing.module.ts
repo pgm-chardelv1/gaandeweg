@@ -1,37 +1,44 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthComponent } from '../auth/auth.component';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: 'app',
     component: TabsPage,
     children: [
       {
+        path: 'auth',
+        component: AuthComponent,
+      },
+      {
         path: 'home',
         loadChildren: () =>
-          import('../home/home.module').then((m) => m.HomePageModule),
+          import('../home-page/home.module').then((m) => m.HomePageModule),
       },
       {
-        path: 'practicing',
+        path: 'exercise',
         loadChildren: () =>
-          import('../practicing/practicing.module').then((m) => m.PracticingPageModule),
+          import('../exercise-page/exercise.module').then(
+            (m) => m.ExercisePageModule
+          ),
       },
       {
-        path: 'learning',
+        path: 'info',
         loadChildren: () =>
-          import('../learning/learning.module').then((m) => m.LearningPageModule),
+          import('../info-page/info.module').then((m) => m.InfoPageModule),
       },
       {
         path: '',
-        redirectTo: '/tabs/home',
+        redirectTo: '/app/home',
         pathMatch: 'full',
       },
     ],
   },
   {
     path: '',
-    redirectTo: '/tabs/home',
+    redirectTo: '/app/home',
     pathMatch: 'full',
   },
 ];

@@ -19,8 +19,10 @@
           "apps/gaandeweg-admin/src/favicon.ico",
           "apps/gaandeweg-admin/src/assets"
         ],
-        "styles": ["apps/gaandeweg-admin/src/styles.scss"],
-        "scripts": ["node_modules/@ckeditor/ckeditor5-build-classic/build/translations/nl.js"]
+        "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css","node_modules/@angular/material/prebuilt-themes/indigo-pink.css","apps/gaandeweg-admin/src/styles.scss"],
+        "scripts": [
+          "node_modules/bootstrap/dist/js/bootstrap.min.js", "node_modules/@ckeditor/ckeditor5-build-classic/build/translations/nl.js"
+        ]
       },
       "configurations": {
         "production": {
@@ -89,6 +91,13 @@
       "options": {
         "jestConfig": "apps/gaandeweg-admin/jest.config.js",
         "passWithNoTests": true
+      }
+    },
+    "generate-docs": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx compodoc -p apps/gaandeweg-admin/tsconfig.json -d dist/docs/gaandeweg-admin -n \"Gaandeweg Admin\" -r 80",
+        "color": true
       }
     }
   },

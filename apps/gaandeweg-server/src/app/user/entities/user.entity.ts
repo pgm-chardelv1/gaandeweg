@@ -3,10 +3,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { UserExercise } from '../../user-exercise/entities/user-exercise.entity';
 
 /**
  * A class that represents a user.
@@ -56,6 +58,9 @@ export class User {
    */
   @Column('tinyint')
   type: UserRole;
+
+  @OneToMany(() => UserExercise, (userExercise) => userExercise.user)
+  userExercises: UserExercise[];
 
   /**
    * Hash the password before saving the user.

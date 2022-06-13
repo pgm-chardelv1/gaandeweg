@@ -46,7 +46,7 @@ Thumbs.db
 .vscode/extensions.json
 
 # MySQL Database volume
-data
+/data
 
 # Environment files
 /**/**/.env

@@ -12,10 +12,12 @@ import {
   InfoElementModule,
   ProfileModule,
   SeederModule,
+  UserExerciseModule,
   UserModule,
 } from './app.modules';
 
 import { Category, Exercise, InfoElement, Profile, User } from './app.entities';
+import { UserExercise } from './user-exercise/entities/user-exercise.entity';
 
 /**
  * The main module of the application.
@@ -34,7 +36,14 @@ import { Category, Exercise, InfoElement, Profile, User } from './app.entities';
           username: 'root',
           password: 'root',
           database: 'gaandeweg-dev',
-          entities: [Exercise, InfoElement, Category, Profile, User],
+          entities: [
+            Exercise,
+            InfoElement,
+            Category,
+            Profile,
+            User,
+            UserExercise,
+          ],
           synchronize: true,
           migrations: [__dirname, 'src/migrations'],
           migrationsRun: true,
@@ -48,6 +57,7 @@ import { Category, Exercise, InfoElement, Profile, User } from './app.entities';
     }),
     CategoryModule,
     ExerciseModule,
+    UserExerciseModule,
     UserModule,
     ProfileModule,
     InfoElementModule,

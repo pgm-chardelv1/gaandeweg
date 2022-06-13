@@ -7,10 +7,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 /**
  * Controller for profile resource
@@ -32,14 +34,11 @@ export class ProfileController {
    * @memberof ProfileController
    * @method post
    */
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createProfileDto: CreateProfileDto) {
     const profile = await this.profileService.create(createProfileDto);
-    return {
-      statusCode: 201,
-      message: 'Profile created successfully',
-      profile,
-    };
+    return profile;
   }
 
   /**
@@ -53,11 +52,7 @@ export class ProfileController {
   @Get()
   async findAll() {
     const profiles = await this.profileService.findAll();
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Profiles found successfully',
-      profiles,
-    };
+    return profiles;
   }
 
   /**
@@ -72,11 +67,7 @@ export class ProfileController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const profile = await this.profileService.findOne(id);
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Profile found successfully',
-      profile,
-    };
+    return profile;
   }
 
   /**
@@ -89,17 +80,14 @@ export class ProfileController {
    * @memberof ProfileController
    * @method patch
    */
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(
     @Param('id') id: string,
     @Body() updateProfileDto: UpdateProfileDto
   ) {
     const profile = await this.profileService.update(id, updateProfileDto);
-    return {
-      statusCode: 204,
-      message: 'Profile updated successfully',
-      profile,
-    };
+    return profile;
   }
 
   /**
@@ -111,13 +99,10 @@ export class ProfileController {
    * @memberof ProfileController
    * @method delete
    */
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const profile = await this.profileService.remove(id);
-    return {
-      statusCode: 204,
-      message: 'Profile deleted successfully',
-      profile,
-    };
+    return profile;
   }
 }

@@ -7,10 +7,13 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { AbilityFactory } from '../ability/ability.factory';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 /**
  * Controller for user resource
@@ -21,7 +24,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
  */
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private abilityFactory: AbilityFactory,
+    private readonly userService: UserService
+  ) {}
 
   /**
    * Create a new user.
@@ -35,11 +41,7 @@ export class UserController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.userService.create(createUserDto);
-    return {
-      statusCode: 201,
-      message: 'User created successfully',
-      user,
-    };
+    return user;
   }
 
   /**
@@ -53,11 +55,7 @@ export class UserController {
   @Get()
   async findAll() {
     const users = await this.userService.findAll();
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Users found successfully',
-      users,
-    };
+    return users;
   }
 
   /**
@@ -69,14 +67,12 @@ export class UserController {
    * @memberof UserController
    * @method get
    */
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const user = await this.userService.findOne(id);
     if (user) {
-      return {
-        statusCode: HttpStatus.OK,
-        message: 'User found successfully',
-      };
+      return user;
     } else {
       return {
         statusCode: HttpStatus.NOT_FOUND,
@@ -95,14 +91,11 @@ export class UserController {
    * @memberof UserController
    * @method patch
    */
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     const user = await this.userService.update(id, updateUserDto);
-    return {
-      statusCode: 204,
-      message: 'User updated successfully',
-      user,
-    };
+    return user;
   }
 
   /**
@@ -114,13 +107,10 @@ export class UserController {
    * @memberof UserController
    * @method delete
    */
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const user = await this.userService.remove(id);
-    return {
-      statusCode: 204,
-      message: 'User deleted successfully',
-      user,
-    };
+    return user;
   }
 }
