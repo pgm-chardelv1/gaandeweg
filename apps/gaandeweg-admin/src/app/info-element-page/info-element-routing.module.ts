@@ -10,6 +10,7 @@ const routes: Routes = [
     path: '',
     component: InfoElementPage,
     pathMatch: 'full',
+    redirectTo: '1/edit',
   },
   {
     path: ':id',

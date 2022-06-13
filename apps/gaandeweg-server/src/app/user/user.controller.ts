@@ -7,11 +7,13 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { AbilityFactory } from '../ability/ability.factory';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 /**
  * Controller for user resource
@@ -65,6 +67,7 @@ export class UserController {
    * @memberof UserController
    * @method get
    */
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const user = await this.userService.findOne(id);
@@ -88,6 +91,7 @@ export class UserController {
    * @memberof UserController
    * @method patch
    */
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     const user = await this.userService.update(id, updateUserDto);
@@ -103,6 +107,7 @@ export class UserController {
    * @memberof UserController
    * @method delete
    */
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const user = await this.userService.remove(id);

@@ -6,10 +6,10 @@ export interface InfoElement {
   name: string;
   definition: string;
   text: string;
-  createdAt: Date;
-  updatedAt: Date;
-  published: boolean;
-  publishedAt: Date;
-  publishedById: string;
-  category: Category;
+  createdAt?: Date;
+  updatedAt?: Date;
+  published?: boolean;
+  publishedAt?: Date;
+  publishedById?: string;
+  category?: Category;
 }

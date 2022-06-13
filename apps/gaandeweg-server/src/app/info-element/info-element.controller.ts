@@ -7,10 +7,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { InfoElementService } from './info-element.service';
 import { CreateInfoElementDto } from './dto/create-info-element.dto';
 import { UpdateInfoElementDto } from './dto/update-info-element.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 /**
  * Controller for info element resource.
@@ -31,6 +33,7 @@ export class InfoElementController {
    * @memberof InfoElementController
    * @method post
    */
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createInfoElementDto: CreateInfoElementDto) {
     const infoElement = await this.infoElementService.create(
@@ -78,6 +81,7 @@ export class InfoElementController {
    * @memberof InfoElementController
    * @method patch
    */
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -99,6 +103,7 @@ export class InfoElementController {
    * @memberof InfoElementController
    * @method delete
    */
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const infoElement = await this.infoElementService.remove(+id);

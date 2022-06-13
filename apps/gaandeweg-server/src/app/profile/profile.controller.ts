@@ -7,10 +7,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 /**
  * Controller for profile resource
@@ -32,6 +34,7 @@ export class ProfileController {
    * @memberof ProfileController
    * @method post
    */
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createProfileDto: CreateProfileDto) {
     const profile = await this.profileService.create(createProfileDto);
@@ -77,6 +80,7 @@ export class ProfileController {
    * @memberof ProfileController
    * @method patch
    */
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -95,6 +99,7 @@ export class ProfileController {
    * @memberof ProfileController
    * @method delete
    */
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const profile = await this.profileService.remove(id);
