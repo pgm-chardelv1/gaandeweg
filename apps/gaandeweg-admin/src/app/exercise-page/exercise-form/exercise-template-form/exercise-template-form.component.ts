@@ -221,8 +221,23 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
           );
         });
       }
+      if (field.fieldValues) {
+        field.fieldValues = [];
+        field.fieldValues.forEach((f) =>
+          control.push(
+            this.formBuilder.group({
+              fieldValue: [f.fieldValue],
+              fieldLabel: [f.fieldLabel],
+            })
+          )
+        );
+      }
       control.push(this.formBuilder.group(field));
     });
+  }
+
+  trackByFieldId(index: number, field: ExerciseFormFieldTemplate) {
+    return field.fieldId;
   }
 
   setFieldOptions(index: number) {

@@ -1,6 +1,6 @@
 <form [formGroup]="exerciseTemplateForm" *ngIf="exercise">
     <div formArrayName="fields">
-        <div class="mb-2" *ngFor="let field of fields.controls; let i=index" [formGroupName]="i">
+        <div class="mb-2" *ngFor="let field of fields.controls; let i=index; " [formGroupName]="i">
             <h3>Field {{i+1}}</h3>
             <div class="form-group mb-2" *ngIf="field.get('fieldName')?.value">    
                 <label class="label">Veldnaam</label>
@@ -32,10 +32,22 @@
                 <textarea class="form-control" formControlName="fieldInfo" [value]="field.get('fieldInfo')?.value"></textarea>
             </div>
 
-            <div class="form-group mb-2" *ngIf="(field.get('fieldType')?.value === 'RANGE' || field.get('fieldType')?.value === 'RADIO') && field.get('fieldValues')">
+            <div class="form-group mb-2" *ngIf="field.get('fieldValues') && (field.get('fieldType')?.value === 'SELECT' || field.get('fieldType')?.value === 'RADIO')" formGroupName="fieldValues">
+                <p>Showing values</p>
 
-                    <!-- <div *ngFor="let value of fieldValues.controls; let j=index">
-                    </div>  -->
+<!--                     <div [formArrayName]="field.get('fieldValues')?.value">
+                        <div *ngFor="let value of field.get('fieldValues')?.value; let i=index" [formGroupName]="i">
+                            {{i+1}}. <input type="text" class="form-control" formControlName="value" [value]="value[i].fieldValue" />
+                        </div>  
+                    </div> 
+                    <div class="form-group mb-2" *ngIf="field.get('fieldType')?.value === 'RADIO'" (click)="getFormInfo()">
+                        <label class="label">Opties</label>
+                        <div class="form-group mb-2" *ngFor="let option of field.get('fieldValues')?.value; let i = index">
+                            <label class="label">Waarde</label>
+                            <input type="text" 
+                            class="form-control" placeholder="{{option.fieldLabel}}" [value]="option.fieldLabel" />
+                        </div>
+                    </div> -->
 
             </div>
 
