@@ -32,25 +32,33 @@
                 <textarea class="form-control" formControlName="fieldInfo" [value]="field.get('fieldInfo')?.value"></textarea>
             </div>
 
-            <div class="form-group mb-2" *ngIf="field.get('fieldValues') && (field.get('fieldType')?.value === 'SELECT' || field.get('fieldType')?.value === 'RADIO')" formGroupName="fieldValues">
+            <div class="form-group mb-2" *ngIf="field.get('fieldValues') && (field.get('fieldType')?.value === 'SELECT' || field.get('fieldType')?.value === 'RADIO')" >
                 <p>Showing values</p>
+                <!-- fieldValues is NOT a formArray, but a formGroup, even though it should definitely be an array to work properly -->
 
-<!--                     <div [formArrayName]="field.get('fieldValues')?.value">
-                        <div *ngFor="let value of field.get('fieldValues')?.value; let i=index" [formGroupName]="i">
-                            {{i+1}}. <input type="text" class="form-control" formControlName="value" [value]="value[i].fieldValue" />
-                        </div>  
-                    </div> 
-                    <div class="form-group mb-2" *ngIf="field.get('fieldType')?.value === 'RADIO'" (click)="getFormInfo()">
+                
+                     <div formArrayName="fieldValues">
+                        <select formControlName="types">
+                            <option class="form-group mb-2" *ngFor="let value of field.get('fieldValues')?.value; let j=index; " [formGroupName]="j" [ngValue]="value.fieldValue">
+                               {{value.fieldLabel}}
+                            </option>
+                        </select>
+                        
+                        <!-- <div *ngFor="let value of field.get('fieldValues'); let i=index" [formGroupName]="i">
+                        </div>  -->
+                    </div>
+                    <!-- </div>  -->
+                    <!-- <div class="form-group mb-2" *ngIf="field.get('fieldType')?.value === 'RADIO'" (click)="getFormInfo()">
                         <label class="label">Opties</label>
                         <div class="form-group mb-2" *ngFor="let option of field.get('fieldValues')?.value; let i = index">
                             <label class="label">Waarde</label>
                             <input type="text" 
                             class="form-control" placeholder="{{option.fieldLabel}}" [value]="option.fieldLabel" />
                         </div>
-                    </div> -->
+                    </div> 
 
-            </div>
-
+            </div> -->
+        </div>
            <!--  <div class="form-group mb-2" *ngIf="field.fieldType === 'RADIO'" (click)="getFormInfo()">
                 <label class="label">Opties</label>
                 <div class="form-group mb-2" *ngFor="let option of field.fieldValues; let i = index">

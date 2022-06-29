@@ -121,7 +121,6 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
       );
       this.data = JSON.parse(this.exercise.template);
       this.setFields(JSON.parse(this.exercise.template));
-      console.log(this.data);
     }
   }
 
@@ -132,6 +131,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
         this.exerciseService.getExercise(this.id as number)
       );
       this.data = JSON.parse(this.exercise.template);
+      console.log(this.data);
       this.setFields(JSON.parse(this.exercise.template));
       console.log(this.exerciseTemplateForm);
     }
@@ -207,32 +207,23 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
     this.exerciseTemplateForm = this.formBuilder.group({
       fields: this.formBuilder.array([]),
     });
+    console.log(this.exerciseTemplateForm);
     const control = <FormArray>this.exerciseTemplateForm.controls['fields'];
     data.fields.forEach((field) => {
-      if (field.fieldType === 'RADIO' || field.fieldType === 'SELECT') {
-        const fieldValues = this.formBuilder.array([]);
-        field.fieldValues?.forEach((value) => {
-          console.log(value);
-          fieldValues.push(
-            this.formBuilder.group({
-              fieldValue: [value.fieldValue],
-              fieldLabel: [value.fieldLabel],
-            })
-          );
+      const pgrp: FormGroup = this.formBuilder.group(field);
+      control.push(pgrp);
+     if (field.fieldType === 'RADIO' || field.fieldType === 'SELECT') {
+       
+        const grps = field.fieldValues?.map((f) => {
+          return this.formBuilder.group({
+            fieldValue: [f.fieldValue],
+            fieldLabel: [f.fieldLabel],
+          });
         });
-      }
-      if (field.fieldValues) {
-        field.fieldValues = [];
-        field.fieldValues.forEach((f) =>
-          control.push(
-            this.formBuilder.group({
-              fieldValue: [f.fieldValue],
-              fieldLabel: [f.fieldLabel],
-            })
-          )
-        );
-      }
-      control.push(this.formBuilder.group(field));
+        const arr = this.formBuilder.array(grps as FormGroup[]);
+        console.log(arr);
+        pgrp.setControl('fieldValues', arr)
+      } 
     });
   }
 
