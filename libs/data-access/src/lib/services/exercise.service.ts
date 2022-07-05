@@ -28,16 +28,25 @@ export class ExerciseService {
   }
 
   /**
-   * Update an exercise in the database.
+   * Updates the exercise with the given id.
    * @param {number} id - the id of the exercise to update
    * @param {Exercise} exercise - the exercise to update
-   * @returns {Observable<Exercise>} - the updated exercise
+   * @returns None
    */
-  updateExercise(id: number, exercise: Exercise): Observable<Exercise> {
-    return this.http.patch<Exercise>(
-      `${environment.API_BASEURL}/exercise/${id}`,
-      exercise
-    );
+  updateExercise(id: number, exercise: Exercise) {
+    console.log('ExerciseService.updateExercise', id, exercise);
+    const body = exercise;
+
+    return this.http
+      .patch<Exercise>(`${environment.API_BASEURL}/exercise/${id}`, body)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   /**

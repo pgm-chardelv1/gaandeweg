@@ -1,7 +1,7 @@
 <form [formGroup]="exerciseTemplateForm" *ngIf="exercise">
     <div formArrayName="fields">
-        <div class="mb-2" *ngFor="let field of fields.controls; let i=index; " [formGroupName]="i">
-            <h3>Field {{i+1}}</h3>
+        <div class="mb-4" *ngFor="let field of fields.controls; let i=index; " [formGroupName]="i">
+            <h3>Veld {{i+1}}</h3>
             <div class="form-group mb-2" *ngIf="field.get('fieldName')?.value">    
                 <label class="label">Veldnaam</label>
                 <input class="form-control" formControlName="fieldName" value="{{field.get('fieldName')?.value}}"/>
@@ -33,78 +33,14 @@
             </div>
 
             <div class="form-group mb-2" *ngIf="field.get('fieldValues') && (field.get('fieldType')?.value === 'SELECT' || field.get('fieldType')?.value === 'RADIO')" >
-                <p>Showing values</p>
-                <!-- fieldValues is NOT a formArray, but a formGroup, even though it should definitely be an array to work properly -->
-
-                
-                     <div formArrayName="fieldValues">
-                        <select formControlName="types">
-                            <option class="form-group mb-2" *ngFor="let value of field.get('fieldValues')?.value; let j=index; " [formGroupName]="j" [ngValue]="value.fieldValue">
-                               {{value.fieldLabel}}
-                            </option>
-                        </select>
-                        
-                        <!-- <div *ngFor="let value of field.get('fieldValues'); let i=index" [formGroupName]="i">
-                        </div>  -->
-                    </div>
-                    <!-- </div>  -->
-                    <!-- <div class="form-group mb-2" *ngIf="field.get('fieldType')?.value === 'RADIO'" (click)="getFormInfo()">
-                        <label class="label">Opties</label>
-                        <div class="form-group mb-2" *ngFor="let option of field.get('fieldValues')?.value; let i = index">
-                            <label class="label">Waarde</label>
-                            <input type="text" 
-                            class="form-control" placeholder="{{option.fieldLabel}}" [value]="option.fieldLabel" />
-                        </div>
-                    </div> 
-
-            </div> -->
-        </div>
-           <!--  <div class="form-group mb-2" *ngIf="field.fieldType === 'RADIO'" (click)="getFormInfo()">
-                <label class="label">Opties</label>
-                <div class="form-group mb-2" *ngFor="let option of field.fieldValues; let i = index">
-                    <label class="label">Waarde</label>
-                    <input type="text" 
-                    class="form-control" placeholder="{{option.fieldLabel}}" [value]="option.fieldLabel" />
-                </div>
-            </div>
-           
-            <div class="form-group mb-2" *ngIf="field.fieldType === 'SELECT'" (click)="getFormInfo()">
-                <label class="label">Opties</label>
-                <div class="form-group mb-2" *ngFor="let option of field.fieldValues; let i = index">
-                    <label class="label">Waarde</label>
-                    <input type="text" 
-                    class="form-control" placeholder="{{option.fieldLabel}}" [value]="option.fieldLabel" />
-                </div>
-            </div>
-
-            <div class="form-group mb-2" *ngIf="field.fieldType === 'RANGE'" (click)="getFormInfo()">
-                <label class="label">Min</label>
-                <input type="number" 
-                class="form-control" placeholder="{{field.fieldOptions.min}}" [value]="field.fieldOptions.min" min="0" max="1"/>
-
-                <label class="label">Max</label>
-                <input type="number"
-                class="form-control" placeholder="{{field.fieldOptions.max}}" [value]="field.fieldOptions.max" min="1" max="100"/>
-
-                <label class="label">Step</label>
-                <input type="number" 
-                class="form-control" placeholder="{{field.fieldOptions.step}}" [value]="field.fieldOptions.step" min="1" max="5"/>
-
-                <div class="form-check pt-2">
-                    <input type="checkbox"
-                    class="form-control form-check-input p-1" [checked]="field.fieldOptions.icons[0].icon" [value]="field.fieldOptions.icons[0].icon" />
-                    <label class="form-check-label">Gebruikt icoontjes</label>
-                </div>
-
-                <div class="form-group">
-                    <label class="label">Begin- en eindwaarde</label>
-                    <div class="form-group mb-2" *ngFor="let icon of field.fieldOptions.icons; let i = index">
-                        <label class="label">Waarde</label>
-                        <input type="text" 
-                        class="form-control" placeholder="{{icon.value}}" [value]="icon.value" />
+                <h5>Opties</h5>
+                <div formArrayName="fieldValues">
+                    <div class="form-group mb-2" *ngFor="let value of field.get('fieldValues')?.value; let j=index; " [formGroupName]="j">
+                        <label class="label">{{value.fieldValue}}</label>
+                        <input class="form-control" formControlName="fieldLabel" [value]="value.fieldLabel" />
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 </form>

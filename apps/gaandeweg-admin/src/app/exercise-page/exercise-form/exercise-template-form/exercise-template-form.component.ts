@@ -19,6 +19,7 @@ import { ExerciseFormFieldTemplate } from './field.model';
 })
 export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
   @Input() id: number | null = null;
+  @Input() saveInitiated = false;
   @Output() template = {
     fields: [],
   };
@@ -212,8 +213,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
     data.fields.forEach((field) => {
       const pgrp: FormGroup = this.formBuilder.group(field);
       control.push(pgrp);
-     if (field.fieldType === 'RADIO' || field.fieldType === 'SELECT') {
-       
+      if (field.fieldType === 'RADIO' || field.fieldType === 'SELECT') {
         const grps = field.fieldValues?.map((f) => {
           return this.formBuilder.group({
             fieldValue: [f.fieldValue],
@@ -222,8 +222,8 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
         });
         const arr = this.formBuilder.array(grps as FormGroup[]);
         console.log(arr);
-        pgrp.setControl('fieldValues', arr)
-      } 
+        pgrp.setControl('fieldValues', arr);
+      }
     });
   }
 
@@ -243,23 +243,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
     const fieldValues = control.get('fieldValues') as FormArray;
     const field = this.data.fields[index];
     fieldValues.patchValue(field.fieldValues);
-    /* const fields = this.exerciseTemplateForm.get('fields') as FormArray;
-
-    fields.controls.forEach((f, i) => {
-      const control = f.get('fieldValues') as FormArray;
-      const values = this.data.fields[i].fieldValues;
-      values.forEach((v) => {
-        console.log(v);
-        control.push(this.formBuilder.group(v));
-      });
-      console.log(control);
-    }); */
   }
-
-  /* const field = this.data.fields[index];
-    field.fieldValues.forEach((value) => {
-      fieldValues.push(this.formBuilder.group(value));
-    }); */
 
   get fieldValues() {
     const fields = this.exerciseTemplateForm.get('fields') as FormArray;

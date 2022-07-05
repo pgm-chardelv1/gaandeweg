@@ -12,12 +12,22 @@ export class InfoElementDetailComponent implements OnInit {
   infoElement!: InfoElement;
   id = 0;
 
+  /**
+   * Constructor for the InfoService.
+   * @param {InfoService} infoElementService - The InfoService instance.
+   * @param {ActivatedRoute} route - The ActivatedRoute instance.
+   * @param {Router} router - The Router instance.
+   */
   constructor(
     private infoElementService: InfoService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
+  /**
+   * Initializes the component.
+   * @returns None
+   */
   async ngOnInit(): Promise<void> {
     this.route.params.subscribe(async (params: Params) => {
       this.id = +params['id'];
@@ -27,6 +37,10 @@ export class InfoElementDetailComponent implements OnInit {
     });
   }
 
+  /**
+   * Deletes the info element from the database and navigates the user back to the info element list.
+   * @returns None
+   */
   onDeleteInfoEelement(): void {
     this.infoElementService.deleteInfoElement(this.id).subscribe(() => {
       this.router.navigate(['/info-element']);

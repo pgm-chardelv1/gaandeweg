@@ -66,11 +66,13 @@ export class ExerciseFormComponent implements OnDestroy, OnInit {
     if (this.exerciseForm.valid) {
       const exercise = this.exerciseForm.value;
       if (this.editMode) {
+        console.log('ExerciseFormComponent.onSubmit.update', exercise);
         this.exerciseService.updateExercise(this.id as number, exercise);
       } else {
+        console.log('ExerciseFormComponent.onSubmit.create', exercise);
         this.exerciseService.createExercise(exercise);
       }
-      console.log(exercise);
+      // console.log(exercise);
       this.router.navigate(['/exercise', this.id, 'edit']);
     }
   }

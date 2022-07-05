@@ -1,9 +1,11 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -11,6 +13,8 @@ import { InfoElement } from '@gaandeweg-ws/data-access';
 import { firstValueFrom } from 'rxjs';
 import { InfoService, LoggingService } from '@gaandeweg-ws/data-access';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
+import { WysiwygComponent } from '../../shared/wysiwyg/wysiwyg.component';
 
 @Component({
   selector: 'gaandeweg-ws-info-element-form-component',
@@ -21,6 +25,8 @@ export class InfoElementFormComponent implements OnChanges, OnInit {
   @Input() infoId!: number;
   id = 0;
   @Input() dataChanged!: string;
+  @ViewChild(WysiwygComponent) wysiwyg!: WysiwygComponent;
+  editMode = false;
   infoElement!: InfoElement;
   infoElementForm!: FormGroup;
   infoElementFormErrors!: { [key: string]: string };
@@ -55,14 +61,43 @@ export class InfoElementFormComponent implements OnChanges, OnInit {
   }
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    console.log(changes, this.dataChanged);
     this.infoElementForm.patchValue(this.infoElement);
-  }
-
-  async dataChangedHandler(dataChanged: string): Promise<void> {
     this.infoElementForm.patchValue({ text: this.dataChanged });
   }
 
+  async dataChangedHandler(dataChanged: string): Promise<void> {
+    console.log('InfoElementFormComponent.dataChangedHandler', dataChanged);
+    console.log(
+      'InfoElementFormComponent.dataChangedHandler',
+      this.dataChanged
+    );
+    this.infoElementForm.patchValue({ text: this.dataChanged });
+    console.log(this.infoElementForm.value);
+  }
+
   async onSubmit(): Promise<void> {
-    this.logger.log('admin', this.infoElementForm.value);
+    console.log(this.wysiwyg?.data);
+    // console.log(this.dataChanged);
+    this.infoElementFormSubmitted = true;
+    this.infoElementFormValid = this.infoElementForm.valid;
+    if (this.infoElementForm.valid) {
+      const infoElement = this.infoElementForm.value;
+      if (this.editMode) {
+        console.log('InfoElementFormComponent.onSubmit.update', infoElement);
+        this.infoElementService.updateInfoElement(this.id as number, {
+          text: this.dataChanged,
+          ...infoElement,
+        });
+      } else {
+        console.log('InfoElementFormComponent.onSubmit.create', infoElement);
+        this.infoElementService.createInfoElement(infoElement);
+      }
+      // console.log(infoElement);
+      console.log(
+        'InfoElementFormComponent.onSubmit',
+        this.infoElementForm.value
+      );
+    }
   }
 }
