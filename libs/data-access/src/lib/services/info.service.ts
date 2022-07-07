@@ -37,14 +37,20 @@ export class InfoService {
    * @param {InfoElement} infoElement - the object that contains the updated info element
    * @returns {Observable<InfoElement>} - the updated info element
    */
-  updateInfoElement(
-    id: number,
-    infoElement: InfoElement
-  ): Observable<InfoElement> {
-    return this.http.patch<InfoElement>(
-      `${environment.API_BASEURL}/info-element/${id}`,
-      infoElement
-    );
+  updateInfoElement(id: number, infoElement: InfoElement) {
+    return this.http
+      .patch<InfoElement>(
+        `${environment.API_BASEURL}/info-element/${id}`,
+        infoElement
+      )
+      .subscribe({
+        next: (data) => {
+          return data;
+        },
+        error: (err) => {
+          return err;
+        },
+      });
   }
 
   /**

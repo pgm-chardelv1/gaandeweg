@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import {
   ExerciseService,
 } from '@gaandeweg-ws/data-access';
 import { firstValueFrom, Subscription } from 'rxjs';
+import { ExerciseTemplateFormComponent } from './exercise-template-form/exercise-template-form.component';
 
 @Component({
   selector: 'gaandeweg-ws-exercise-form-component',
@@ -19,6 +20,8 @@ import { firstValueFrom, Subscription } from 'rxjs';
 })
 export class ExerciseFormComponent implements OnDestroy, OnInit {
   @Input() exerciseId = 1;
+  @ViewChild(ExerciseTemplateFormComponent)
+  exerciseTemplateForm!: ExerciseTemplateFormComponent;
   id = 0;
   exerciseSub = new Subscription();
   categories: Category[] = [];
@@ -61,6 +64,9 @@ export class ExerciseFormComponent implements OnDestroy, OnInit {
   }
 
   async onSubmit(): Promise<void> {
+    const templateString =
+      this.exerciseTemplateForm?.exerciseTemplateForm?.value;
+    this.exerciseForm.patchValue({ template: JSON.stringify(templateString) });
     this.exerciseFormSubmitted = true;
     this.exerciseFormValid = this.exerciseForm.valid;
     if (this.exerciseForm.valid) {
