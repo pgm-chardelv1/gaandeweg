@@ -13,6 +13,11 @@ const routes: Routes = [
         component: AuthComponent,
       },
       {
+        path: 'info',
+        loadChildren: () =>
+          import('../info-page/info.module').then((m) => m.InfoPageModule),
+      },
+      {
         path: 'home',
         loadChildren: () =>
           import('../home-page/home.module').then((m) => m.HomePageModule),
@@ -25,14 +30,8 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'info',
-        loadChildren: () =>
-          import('../info-page/info.module').then((m) => m.InfoPageModule),
-      },
-      {
         path: '',
         redirectTo: '/app/home',
-        pathMatch: 'full',
       },
     ],
   },

@@ -127,7 +127,7 @@ export class AuthService {
    */
   logout() {
     this.user.next({} as User);
-    this.router.navigate(['/auth']);
+    this.router.navigate(['/app/auth']);
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
@@ -173,7 +173,7 @@ export class AuthService {
     }
     switch (errorRes.error.error.message) {
       case 'EMAIL_EXISTS':
-        errorMessage = 'Dit email adres bestaat al.';
+        errorMessage = 'Dit email adres bestaat reeds.';
         break;
       case 'EMAIL_NOT_FOUND':
         errorMessage = 'Onjuist email adres.';

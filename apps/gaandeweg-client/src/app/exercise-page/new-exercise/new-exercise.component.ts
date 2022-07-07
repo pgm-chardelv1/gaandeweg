@@ -180,12 +180,9 @@ export class NewExerciseComponent implements OnChanges, OnInit {
   }
 
   async onSubmit(): Promise<boolean> {
-    console.log('Form:', this.myGroup.value);
-
     this.isSubmitted = true;
 
     if (!this.myGroup.valid) {
-      console.log(this.myGroup.controls);
       console.log('Please provide all the required values!');
       return false;
     } else {

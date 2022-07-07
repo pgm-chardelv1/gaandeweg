@@ -6,11 +6,13 @@ import { InfoPage } from './info.page';
 
 import { InfoPageRoutingModule } from './info-routing.module';
 import { InfoDetailComponentModule } from './info-detail/info-detail.module';
+import { HeaderModule } from '../header/header.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    HeaderModule,
     IonicModule,
     InfoDetailComponentModule,
     InfoPageRoutingModule,

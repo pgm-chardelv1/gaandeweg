@@ -1,16 +1,6 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Oefenen</ion-title>
-  </ion-toolbar>
-</ion-header>
+<gaandeweg-ws-header pageTitle="Gaandeweg Oefeningen"></gaandeweg-ws-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Oefenen</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <!-- Search by Exercise name -->
   <ion-searchbar class="searchIcon" [formControl]="searchKey"  (ionChange)="search()" debounce="100" (ionCancel)="resetChanges()" placeholder="Zoek"></ion-searchbar>
 

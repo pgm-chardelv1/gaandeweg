@@ -32,5 +32,6 @@ import { LoggingService } from '@gaandeweg-ws/data-access';
     LoggingService,
   ],
   bootstrap: [AppComponent],
+  exports: [AuthComponent],
 })
 export class AppModule {}
