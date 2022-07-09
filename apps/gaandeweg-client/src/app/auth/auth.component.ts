@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthResponseData, AuthService } from './auth.service';
+import { createPasswordStrengthValidator } from '@gaandeweg-ws/data-access';
 
 @Component({
   selector: 'gaandeweg-ws-auth',
@@ -33,7 +34,14 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(5)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          createPasswordStrengthValidator(),
+        ],
+      ],
     });
   }
 

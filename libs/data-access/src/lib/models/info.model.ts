@@ -12,4 +12,5 @@ export interface InfoElement {
   publishedAt?: Date;
   publishedById?: string;
   category?: Category;
+  categoryId?: number;
 }

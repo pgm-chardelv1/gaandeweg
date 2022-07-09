@@ -36,6 +36,9 @@ export class InfoElement {
   @Column({ type: 'longtext' })
   text: string;
 
+  @Column({ type: 'int' })
+  categoryId: number;
+
   @CreateDateColumn()
   createdAt: Date;
 

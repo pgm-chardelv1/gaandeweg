@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-xs-12">
+        <button class="btn btn-success" (click)="onNewInfoElement()">
+            <i class="fa fa-plus"></i>
+            Nieuw informatie element
+        </button>
+    </div>
+
+    <div class="col-xs-12" *ngIf="infoElements">
+        <ul class="list-group ps-0">
+            <li class="list-group-item" *ngFor="let infoElement of infoElements" >
+                <a [routerLink]="['/info-element', infoElement.id, 'edit']" routerLinkActive="bg-light">{{infoElement.name}}</a>
+            </li>
+        </ul>
+    </div>
+</div>

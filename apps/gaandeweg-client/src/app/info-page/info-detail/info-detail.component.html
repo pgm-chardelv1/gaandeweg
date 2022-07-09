@@ -5,7 +5,7 @@
         </ion-card-header>
         <ion-card-content>
             <p><strong>{{infoElement.definition}}</strong></p>
-            <p>{{infoElement.text}}</p>
+            <p [trustHtml]="infoElement.text">{{infoElement.text}}</p>
         </ion-card-content>
     </ion-card>
 </ion-content>

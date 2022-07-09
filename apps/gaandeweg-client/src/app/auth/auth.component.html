@@ -6,7 +6,7 @@
   </ion-header>
 
     <ion-card class="login-form">
-      <div class="alert alert-danger" *ngIf="error">
+      <div class="alert alert-danger" *ngIf="error !== null">
         <p>{{ error }}</p>
       </div>
       <div *ngIf="isLoading" style="text-align: center;">
@@ -34,8 +34,27 @@
             formControlName="password"
             autocomplete="current-password"
             required
-            minlength="5"
+            minlength="8"
+            passwordStrength
           ></ion-input>
+
+          <div class="field-message" *ngIf="loginForm.get('password')?.hasError('passwordStrength')">
+            <p>
+              Wachtwoord moet een kleine letter, een hoofdletter, een cijfer en een speciaal teken bevatten.
+            </p>
+          </div>
+
+          <div class="field-message" *ngIf="loginForm.get('password')?.hasError('minlength')">
+            <p>
+              Wachtwoord moet minimaal 8 karakters bevatten.
+            </p>
+          </div>
+
+          <div class="field-message" *ngIf="loginForm.get('password')?.hasError('required')">
+            <p>
+              Wachtwoord is verplicht.
+            </p>
+          </div>
         </div>
         <div>
           <ion-button color="primary"

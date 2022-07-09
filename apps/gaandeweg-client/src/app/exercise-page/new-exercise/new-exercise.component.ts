@@ -171,6 +171,17 @@ export class NewExerciseComponent implements OnChanges, OnInit {
           ])
         )
       );
+    } else if (field.fieldType === 'TIME') {
+      this.myGroup.registerControl(
+        field.fieldName,
+        new FormControl(
+          null,
+          Validators.compose([
+            Validators.required,
+            Validators.pattern(/^[0-9]{2}:[0-9]{2}$/),
+          ])
+        )
+      );
     } else {
       this.myGroup.registerControl(
         field.fieldName,

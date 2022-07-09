@@ -58,11 +58,17 @@ export class InfoService {
    * @param {InfoElement} infoElement - the object that contains the new info element
    * @returns {Observable<InfoElement>} - the created info element
    */
-  createInfoElement(infoElement: InfoElement): Observable<InfoElement> {
-    return this.http.post<InfoElement>(
-      `${environment.API_BASEURL}/info-element`,
-      infoElement
-    );
+  createInfoElement(infoElement: InfoElement) {
+    return this.http
+      .post<InfoElement>(`${environment.API_BASEURL}/info-element`, infoElement)
+      .subscribe({
+        next: (data) => {
+          return data;
+        },
+        error: (err) => {
+          console.error(err.message);
+        },
+      });
   }
 
   /**
