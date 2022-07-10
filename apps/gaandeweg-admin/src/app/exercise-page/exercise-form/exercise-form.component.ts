@@ -11,6 +11,8 @@ import {
 } from '@gaandeweg-ws/data-access';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { ExerciseTemplateFormComponent } from './exercise-template-form/exercise-template-form.component';
+import jwtDecode from 'jwt-decode';
+import { User } from '../../auth/user.model';
 
 @Component({
   selector: 'gaandeweg-ws-exercise-form-component',
@@ -74,12 +76,32 @@ export class ExerciseFormComponent implements OnDestroy, OnInit {
       if (this.editMode) {
         console.log('ExerciseFormComponent.onSubmit.update', exercise);
         this.exerciseService.updateExercise(this.id as number, exercise);
+        this.router.navigate(['/exercise', this.id, 'edit']);
       } else {
         console.log('ExerciseFormComponent.onSubmit.create', exercise);
-        this.exerciseService.createExercise(exercise);
+        const uData = JSON.parse(localStorage.getItem('userData') as string);
+        const uId: {
+          email: string;
+          sub: {
+            id: string;
+          };
+        } = jwtDecode(uData._token as string);
+        console.log(uId.sub.id);
+        if (uData as User) {
+          exercise.publishedById = uData.id;
+          console.log(
+            'ExerciseFormComponent.onSubmit.create.uId',
+            jwtDecode(uData._token as string)
+          );
+        }
+        this.exerciseService.createExercise({
+          ...exercise,
+          template: JSON.stringify(templateString),
+          published: true,
+          publishedBy: uId.sub.id,
+        });
+        this.router.navigate(['/exercise']);
       }
-      // console.log(exercise);
-      this.router.navigate(['/exercise', this.id, 'edit']);
     }
   }
 

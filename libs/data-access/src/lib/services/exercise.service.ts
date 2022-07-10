@@ -54,11 +54,17 @@ export class ExerciseService {
    * @param {Exercise} exercise - the exercise to create
    * @returns {Observable<Exercise>} - the created exercise
    */
-  createExercise(exercise: Exercise): Observable<Exercise> {
-    return this.http.post<Exercise>(
-      `${environment.API_BASEURL}/exercise`,
-      exercise
-    );
+  createExercise(exercise: Exercise) {
+    return this.http
+      .post<Exercise>(`${environment.API_BASEURL}/exercise`, exercise)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   /**

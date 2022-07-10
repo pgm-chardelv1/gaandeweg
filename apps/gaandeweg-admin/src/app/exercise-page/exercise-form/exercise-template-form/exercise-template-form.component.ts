@@ -8,7 +8,12 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Exercise, ExerciseService } from '@gaandeweg-ws/data-access';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+  Exercise,
+  ExerciseService,
+  LoggingService,
+} from '@gaandeweg-ws/data-access';
 import { firstValueFrom } from 'rxjs';
 import { ExerciseFormFieldTemplate } from './field.model';
 
@@ -23,6 +28,8 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
   @Output() template = {
     fields: [],
   };
+  faPlus = faPlus;
+  faTrash = faTrash;
   isLoading = true;
   exercise!: Exercise;
   exerciseTemplateForm: FormGroup;
@@ -81,18 +88,6 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
             fieldValue: 'value',
             fieldLabel: 'label',
           },
-          {
-            fieldValue: 'value',
-            fieldLabel: 'label',
-          },
-          {
-            fieldValue: 'value',
-            fieldLabel: 'label',
-          },
-          {
-            fieldValue: 'value',
-            fieldLabel: 'label',
-          },
         ],
       },
     ],
@@ -102,6 +97,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
   constructor(
     public formBuilder: FormBuilder,
     private exerciseService: ExerciseService,
+    private logger: LoggingService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -132,27 +128,29 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
         this.exerciseService.getExercise(this.id as number)
       );
       this.data = JSON.parse(this.exercise.template);
-      console.log(this.data);
       this.setFields(JSON.parse(this.exercise.template));
-      console.log(this.exerciseTemplateForm);
     }
   }
 
   getFormInfo() {
-    console.log(this.exerciseTemplateForm.controls);
+    this.logger.log(
+      'admin',
+      JSON.stringify(this.exerciseTemplateForm.controls)
+    );
   }
 
   get fields() {
     return this.exerciseTemplateForm.controls['fields'] as FormArray;
   }
 
-  addField(field: ExerciseFormFieldTemplate) {
+  addField() {
+    const fields = this.exerciseTemplateForm.get('fields') as FormArray;
     const fieldForm = this.formBuilder.group({
-      fieldId: [field.fieldId, Validators.required],
-      fieldType: [field.fieldType, Validators.required],
-      fieldName: [field.fieldName, Validators.required],
-      fieldText: [field.fieldText, Validators.required],
-      fieldInfo: [field.fieldInfo],
+      fieldId: [fields.length + 1, Validators.required],
+      fieldType: ['fieldType', Validators.required],
+      fieldName: ['fieldName', Validators.required],
+      fieldText: ['fieldText', Validators.required],
+      fieldInfo: ['fieldInfo'],
       fieldOptions: this.formBuilder.group({
         min: [0],
         max: [0],
@@ -165,7 +163,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
     this.fields.push(fieldForm);
   }
 
-  removeField(index: number) {
+  onDeleteField(index: number) {
     this.fields.removeAt(index);
   }
 
@@ -208,21 +206,22 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
     this.exerciseTemplateForm = this.formBuilder.group({
       fields: this.formBuilder.array([]),
     });
-    console.log(this.exerciseTemplateForm);
     const control = <FormArray>this.exerciseTemplateForm.controls['fields'];
+
     data.fields.forEach((field) => {
-      const pgrp: FormGroup = this.formBuilder.group(field);
-      control.push(pgrp);
+      const fieldGroup: FormGroup = this.formBuilder.group(field);
+      control.push(fieldGroup);
       if (field.fieldType === 'RADIO' || field.fieldType === 'SELECT') {
-        const grps = field.fieldValues?.map((f) => {
+        const fieldValueGroup = field.fieldValues?.map((f) => {
           return this.formBuilder.group({
             fieldValue: [f.fieldValue],
             fieldLabel: [f.fieldLabel],
           });
         });
-        const arr = this.formBuilder.array(grps as FormGroup[]);
-        console.log(arr);
-        pgrp.setControl('fieldValues', arr);
+        const fieldValueArr = this.formBuilder.array(
+          fieldValueGroup as FormGroup[]
+        );
+        fieldGroup.setControl('fieldValues', fieldValueArr);
       }
     });
   }
@@ -248,5 +247,9 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
   get fieldValues() {
     const fields = this.exerciseTemplateForm.get('fields') as FormArray;
     return fields.controls.forEach((f) => f.get('fieldValues') as FormArray);
+  }
+
+  onAddField() {
+    this.addField();
   }
 }
