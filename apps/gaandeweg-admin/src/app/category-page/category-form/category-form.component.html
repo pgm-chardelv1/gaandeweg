@@ -1,7 +1,7 @@
-<div class="row" *ngIf="category && categoryForm">
+<div class="row" *ngIf="categoryForm">
     <form [formGroup]="categoryForm" (submit)="onSubmit()">
         <div class="col-xs-12">
-            <input type="hidden" formControlName="id" [value]="category.id">
+            <input type="hidden" formControlName="id" [value]="category?.id">
 
             <div class="form-group mb-2">
                 <label for="name">Naam</label>

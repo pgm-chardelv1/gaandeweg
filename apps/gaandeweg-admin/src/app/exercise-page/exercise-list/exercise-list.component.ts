@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Exercise, ExerciseService } from '@gaandeweg-ws/data-access';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+import { Exercise, ExerciseService } from '@gaandeweg-ws/data-access';
 
 @Component({
   selector: 'gaandeweg-ws-exercise-list',
@@ -9,6 +11,8 @@ import { Subscription } from 'rxjs/internal/Subscription';
   styleUrls: ['./exercise-list.component.scss'],
 })
 export class ExerciseListComponent implements OnInit, OnDestroy {
+  faPlus = faPlus;
+  faTrash = faTrash;
   exercises: Exercise[] = [];
   exerciseSub = new Subscription();
 
@@ -32,5 +36,15 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.exerciseSub.unsubscribe();
+  }
+
+  onDeleteExercise(exerciseId: number) {
+    if (confirm('Ben je zeker dat je deze oefening wilt verwijderen?')) {
+      this.exerciseService.deleteExercise(exerciseId).subscribe(() => {
+        this.exercises = this.exercises.filter(
+          (exercise: Exercise) => exercise.id !== exerciseId
+        );
+      });
+    }
   }
 }

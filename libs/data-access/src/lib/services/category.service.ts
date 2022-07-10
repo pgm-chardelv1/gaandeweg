@@ -33,7 +33,7 @@ export class CategoryService {
    * Update a category.
    * @param {number} id - the id of the category to update
    * @param {Category} category - the category to update
-   * @returns {Observable<Category>} - the updated category
+   * @returns
    */
   updateCategory(id: number, category: Category) {
     const body = category;
@@ -52,13 +52,19 @@ export class CategoryService {
   /**
    * Creates a new category.
    * @param {Category} category - the category to create
-   * @returns {Observable<Category>} - the created category
+   * @returns
    */
-  createCategory(category: Category): Observable<Category> {
-    return this.http.post<Category>(
-      `${environment.API_BASEURL}/categories`,
-      category
-    );
+  createCategory(category: Category) {
+    return this.http
+      .post<Category>(`${environment.API_BASEURL}/categories`, category)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
   /**

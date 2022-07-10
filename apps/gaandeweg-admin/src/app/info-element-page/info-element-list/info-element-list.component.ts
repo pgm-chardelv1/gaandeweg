@@ -1,6 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
+  faFloppyDisk,
+  faPlus,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
+import {
   InfoElement,
   InfoService,
   LoggingService,
@@ -13,6 +18,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./info-element-list.component.scss'],
 })
 export class InfoElementListComponent implements OnInit, OnDestroy {
+  faFloppyDisk = faFloppyDisk;
+  faPlus = faPlus;
+  faTrash = faTrash;
   infoElements: InfoElement[] = [];
   infoElementSub = new Subscription();
 
@@ -38,5 +46,15 @@ export class InfoElementListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.infoElementSub.unsubscribe();
+  }
+
+  onDeleteInfoElement(infoElementId: number) {
+    if (confirm('Ben je zeker dat je dit Info Element wilt verwijderen?')) {
+      this.infoService.deleteInfoElement(infoElementId).subscribe(() => {
+        this.infoElements = this.infoElements.filter(
+          (infoElement: InfoElement) => infoElement.id !== infoElementId
+        );
+      });
+    }
   }
 }

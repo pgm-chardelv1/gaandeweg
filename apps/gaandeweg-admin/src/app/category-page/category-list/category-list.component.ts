@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import { Category, CategoryService } from '@gaandeweg-ws/data-access';
 
 @Component({
@@ -11,6 +13,8 @@ import { Category, CategoryService } from '@gaandeweg-ws/data-access';
 export class CategoryListComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
   categorySub = new Subscription();
+  faPlus = faPlus;
+  faTrash = faTrash;
 
   constructor(
     private categoryService: CategoryService,
@@ -32,5 +36,15 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
   onNewCategory() {
     this.router.navigate(['new'], { relativeTo: this.route });
+  }
+
+  onDeleteCategory(categoryId: number) {
+    if (confirm('Ben je zeker dat je deze categorie wilt verwijderen?')) {
+      this.categoryService.deleteCategory(categoryId).subscribe(() => {
+        this.categories = this.categories.filter(
+          (category: Category) => category.id !== categoryId
+        );
+      });
+    }
   }
 }

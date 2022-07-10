@@ -1,14 +1,12 @@
 import {
-  AfterViewInit,
   Component,
   Input,
-  OnDestroy,
   OnInit,
   SimpleChanges,
   ViewChild,
-  ViewChildren,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 import {
   Category,
@@ -26,13 +24,13 @@ import { WysiwygComponent } from '../../shared/wysiwyg/wysiwyg.component';
   styleUrls: ['./info-element-form.component.scss'],
 })
 export class InfoElementFormComponent
-  implements /* AfterViewInit,  */ OnDestroy, OnInit
+  implements /* AfterViewInit,   OnDestroy,*/ OnInit
 {
   @Input() infoId!: number;
   @Input() dataChanged!: string;
   @ViewChild(WysiwygComponent) wysiwyg!: WysiwygComponent;
-  // @ViewChildren(WysiwygComponent) wysiwygComponents!: WysiwygComponent[];
 
+  faFloppyDisk = faFloppyDisk;
   id = 0;
   isLoading = false;
   editMode = false;
@@ -75,15 +73,28 @@ export class InfoElementFormComponent
   }
 
   async ngOnInit(): Promise<void> {
-    this.route.params.subscribe(async (params: Params) => {
-      this.id = +params['id'];
-      this.editMode = params['id'] != null;
-      console.log('InfoElementFormComponent.ngOnInit.editMode', this.editMode);
-      this.initForm();
-    });
-    this.categories = await firstValueFrom(
-      this.categoryService.getCategories()
-    );
+    this.infoElement = this.newInfoElement;
+    try {
+      this.route.params.subscribe(async (params: Params) => {
+        this.id = +params['id'];
+        this.editMode = params['id'] != null;
+        console.log(
+          'InfoElementFormComponent.ngOnInit.editMode',
+          this.editMode
+        );
+        this.initForm();
+        console.log(
+          'InfoElementFormComponent.ngOnInit.isInitiated',
+          this.infoElement,
+          this.wysiwyg?.data
+        );
+      });
+      this.categories = await firstValueFrom(
+        this.categoryService.getCategories()
+      );
+    } catch (err: any) {
+      console.log(err);
+    }
   }
 
   async dataChangedHandler(dataChanged: string): Promise<void> {
@@ -118,18 +129,62 @@ export class InfoElementFormComponent
     }
   }
 
-  private initForm(): void {
-    if (this.editMode) {
-      this.infoElementSub = this.infoElementService
-        .getInfoElement(this.id as number)
-        .subscribe((infoElement: InfoElement) => {
-          this.infoElement = infoElement;
-          this.infoElementForm.patchValue(infoElement);
-          this.wysiwyg.data = infoElement.text;
-        });
-    } else {
-      this.infoElement = this.newInfoElement;
+  initForm() {
+    try {
+      if (this.editMode) {
+        this.infoElementSub = this.infoElementService
+          .getInfoElement(this.id as number)
+          .subscribe((infoElement: InfoElement) => {
+            // infoElement = infoElement || this.newInfoElement;
+            this.infoElementForm.patchValue(infoElement);
+            if (infoElement && infoElement.text) {
+              this.wysiwyg.data = infoElement.text;
+              this.infoElementForm.patchValue({ text: infoElement?.text });
+              this.isLoading = false;
+            } else if (infoElement) {
+              this.logger.log(
+                'admin',
+                `InfoElementFormComponent.initForm infoElement has been found. 
+                
+                Found wysiwyg component, setting wysiwyg data ${!!this
+                  .wysiwyg}} to infoElement.text ${infoElement.text}`
+              );
+              if (this.wysiwyg) {
+                this.wysiwyg.data = infoElement.text;
+              }
+              this.infoElementForm.patchValue({ text: infoElement.text });
+              this.isLoading = false;
+            } else {
+              this.logger.log(
+                'admin',
+                `InfoElementFormComponent.initForm infoElement NOT found. 
+                
+                Found wysiwyg component, setting wysiwyg data ${!!this
+                  .wysiwyg}} to infoElement.text ${this.newInfoElement.text}`
+              );
+              if (this.wysiwyg) {
+                this.wysiwyg.data = this.newInfoElement.text;
+              }
+              this.infoElementForm.patchValue({
+                text: this.newInfoElement.text,
+              });
+              this.isLoading = false;
+            }
+          });
+      } else {
+        this.infoElementForm.patchValue(this.newInfoElement);
+        console.log(
+          'InfoElementFormComponent.initForm.newInfoElement - Could not find infoElement'
+        );
+        this.isLoading = false;
+      }
+    } catch (err: any) {
+      console.log(
+        'InfoElementFormComponent.initForm.err subscription failed to initialize infoElement',
+        err
+      );
     }
+
     // console.log(this.infoElement);
 
     this.infoElementForm = this.formBuilder.group({
@@ -148,16 +203,4 @@ export class InfoElementFormComponent
     this.infoElementForm.patchValue(this.infoElement);
     this.infoElementForm.patchValue({ text: this.dataChanged });
   }
-
-  ngOnDestroy(): void {
-    this.infoElementSub.unsubscribe();
-  }
-
-  /*   async ngAfterViewInit(): Promise<void> {
-    console.log('InfoElementFormComponent.ngAfterViewInit');
-    console.log(this.wysiwygComponents);
-    console.log(this.wysiwyg);
-    this.isLoading = false;
-    this.wysiwyg.data = this.infoElement?.text ? this.infoElement.text : '';
-  } */
 }

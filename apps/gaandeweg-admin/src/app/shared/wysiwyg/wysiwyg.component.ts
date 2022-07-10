@@ -34,13 +34,10 @@ export class WysiwygComponent {
 
   public onContentChange({ editor }: ChangeEvent) {
     this.data = editor.getData();
-    console.log(this.data);
-    this.dataChanged.emit(editor.getData());
     this.outputData();
   }
 
   public outputData(): void {
-    console.log(this.data);
     this.dataChanged.emit(this.data);
   }
 }

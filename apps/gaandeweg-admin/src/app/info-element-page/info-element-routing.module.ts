@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
 
-import { InfoElementDetailComponent } from './info-element-detail/info-element-detail.component';
 import { InfoElementFormComponent } from './info-element-form/info-element-form.component';
 import { InfoElementResolverService } from './info-element-resolver.service';
+import { InfoElementStartComponent } from './info-element-start/info-element-start.component';
 import { InfoElementPage } from './info-element.page';
 
 const routes: Routes = [
@@ -13,6 +13,10 @@ const routes: Routes = [
     component: InfoElementPage,
     canActivate: [AuthGuard],
     children: [
+      {
+        path: '',
+        component: InfoElementStartComponent,
+      },
       {
         path: ':id/edit',
         component: InfoElementFormComponent,

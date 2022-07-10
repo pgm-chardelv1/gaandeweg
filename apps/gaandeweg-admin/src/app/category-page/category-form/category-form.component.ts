@@ -21,18 +21,33 @@ export class CategoryFormComponent implements OnChanges, OnDestroy, OnInit {
   category!: Category;
   categorySub = new Subscription();
   categoryForm!: FormGroup;
-  @Input() categoryFormErrors!: { [key: string]: string };
-  @Input() categoryFormTouched!: boolean;
-  @Input() categoryFormSubmitted!: boolean;
-  @Input() categoryFormValid!: boolean;
-  @Input() categoryFormSubmitting!: boolean;
+  categoryFormErrors!: { [key: string]: string };
+  categoryFormTouched!: boolean;
+  categoryFormSubmitted!: boolean;
+  categoryFormValid!: boolean;
+  categoryFormSubmitting!: boolean;
+  editMode = false;
 
   constructor(
     private categoryService: CategoryService,
     public formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnChanges(categoryForm: SimpleChanges): void {
+    console.log(categoryForm);
+  }
+
+  async ngOnInit(): Promise<void> {
+    this.route.params.subscribe((params: Params) => {
+      this.id = +params['id'];
+      this.editMode = params['id'] != null;
+      this.initForm();
+    });
+  }
+
+  initForm(): void {
     this.categoryForm = this.formBuilder.group({
       id: [1, Validators.required],
       version: ['1', Validators.required],
@@ -40,22 +55,14 @@ export class CategoryFormComponent implements OnChanges, OnDestroy, OnInit {
       summary: ['', Validators.required],
       description: ['', Validators.required],
     });
-  }
-
-  ngOnChanges(categoryForm: SimpleChanges): void {
-    console.log(categoryForm);
-  }
-
-  ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.id = +params['id'];
+    if (this.editMode) {
       this.categorySub = this.categoryService
         .getCategory(this.id)
         .subscribe((category: Category) => {
           this.category = category;
           this.categoryForm.patchValue(category);
         });
-    });
+    }
   }
 
   ngOnDestroy(): void {
@@ -65,10 +72,18 @@ export class CategoryFormComponent implements OnChanges, OnDestroy, OnInit {
   async onSubmit(): Promise<void> {
     this.categoryFormSubmitted = true;
     this.categoryFormValid = this.categoryForm.valid;
+
     if (this.categoryForm.valid) {
       const category = this.categoryForm.value;
-      this.categoryService.updateCategory(this.id, category);
-      this.router.navigate(['/category', this.id, 'edit']);
+      if (this.editMode) {
+        console.log('CategoryFormComponent.onSubmit.update', category);
+        this.categoryService.updateCategory(this.id, category);
+        this.router.navigate(['/category', this.id, 'edit']);
+      } else {
+        console.log('CategoryFormComponent.onSubmit.create', category);
+        this.categoryService.createCategory(category);
+        this.router.navigate(['/category']);
+      }
     }
   }
 }
