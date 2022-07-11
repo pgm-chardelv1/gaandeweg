@@ -6,20 +6,9 @@
       <ion-title size="large">Info</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <ion-spinner *ngIf="isLoading"></ion-spinner>
-
-  <ion-searchbar class="searchIcon" [formControl]="searchKey"  (ionChange)="search()" debounce="100" (ionCancel)="resetChanges()" placeholder="Zoek"></ion-searchbar>
-
-  <ion-list>
-    <ion-item lines="full" *ngFor="let infoElement of infoElements" color="{{isActive(infoElement.id) ? 'light' : null}}">
-      <ion-label *ngIf="infoElement && infoElement.id" button (click)="setActive(infoElement.id)">
-        <h2>{{infoElement.name}}</h2>
-        <p>{{infoElement.definition}}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <gaandeweg-ws-info-list></gaandeweg-ws-info-list>
   
-  <gaandeweg-ws-info-detail [infoId]="activeId"></gaandeweg-ws-info-detail>
+  <router-outlet></router-outlet>
+  <!-- <gaandeweg-ws-info-detail></gaandeweg-ws-info-detail> -->
 </ion-content>
 

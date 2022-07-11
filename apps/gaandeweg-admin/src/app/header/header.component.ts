@@ -8,7 +8,7 @@ import { AuthService } from '../auth/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit /* , OnDestroy */ {
   isLoading = true;
   isAuthenticated = false;
   @Output() isAuthenticated$ = this.isAuthenticated;
@@ -23,14 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userSub = this.authService.user.subscribe((user) => {
       this.logger.log('admin', user.token as string);
       this.isAuthenticated = !!user.token;
-      this.logger.log(
-        'admin',
-        this.isAuthenticated ? 'User logged in' : 'User logged out'
-      );
-      this.logger.log(
-        'admin',
-        'User is authenticated: ' + this.isAuthenticated
-      );
+      this.logger.log('admin', 'Authenticated user: ' + this.isAuthenticated);
     });
     this.isLoading = false;
   }
@@ -38,9 +31,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onLogout(): void {
     this.authService.logout();
     this.logger.log('admin', 'User logged out');
-  }
-
-  ngOnDestroy(): void {
-    this.userSub.unsubscribe();
   }
 }

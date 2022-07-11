@@ -17,7 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './info-element-list.component.html',
   styleUrls: ['./info-element-list.component.scss'],
 })
-export class InfoElementListComponent implements OnInit, OnDestroy {
+export class InfoElementListComponent implements OnInit /* , OnDestroy */ {
   faFloppyDisk = faFloppyDisk;
   faPlus = faPlus;
   faTrash = faTrash;
@@ -32,7 +32,7 @@ export class InfoElementListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.logger.log('client', 'InfoElementListComponent.ngOnInit');
+    this.logger.log('admin', 'InfoElementListComponent.ngOnInit');
     this.infoElementSub = this.infoService
       .getInfoElements()
       .subscribe((infoElements: InfoElement[]) => {
@@ -44,9 +44,9 @@ export class InfoElementListComponent implements OnInit, OnDestroy {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 
-  ngOnDestroy(): void {
+  /*   ngOnDestroy(): void {
     this.infoElementSub.unsubscribe();
-  }
+  } */
 
   onDeleteInfoElement(infoElementId: number) {
     if (confirm('Ben je zeker dat je dit Info Element wilt verwijderen?')) {

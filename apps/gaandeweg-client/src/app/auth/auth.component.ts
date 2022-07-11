@@ -5,22 +5,27 @@ import { Observable } from 'rxjs';
 import { AuthResponseData, AuthService } from './auth.service';
 import { createPasswordStrengthValidator } from '@gaandeweg-ws/data-access';
 
+/**
+ * Switches the mode of the auth component between login and signup. Allows the user to switch between the two modes. Allows the user to register or login.
+ * @returns None
+ */
 @Component({
   selector: 'gaandeweg-ws-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })
-/**
- * The AuthComponent class.
- * @class AuthComponent
- * @implements OnInit
- */
 export class AuthComponent implements OnInit {
   isLoginMode = true;
   isLoading = false;
   error: string | null = null;
   loginForm!: FormGroup;
 
+  /**
+   * Constructor for the LoginComponent.
+   * @param {AuthService} authService - The authentication service.
+   * @param {Router} router - The router service.
+   * @param {FormBuilder} formBuilder - The form builder service.
+   */
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -58,7 +63,6 @@ export class AuthComponent implements OnInit {
    * @returns None
    */
   onSubmit() {
-    console.log(this.loginForm.value);
     const form = this.loginForm;
     if (!form.valid) {
       return;
@@ -76,21 +80,27 @@ export class AuthComponent implements OnInit {
       authObs = this.authService.signup(email, password);
     }
 
-    authObs.subscribe(
-      (resData) => {
-        console.log(resData);
+    /**
+     * Subscribes to the authObservable and handles the response.
+     * @param {Observer<any>} observer - the observer to subscribe to.
+     * @returns None
+     */
+    authObs.subscribe({
+      next: (resData) => {
         this.isLoading = false;
-        this.router.navigate(['/app/home']);
+        console.log('Successfully logged in.', resData);
+        this.router.navigate(['/home']);
       },
-      (errorMessage) => {
-        console.log(errorMessage);
+      error: (errorMessage) => {
         this.error = errorMessage;
+        console.log('An error occurred while logging you in: ', errorMessage);
         this.isLoading = false;
       },
-      () => {
-        console.log('authObs complete');
-      }
-    );
+      complete: () => {
+        this.isLoading = false;
+        console.log('Logging in completed.');
+      },
+    });
 
     form.reset();
   }

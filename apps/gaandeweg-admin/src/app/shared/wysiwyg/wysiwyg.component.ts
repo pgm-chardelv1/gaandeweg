@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -16,7 +17,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
   templateUrl: './wysiwyg.component.html',
   styleUrls: ['./wysiwyg.component.scss'],
 })
-export class WysiwygComponent {
+export class WysiwygComponent implements OnChanges {
   public isDisabled = false;
   isLoading = true;
   public Editor = ClassicEditorBuild;
@@ -39,5 +40,11 @@ export class WysiwygComponent {
 
   public outputData(): void {
     this.dataChanged.emit(this.data);
+  }
+
+  ngOnChanges(data: SimpleChanges): void {
+    console.log('WysiwygComponent.ngOnInit data:', this.data);
+    console.log(data);
+    this.isLoading = false;
   }
 }

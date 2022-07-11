@@ -5,19 +5,27 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfoPage } from './info.page';
 
 import { InfoPageRoutingModule } from './info-routing.module';
-import { InfoDetailComponentModule } from './info-detail/info-detail.module';
 import { HeaderModule } from '../header/header.module';
+import { DirectivesModule } from '../shared/directives.module';
+import { InfoDetailComponent } from './info-detail/info-detail.component';
+import { InfoStartComponent } from './info-start/info-start.component';
+import { InfoListComponent } from './info-list/info-list.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    DirectivesModule,
     FormsModule,
     HeaderModule,
     IonicModule,
-    InfoDetailComponentModule,
     InfoPageRoutingModule,
     ReactiveFormsModule,
   ],
-  declarations: [InfoPage],
+  declarations: [
+    InfoPage,
+    InfoListComponent,
+    InfoStartComponent,
+    InfoDetailComponent,
+  ],
 })
 export class InfoPageModule {}

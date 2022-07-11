@@ -93,7 +93,9 @@ export class ExercisePage implements OnInit {
 
   async ngOnInit() {
     this.exercises = await firstValueFrom(this.exerciseService.getExercises());
+
     this.searchListCopy = this.exercises;
+
     this.categories = await firstValueFrom(
       this.categoryService.getCategories()
     );

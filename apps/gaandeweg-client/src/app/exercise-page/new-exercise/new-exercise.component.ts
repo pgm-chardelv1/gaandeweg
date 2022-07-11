@@ -81,40 +81,47 @@ export class NewExerciseComponent implements OnChanges, OnInit {
 
   registerControl(field: ExerciseFormField): void {
     // Register validators for range fields
-    if (this.fieldIsRange(field) && field.fieldOptions) {
-      this.myGroup.registerControl(
-        field.fieldName,
-        new FormControl(
-          null,
-          Validators.compose([
-            Validators.required,
-            Validators.min(field.fieldOptions.min),
-            Validators.max(field.fieldOptions.max),
-            Validators.pattern(/^[0-9]*$/),
-          ])
-        )
-      );
-      this.validation_messages = {
-        ...this.validation_messages,
-        [`${field.fieldText}`]: [
-          {
-            type: 'required',
-            message: `${field.fieldName} mag niet leeg zijn`,
-          },
-          {
-            type: 'min',
-            message: `${field.fieldName} moet minimaal ${field.fieldOptions.min} zijn`,
-          },
-          {
-            type: 'max',
-            message: `${field.fieldName} moet maximaal ${field.fieldOptions.max} zijn`,
-          },
-          {
-            type: 'pattern',
-            message: `${field.fieldName} moet een getal zijn`,
-          },
-        ],
-      };
+    if (this.fieldIsRange(field)) {
+      if (field.fieldOptions) {
+        this.myGroup.registerControl(
+          field.fieldName,
+          new FormControl(
+            null,
+            Validators.compose([
+              Validators.required,
+              Validators.min(field.fieldOptions.min),
+              Validators.max(field.fieldOptions.max),
+              Validators.pattern(/^[0-9]*$/),
+            ])
+          )
+        );
+        this.validation_messages = {
+          ...this.validation_messages,
+          [`${field.fieldText}`]: [
+            {
+              type: 'required',
+              message: `${field.fieldName} mag niet leeg zijn`,
+            },
+            {
+              type: 'min',
+              message: `${field.fieldName} moet minimaal ${field.fieldOptions.min} zijn`,
+            },
+            {
+              type: 'max',
+              message: `${field.fieldName} moet maximaal ${field.fieldOptions.max} zijn`,
+            },
+            {
+              type: 'pattern',
+              message: `${field.fieldName} moet een getal zijn`,
+            },
+          ],
+        };
+      } else {
+        this.logger.log(
+          'client',
+          'Detected a range field, but could not detect the field options'
+        );
+      }
 
       // Register validators for text fields
     } else if (field.fieldType === 'TEXT') {

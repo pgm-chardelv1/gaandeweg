@@ -9,6 +9,7 @@ import { take, exhaustMap } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
 import { User } from './user.model';
+import { LoggingService } from '@gaandeweg-ws/data-access';
 
 @Injectable()
 /**
@@ -18,16 +19,35 @@ import { User } from './user.model';
  * @returns {Observable<HttpEvent<any>>} - the modified request
  */
 export class AuthInterceptorService implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private logger: LoggingService
+  ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return this.authService.user.pipe(
       take(1),
       exhaustMap((user: User) => {
         if (!user) {
+          const uData = localStorage.getItem('userData');
+          if (uData) {
+            console.log('uData', uData);
+            const modifiedReq = req.clone({
+              headers: new HttpHeaders().set(
+                'Authorization',
+                `Bearer ${JSON.parse(uData).accessToken}`
+              ),
+            });
+            return next.handle(modifiedReq);
+          }
           return next.handle(req);
         }
-        console.log(user.id);
+        this.logger.log(
+          'client/auth-interceptor.service.ts',
+          `User found: false. User data found: ${localStorage.getItem(
+            'userData'
+          )}`
+        );
         const modifiedReq = req.clone({
           headers: new HttpHeaders().set(
             'Authorization',

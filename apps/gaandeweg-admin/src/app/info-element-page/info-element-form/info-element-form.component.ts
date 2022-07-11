@@ -23,9 +23,7 @@ import { WysiwygComponent } from '../../shared/wysiwyg/wysiwyg.component';
   templateUrl: './info-element-form.component.html',
   styleUrls: ['./info-element-form.component.scss'],
 })
-export class InfoElementFormComponent
-  implements /* AfterViewInit,   OnDestroy,*/ OnInit
-{
+export class InfoElementFormComponent implements OnInit {
   @Input() infoId!: number;
   @Input() dataChanged!: string;
   @ViewChild(WysiwygComponent) wysiwyg!: WysiwygComponent;
@@ -84,7 +82,7 @@ export class InfoElementFormComponent
         );
         this.initForm();
         console.log(
-          'InfoElementFormComponent.ngOnInit.isInitiated',
+          -'InfoElementFormComponent.ngOnInit.isInitiated',
           this.infoElement,
           this.wysiwyg?.data
         );
@@ -112,7 +110,8 @@ export class InfoElementFormComponent
     this.infoElementForm.patchValue({ text: this.wysiwyg?.data });
     this.infoElementFormSubmitted = true;
     this.infoElementFormValid = this.infoElementForm.valid;
-    if (this.infoElementForm.valid) {
+
+    if (this.infoElementFormValid) {
       const infoElement = this.infoElementForm.value;
       if (this.editMode) {
         console.log('InfoElementFormComponent.onSubmit.update', infoElement);
@@ -123,8 +122,14 @@ export class InfoElementFormComponent
         this.router.navigate(['/info-element', this.id, 'edit']);
       } else {
         console.log('InfoElementFormComponent.onSubmit.create', infoElement);
-        this.infoElementService.createInfoElement(infoElement);
-        this.router.navigate(['/info-element']);
+        this.infoElementService.createInfoElement({
+          ...infoElement,
+          published: true,
+          version: '1.0.0',
+          publishedById: 'admin',
+        });
+        console.log('InfoElementFormComponent.onSubmit.create.navigate');
+        this.router.navigate(['info-element']);
       }
     }
   }
@@ -135,10 +140,10 @@ export class InfoElementFormComponent
         this.infoElementSub = this.infoElementService
           .getInfoElement(this.id as number)
           .subscribe((infoElement: InfoElement) => {
-            // infoElement = infoElement || this.newInfoElement;
+            this.infoElement = infoElement;
             this.infoElementForm.patchValue(infoElement);
             if (infoElement && infoElement.text) {
-              this.wysiwyg.data = infoElement.text;
+              this.wysiwyg.data = this.infoElement.text;
               this.infoElementForm.patchValue({ text: infoElement?.text });
               this.isLoading = false;
             } else if (infoElement) {
@@ -168,6 +173,9 @@ export class InfoElementFormComponent
               this.infoElementForm.patchValue({
                 text: this.newInfoElement.text,
               });
+              this.infoElementForm.patchValue({
+                version: '1.0',
+              });
               this.isLoading = false;
             }
           });
@@ -189,7 +197,7 @@ export class InfoElementFormComponent
 
     this.infoElementForm = this.formBuilder.group({
       id: [this.infoElement.id],
-      version: [this.infoElement.version, Validators.required],
+      version: [this.infoElement.version],
       categoryId: [this.infoElement.categoryId, Validators.required],
       name: [this.infoElement.name, Validators.required],
       definition: [this.infoElement.definition, Validators.required],

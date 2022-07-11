@@ -5,17 +5,12 @@ import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'app',
+    path: '',
     component: TabsPage,
     children: [
       {
         path: 'auth',
         component: AuthComponent,
-      },
-      {
-        path: 'info',
-        loadChildren: () =>
-          import('../info-page/info.module').then((m) => m.InfoPageModule),
       },
       {
         path: 'home',
@@ -30,14 +25,15 @@ const routes: Routes = [
           ),
       },
       {
-        path: '',
-        redirectTo: '/app/home',
+        path: 'info',
+        loadChildren: () =>
+          import('../info-page/info.module').then((m) => m.InfoPageModule),
       },
     ],
   },
   {
     path: '',
-    redirectTo: '/app/home',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
 ];
