@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
-import { FormControl } from '@angular/forms';
 
-import {
-  InfoElement,
-  InfoService,
-  LoggingService,
-} from '@gaandeweg-ws/data-access';
+import { LoggingService } from '@gaandeweg-ws/data-access';
 // import { InfoDetailComponent } from './info-detail/info-detail.component';
 
 @Component({

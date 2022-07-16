@@ -8,6 +8,11 @@ import { InfoPage } from './info.page';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'list',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: InfoPage,
     children: [
       {
@@ -20,11 +25,6 @@ const routes: Routes = [
         resolve: [InfoResolverService],
       },
     ],
-  },
-  {
-    path: '',
-    redirectTo: 'list',
-    pathMatch: 'full',
   },
 ];
 
