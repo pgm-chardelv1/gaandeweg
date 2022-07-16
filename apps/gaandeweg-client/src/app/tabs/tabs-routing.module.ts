@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from '../auth/auth.component';
+
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -29,12 +30,23 @@ const routes: Routes = [
         loadChildren: () =>
           import('../info-page/info.module').then((m) => m.InfoPageModule),
       },
+      {
+        path: 'not-found',
+        loadChildren: () =>
+          import('../not-found-page/not-found.module').then(
+            (m) => m.NotFoundPageModule
+          ),
+      },
     ],
   },
-  {
+  /*   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  }, */
+  {
+    path: '**',
+    redirectTo: 'not-found',
   },
 ];
 

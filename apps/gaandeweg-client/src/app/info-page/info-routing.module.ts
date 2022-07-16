@@ -11,7 +11,7 @@ const routes: Routes = [
     component: InfoPage,
     children: [
       {
-        path: '',
+        path: 'list',
         component: InfoStartComponent,
       },
       {
@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/app/info/0',
+    redirectTo: 'list',
     pathMatch: 'full',
   },
 ];

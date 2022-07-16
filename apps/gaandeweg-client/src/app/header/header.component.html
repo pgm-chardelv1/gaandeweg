@@ -1,18 +1,20 @@
-<ion-header>
+<ion-header collapse="fade">
   <ion-toolbar>
-    <ion-thumbnail slot="start">
+    <a style="text-decoration: none; display: flex; color: #333" routerLink="/app/home" title="Gaandeweg Home">
+      <ion-thumbnail slot="start">
         <img src="../../assets/Gaandeweg-trans-square.png" alt="logo">
-    </ion-thumbnail>
-    
-    <ion-title>{{pageTitle}}</ion-title>
+      </ion-thumbnail>
+      
+      <ion-title>{{pageTitle}}</ion-title>
+    </a>
     
     <ion-buttons slot="end">
-        <ion-button *ngIf="isAuthenticated" (click)="onLogout()">
+        <ion-button *ngIf="isAuthenticated" (click)="onLogout()" title="Log uit">
             <ion-text>Log Uit</ion-text>
             <ion-icon name="log-out" title="Log uit"></ion-icon>
         </ion-button>
 
-        <ion-button *ngIf="!isAuthenticated" routerLink="/auth">
+        <ion-button *ngIf="!isAuthenticated" routerLink="/app/auth" title="Log in">
             <ion-text>Log In</ion-text>
             <ion-icon name="log-in" title="Log in"></ion-icon>
         </ion-button>
