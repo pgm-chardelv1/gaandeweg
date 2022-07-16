@@ -7,13 +7,13 @@ import {
   InfoService,
   LoggingService,
 } from '@gaandeweg-ws/data-access';
-import { InfoDetailComponent } from './info-detail/info-detail.component';
+// import { InfoDetailComponent } from './info-detail/info-detail.component';
 
 @Component({
   selector: 'gaandeweg-ws-info',
   templateUrl: 'info.page.html',
   styleUrls: ['info.page.scss'],
-  providers: [InfoDetailComponent, InfoService, LoggingService],
+  providers: [InfoService],
 })
 export class InfoPage implements OnInit {
   isLoading = true;

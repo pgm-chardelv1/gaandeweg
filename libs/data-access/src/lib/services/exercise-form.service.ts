@@ -25,7 +25,7 @@ export class ExerciseFormService {
 
     if (exercise?.template) {
       const parsedExercise = JSON.parse(exercise?.template);
-      for (let i = 0; i < parsedExercise.fields.length - 1; i++) {
+      for (let i = 0; i < parsedExercise.fields.length; i++) {
         const field = parsedExercise.fields[i];
         form?.fields?.push({
           fieldId: field.fieldId,

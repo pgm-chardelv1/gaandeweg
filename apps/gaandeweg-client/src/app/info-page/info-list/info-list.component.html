@@ -6,9 +6,10 @@
     <ion-item lines="full" *ngFor="let infoElement of infoElements" color="{{isActive(infoElement.id) ? 'light' : null}}">
       <ion-label *ngIf="infoElement && infoElement.id" button (click)="setActive(infoElement.id)">
         <h2>{{infoElement.name}}</h2>
+        
         <p>{{infoElement.definition}}</p>
       </ion-label>
 
-        <ion-chip *ngIf="infoElement && infoElement.categoryId" slot="end">{{getCategoryName(infoElement.categoryId)}}</ion-chip>
+      <ion-chip *ngIf="infoElement && infoElement.categoryId" slot="end">{{getCategoryName(infoElement.categoryId)}}</ion-chip>
     </ion-item>
   </ion-list>

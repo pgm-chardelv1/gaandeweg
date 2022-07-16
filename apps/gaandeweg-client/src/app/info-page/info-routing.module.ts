@@ -13,7 +13,6 @@ const routes: Routes = [
       {
         path: '',
         component: InfoStartComponent,
-        pathMatch: 'full',
       },
       {
         path: ':id',
@@ -21,6 +20,11 @@ const routes: Routes = [
         resolve: [InfoResolverService],
       },
     ],
+  },
+  {
+    path: '',
+    redirectTo: '/app/info/0',
+    pathMatch: 'full',
   },
 ];
 

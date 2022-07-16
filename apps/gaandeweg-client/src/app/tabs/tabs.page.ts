@@ -10,6 +10,6 @@ export class TabsPage implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    console.log(this.route.snapshot);
+    console.log('TabsPage.ngOnInit', this.router.url);
   }
 }

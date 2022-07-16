@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./info-list.component.scss'],
 })
 export class InfoListComponent implements OnInit, OnDestroy {
-  activeId = 1;
+  activeId = 0;
 
   categories: Category[] = [];
   infoElements: InfoElement[] = [];

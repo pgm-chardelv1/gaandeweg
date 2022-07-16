@@ -63,6 +63,7 @@ export class InfoElementFormComponent implements OnInit {
   ) {
     this.infoElementForm = this.formBuilder.group({
       id: ['', Validators.required],
+      version: [''],
       name: ['', Validators.required],
       definition: ['', Validators.required],
       text: ['', Validators.required],
@@ -80,12 +81,14 @@ export class InfoElementFormComponent implements OnInit {
           'InfoElementFormComponent.ngOnInit.editMode',
           this.editMode
         );
-        this.initForm();
-        console.log(
-          -'InfoElementFormComponent.ngOnInit.isInitiated',
-          this.infoElement,
-          this.wysiwyg?.data
-        );
+        const formInitiated = await this.initForm();
+        if (formInitiated) {
+          console.log(
+            -'InfoElementFormComponent.ngOnInit.isInitiated',
+            this.infoElement,
+            this.wysiwyg?.data
+          );
+        }
       });
       this.categories = await firstValueFrom(
         this.categoryService.getCategories()
@@ -134,7 +137,7 @@ export class InfoElementFormComponent implements OnInit {
     }
   }
 
-  initForm() {
+  async initForm() {
     try {
       if (this.editMode) {
         this.infoElementSub = this.infoElementService
@@ -186,11 +189,13 @@ export class InfoElementFormComponent implements OnInit {
         );
         this.isLoading = false;
       }
+      return true;
     } catch (err: any) {
       console.log(
         'InfoElementFormComponent.initForm.err subscription failed to initialize infoElement',
         err
       );
+      return false;
     }
 
     // console.log(this.infoElement);

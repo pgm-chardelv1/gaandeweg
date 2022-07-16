@@ -1,2 +1,2 @@
 <ckeditor [disabled]="isDisabled" [editor]="Editor"
- [data]="data" (change)="onContentChange($event)" [config]="config"></ckeditor>
+ [(ngModel)]="model.editorData" (change)="onContentChange($event)" [config]="config"></ckeditor>

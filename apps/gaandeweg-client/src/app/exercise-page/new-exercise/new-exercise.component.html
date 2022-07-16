@@ -17,10 +17,12 @@
   
                 <!-- Field uses values -->
                 <ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === false" slot="start">{{field.fieldOptions.icons[0].value}}</ion-label>
+
                 <ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === false" slot="end">{{field.fieldOptions.icons[1].value}}</ion-label>
   
                 <!-- Field uses icons -->
                 <ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === true" slot="start" name="thumbs-down-outline"></ion-icon>
+                
                 <ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === true" name="thumbs-up-outline" slot="end"></ion-icon>
   
               </ion-range>

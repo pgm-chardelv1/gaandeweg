@@ -59,7 +59,6 @@ export class NewExerciseComponent implements OnChanges, OnInit {
   ) {}
 
   async ngOnChanges(exerciseId: SimpleChanges): Promise<void> {
-    console.log(exerciseId);
     this.exercise = await firstValueFrom(
       this.exerciseService.getExercise(this.exerciseId)
     );
@@ -80,7 +79,6 @@ export class NewExerciseComponent implements OnChanges, OnInit {
   }
 
   registerControl(field: ExerciseFormField): void {
-    // Register validators for range fields
     if (this.fieldIsRange(field)) {
       if (field.fieldOptions) {
         this.myGroup.registerControl(
@@ -243,7 +241,6 @@ export class NewExerciseComponent implements OnChanges, OnInit {
   }
 
   fieldIsRange(field: ExerciseFormField) {
-    // console.log(field as ExerciseFormFieldRange);
     return (
       field.fieldType === 'RANGE' &&
       field.fieldOptions &&

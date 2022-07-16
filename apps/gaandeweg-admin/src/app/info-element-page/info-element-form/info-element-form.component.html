@@ -1,6 +1,7 @@
 <div *ngIf="isLoading">
     <gaandeweg-ws-loading-spinner></gaandeweg-ws-loading-spinner>
 </div>
+
 <div class="container-fluid" *ngIf="!isLoading">
     <div class="row">
         <div class="col-md-12">
@@ -49,9 +50,8 @@
     
         <div class="form-group mb-2" *ngIf="infoElement">
             <label class="label">Tekstinhoud van het info element</label>
-            <gaandeweg-ws-wysiwyg [data]="infoElement.text" (changes)="dataChangedHandler(dataChanged)"></gaandeweg-ws-wysiwyg>
 
-            {{ infoElement?.text }}
+            <gaandeweg-ws-wysiwyg [data]="infoElement.text" (changes)="dataChangedHandler(dataChanged)"></gaandeweg-ws-wysiwyg>
 
             <div class="invalid-feedback" *ngIf="infoElementForm.get('text')?.errors">
                 Tekst is verplicht
@@ -69,7 +69,6 @@
         <div class="form-group mb-2" *ngIf="!infoElement">
             <div *ngIf="!infoElement">
                 <gaandeweg-ws-loading-spinner></gaandeweg-ws-loading-spinner>
-                <gaandeweg-ws-wysiwyg></gaandeweg-ws-wysiwyg>
             </div>
         </div>
     
