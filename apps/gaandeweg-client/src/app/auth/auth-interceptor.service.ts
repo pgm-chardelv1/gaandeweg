@@ -28,33 +28,34 @@ export class AuthInterceptorService implements HttpInterceptor {
     return this.authService.user.pipe(
       take(1),
       exhaustMap((user: User) => {
-        if (!user) {
+        if (!user || !user.token) {
           const uData = localStorage.getItem('userData');
-          if (uData) {
-            console.log('uData', uData);
+          if (uData !== null) {
+            // console.log('uData', JSON.parse(uData).id);
             const modifiedReq = req.clone({
               headers: new HttpHeaders().set(
                 'Authorization',
-                `Bearer ${JSON.parse(uData).accessToken}`
+                `Bearer ${JSON.parse(uData)._token}`
               ),
             });
             return next.handle(modifiedReq);
           }
+          /*           this.logger.log(
+            'client/auth-interceptor.service.ts',
+            `User found: false. User data found: ${localStorage.getItem(
+              'userData'
+            )}`
+          ); */
           return next.handle(req);
+        } else {
+          const modifiedReq = req.clone({
+            headers: new HttpHeaders().set(
+              'Authorization',
+              `Bearer ${user.token as string}`
+            ),
+          });
+          return next.handle(modifiedReq);
         }
-        this.logger.log(
-          'client/auth-interceptor.service.ts',
-          `User found: false. User data found: ${localStorage.getItem(
-            'userData'
-          )}`
-        );
-        const modifiedReq = req.clone({
-          headers: new HttpHeaders().set(
-            'Authorization',
-            `Bearer ${user.token as string}`
-          ),
-        });
-        return next.handle(modifiedReq);
       })
     );
   }

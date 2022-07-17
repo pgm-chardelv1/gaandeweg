@@ -6,6 +6,7 @@ import {
   Category,
   CategoryService,
   Exercise,
+  ExerciseFormField,
   ExerciseFormService,
   ExerciseService,
 } from '@gaandeweg-ws/data-access';
@@ -68,39 +69,70 @@ export class ExerciseFormComponent implements OnDestroy, OnInit {
   async onSubmit(): Promise<void> {
     const templateString =
       this.exerciseTemplateForm?.exerciseTemplateForm?.value;
-    this.exerciseForm.patchValue({ template: JSON.stringify(templateString) });
-    this.exerciseFormSubmitted = true;
-    this.exerciseFormValid = this.exerciseForm.valid;
-    if (this.exerciseForm.valid) {
-      const exercise = this.exerciseForm.value;
-      if (this.editMode) {
-        console.log('ExerciseFormComponent.onSubmit.update', exercise);
-        this.exerciseService.updateExercise(this.id as number, exercise);
-        this.router.navigate(['/exercise', this.id, 'edit']);
-      } else {
-        console.log('ExerciseFormComponent.onSubmit.create', exercise);
-        const uData = JSON.parse(localStorage.getItem('userData') as string);
-        const uId: {
-          email: string;
-          sub: {
-            id: string;
-          };
-        } = jwtDecode(uData._token as string);
-        console.log(uId.sub.id);
-        if (uData as User) {
-          exercise.publishedById = uData.id;
-          console.log(
-            'ExerciseFormComponent.onSubmit.create.uId',
-            jwtDecode(uData._token as string)
+
+    /**
+     * Removes any field values that are null or undefined.
+     * @param {ExerciseFormField[]} fields - the fields to filter
+     * @returns None
+     */
+    if (templateString) {
+      templateString.fields.forEach((field: ExerciseFormField) => {
+        console.log('ExerciseFormComponent.onSubmit.field', field);
+
+        const fieldValues = field.fieldValues;
+        console.log('fieldValues', fieldValues);
+        if (fieldValues) {
+          const filteredFieldValues = fieldValues?.filter(
+            (f: { fieldValue: string | null; fieldLabel: string | null }) => {
+              return (
+                f.fieldValue !== null &&
+                f.fieldValue !== undefined &&
+                f.fieldLabel !== undefined &&
+                f.fieldLabel !== null
+              );
+            }
           );
+          console.log(filteredFieldValues);
+          templateString.fieldValues = filteredFieldValues;
         }
-        this.exerciseService.createExercise({
-          ...exercise,
-          template: JSON.stringify(templateString),
-          published: true,
-          publishedBy: uId.sub.id,
-        });
-        this.router.navigate(['/exercise']);
+      });
+
+      this.exerciseForm.patchValue({
+        template: JSON.stringify(templateString),
+      });
+      this.exerciseFormSubmitted = true;
+      this.exerciseFormValid = this.exerciseForm.valid;
+      if (this.exerciseForm.valid) {
+        const exercise = this.exerciseForm.value;
+        if (this.editMode) {
+          console.log('ExerciseFormComponent.onSubmit.update', exercise);
+          this.exerciseService.updateExercise(this.id as number, exercise);
+          this.router.navigate(['/exercise', this.id, 'edit']);
+        } else {
+          console.log('ExerciseFormComponent.onSubmit.create', exercise);
+          const uData = JSON.parse(localStorage.getItem('userData') as string);
+          const uId: {
+            email: string;
+            sub: {
+              id: string;
+            };
+          } = jwtDecode(uData._token as string);
+
+          if (uData as User) {
+            exercise.publishedById = uData.id;
+            console.log(
+              'ExerciseFormComponent.onSubmit.create.uId',
+              jwtDecode(uData._token as string)
+            );
+          }
+          this.exerciseService.createExercise({
+            ...exercise,
+            template: JSON.stringify(templateString),
+            published: true,
+            publishedBy: uId.sub.id,
+          });
+          this.router.navigate(['/exercise']);
+        }
       }
     }
   }

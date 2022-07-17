@@ -161,6 +161,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
       fieldValues: this.formBuilder.array([]),
     });
     this.fields.push(fieldForm);
+    console.log(this.exerciseTemplateForm.controls);
   }
 
   onDeleteField(index: number) {
@@ -224,6 +225,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
         fieldGroup.setControl('fieldValues', fieldValueArr);
       }
     });
+    console.log(this.exerciseTemplateForm.controls);
   }
 
   trackByFieldId(index: number, field: ExerciseFormFieldTemplate) {

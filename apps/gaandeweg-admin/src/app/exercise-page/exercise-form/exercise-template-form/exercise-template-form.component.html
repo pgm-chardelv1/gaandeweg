@@ -42,11 +42,26 @@
                 <h5>Opties</h5>
                 <div formArrayName="fieldValues">
                     <div class="form-group mb-2" *ngFor="let value of field.get('fieldValues')?.value; let j=index; " [formGroupName]="j">
-                        <label class="label">{{value.fieldValue}}</label>
-                        <input class="form-control" formControlName="fieldLabel" [value]="value.fieldLabel" />
+                        <div *ngIf="value.fieldValue !== null && value.fieldLabel !== null">
+                            <label class="label">{{value.fieldValue}}</label>
+                            <input class="form-control" formControlName="fieldLabel" [value]="value.fieldLabel" />
+                        </div>
                     </div>
                 </div>
             </div>
+
+<!--             <div class="form-group mb-2" *ngIf="field.get('fieldOptions') && (field.get('fieldType')?.value === 'RANGE')" formGroupName="fieldOptions">
+                <h5>Opties</h5>
+                <div class="form-group mb-2" >
+                    <label class="label">Min</label>
+                    <input class="form-control" type="number" formControlName="min" [value]="field.get('fieldOptions')?.value.min"/>
+                </div>
+
+                <div class="form-group mb-2" >
+                    <label class="label">Max</label>
+                    <input class="form-control" type="number" formControlName="max" [value]="field.get('fieldOptions')?.value.max"/>
+                </div>
+            </div> -->
         </div>
 
         <button class="btn btn-success" (click)="addField()">

@@ -1,0 +1,15 @@
+<ion-spinner *ngIf="isLoading"></ion-spinner>
+
+<!--   <ion-searchbar class="searchIcon" [formControl]="searchKey"  (ionChange)="search()" debounce="100" (ionCancel)="resetChanges()" placeholder="Zoek"></ion-searchbar> -->
+
+  <ion-list>
+    <ion-item lines="full" *ngFor="let userExercise of userExercises">
+        <!-- color="{{isActive(infoElement.id) ? 'light' : null}}" -->
+      <ion-label *ngIf="userExercise">
+        <h2>{{userExercise.id}}</h2>
+        <p>{{userExercise.userId}} - {{userData.id}}</p>
+      </ion-label>
+
+      <!-- <ion-chip *ngIf="infoElement && infoElement.categoryId" slot="end">{{getCategoryName(infoElement.categoryId)}}</ion-chip> -->
+    </ion-item>
+  </ion-list>

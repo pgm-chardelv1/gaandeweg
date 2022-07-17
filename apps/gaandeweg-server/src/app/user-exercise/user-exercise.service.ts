@@ -42,12 +42,15 @@ export class UserExerciseService {
    * Find all userExercises.
    * @returns {Promise<UserExercise[]>}
    */
-  async findAll(): Promise<UserExercise[]> {
+  async findAll(userId: string): Promise<UserExercise[]> {
     try {
-      const userExercises = this.userExerciseRepository.find();
+      console.log(userId);
+      const userExercises = this.userExerciseRepository.find({
+        where: { userId: userId },
+      });
       return userExercises;
     } catch (err) {
-      Logger.log(`Could not find userExercises. ${err}`);
+      Logger.log(`Could not find userExercises today. ${err}`);
     }
   }
 
@@ -56,9 +59,10 @@ export class UserExerciseService {
    * @param {number} id - the id of the userExercise to find
    * @returns {Promise<UserExercise>} - the userExercise with the given id
    */
-  async findOne(id: number): Promise<UserExercise> {
+  async findOne(id: number, userId: string): Promise<UserExercise> {
     try {
       const userExercise = this.userExerciseRepository.findOne(id);
+
       if (!userExercise) {
         throw new BadRequestException('UserExercise could not be found');
       }

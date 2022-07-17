@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { LoggingService } from '@gaandeweg-ws/data-access';
 
 @Component({
-  selector: 'gaandeweg-ws-info',
-  templateUrl: 'info.page.html',
-  styleUrls: ['info.page.scss'],
+  selector: 'gaandeweg-ws-profile',
+  templateUrl: './profile.page.html',
+  styleUrls: ['./profile.page.scss'],
 })
-export class InfoPage implements OnInit {
+export class ProfilePage implements OnInit {
   isLoading = true;
 
   constructor(private logger: LoggingService) {}
 
-  async ngOnInit() {
-    this.logger.log('client', 'InfoPage.ngOnInit');
+  ngOnInit(): void {
+    this.logger.log('client', 'ProfilePage.ngOnInit');
     this.isLoading = false;
   }
 }

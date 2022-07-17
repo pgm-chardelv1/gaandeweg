@@ -27,16 +27,18 @@ export class UserExerciseController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get()
-  async findAll() {
-    const userExercises = await this.userExerciseService.findAll();
+  @Get(':userId')
+  async findAll(@Param('userId') userId: string) {
+    console.log(userId);
+    const userExercises = await this.userExerciseService.findAll(userId);
+    console.log(userExercises);
     return userExercises;
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: number) {
-    const userExercise = await this.userExerciseService.findOne(id);
+  async findOne(@Param('id') id: number, userId: string) {
+    const userExercise = await this.userExerciseService.findOne(id, userId);
     return userExercise;
   }
 

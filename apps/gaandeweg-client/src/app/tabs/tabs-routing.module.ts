@@ -31,6 +31,13 @@ const routes: Routes = [
           import('../info-page/info.module').then((m) => m.InfoPageModule),
       },
       {
+        path: 'profile',
+        loadChildren: () =>
+          import('../profile-page/profile.module').then(
+            (m) => m.ProfilePageModule
+          ),
+      },
+      {
         path: 'not-found',
         loadChildren: () =>
           import('../not-found-page/not-found.module').then(
