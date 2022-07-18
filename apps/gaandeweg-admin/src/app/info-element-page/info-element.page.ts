@@ -6,6 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+
 import { InfoElement, InfoService } from '@gaandeweg-ws/data-access';
 
 @Component({

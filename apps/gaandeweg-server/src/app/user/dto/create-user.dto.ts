@@ -1,4 +1,5 @@
 import { IsEmail, IsInt, IsOptional, Max, Min } from 'class-validator';
+
 import { UserRole } from '../entities/user.entity';
 
 /**

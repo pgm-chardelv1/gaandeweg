@@ -1,11 +1,12 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { firstValueFrom, Subscription } from 'rxjs';
+
 import {
   InfoElement,
   InfoService,
   LoggingService,
 } from '@gaandeweg-ws/data-access';
-import { firstValueFrom, Subscription } from 'rxjs';
 
 @Component({
   selector: 'gaandeweg-ws-info-detail',

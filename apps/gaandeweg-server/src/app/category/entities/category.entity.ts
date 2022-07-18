@@ -7,9 +7,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { InfoElement } from '../../app.entities';
 
 import { Exercise } from '../../exercise/entities/exercise.entity';
+import { InfoElement } from '../../app.entities';
 /**
  * A class that represents a category.
  * @param {string} id - The id of the category.

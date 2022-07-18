@@ -9,6 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+
 import { CreateUserExerciseDto } from './dto/create-user-exercise.dto';
 import { UpdateUserExerciseDto } from './dto/update-user-exercise.dto';
 import { UserExerciseService } from './user-exercise.service';
@@ -29,34 +30,34 @@ export class UserExerciseController {
   @UseGuards(JwtAuthGuard)
   @Get(':userId')
   async findAll(@Param('userId') userId: string) {
-    console.log(userId);
     const userExercises = await this.userExerciseService.findAll(userId);
-    console.log(userExercises);
     return userExercises;
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  async findOne(@Param('id') id: number, userId: string) {
+  @Get(':userId/:id')
+  async findOne(@Param('id') id: number, @Param('userId') userId: string) {
     const userExercise = await this.userExerciseService.findOne(id, userId);
     return userExercise;
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':id')
-  async delete(@Param('id') id: number) {
-    const userExercise = await this.userExerciseService.remove(id);
+  @Delete(':userId/:id')
+  async delete(@Param('id') id: number, @Param('userId') userId: string) {
+    const userExercise = await this.userExerciseService.remove(id, userId);
     return userExercise;
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put(':id')
+  @Put(':userId/:id')
   async update(
     @Param('id') id: number,
+    @Param('userId') userId: string,
     @Body() updateUserExerciseDto: UpdateUserExerciseDto
   ) {
     const userExercise = await this.userExerciseService.update(
       id,
+      userId,
       updateUserExerciseDto
     );
     return userExercise;

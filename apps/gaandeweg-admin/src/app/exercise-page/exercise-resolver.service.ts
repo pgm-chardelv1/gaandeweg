@@ -1,10 +1,11 @@
+import { Injectable } from '@angular/core';
 import {
-  Resolve,
   ActivatedRouteSnapshot,
+  Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs/internal/lastValueFrom';
+
 import { Exercise, ExerciseService } from '@gaandeweg-ws/data-access';
 
 @Injectable({ providedIn: 'root' })

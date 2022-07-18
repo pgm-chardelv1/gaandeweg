@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+
 import { UserExercise } from '../../user-exercise/entities/user-exercise.entity';
 
 /**

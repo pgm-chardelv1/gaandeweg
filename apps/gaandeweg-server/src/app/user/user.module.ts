@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './user.service';
-import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User as UserEntity } from './entities/user.entity';
+
 import { AbilityModule } from '../ability/ability.module';
+import { User as UserEntity } from './entities/user.entity';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
 
 /**
  * The user module.

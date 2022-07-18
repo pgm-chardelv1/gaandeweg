@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+
 import { SanitizeHtmlDirective } from './sanitize-html.directive';
 
 @NgModule({

@@ -3,11 +3,11 @@ import {
   Get,
   Post,
   Body,
-  HttpStatus,
   Patch,
   Param,
   Delete,
 } from '@nestjs/common';
+
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';

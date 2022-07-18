@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+
 import {
   Exercise,
   ExerciseService,
   LoggingService,
 } from '@gaandeweg-ws/data-access';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'gaandeweg-ws-exercise-page-component',

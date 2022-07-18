@@ -5,6 +5,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+
 import { Category, CategoryService } from '@gaandeweg-ws/data-access';
 
 @Injectable({ providedIn: 'root' })

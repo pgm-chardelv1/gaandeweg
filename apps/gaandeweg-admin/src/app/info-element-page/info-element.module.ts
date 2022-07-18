@@ -1,8 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { SharedModule } from '../shared/shared.module';
 import { InfoElementFormComponent } from './info-element-form/info-element-form.component';
 import { InfoElementListComponent } from './info-element-list/info-element-list.component';

@@ -1,6 +1,8 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { firstValueFrom, Subscription } from 'rxjs';
+import jwtDecode from 'jwt-decode';
 
 import {
   Category,
@@ -10,10 +12,8 @@ import {
   ExerciseFormService,
   ExerciseService,
 } from '@gaandeweg-ws/data-access';
-import { firstValueFrom, Subscription } from 'rxjs';
-import { ExerciseTemplateFormComponent } from './exercise-template-form/exercise-template-form.component';
-import jwtDecode from 'jwt-decode';
 import { User } from '../../auth/user.model';
+import { ExerciseTemplateFormComponent } from './exercise-template-form/exercise-template-form.component';
 
 @Component({
   selector: 'gaandeweg-ws-exercise-form-component',

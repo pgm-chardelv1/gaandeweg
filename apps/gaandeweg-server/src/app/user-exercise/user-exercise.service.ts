@@ -1,12 +1,22 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { randomBytes, scrypt, createCipheriv, createDecipheriv } from 'crypto';
 import { Repository } from 'typeorm';
+import { promisify } from 'util';
+import * as dotenv from 'dotenv';
+
 import { CreateUserExerciseDto } from './dto/create-user-exercise.dto';
 import { UpdateUserExerciseDto } from './dto/update-user-exercise.dto';
 import { UserExercise } from './entities/user-exercise.entity';
 
 @Injectable()
 export class UserExerciseService {
+  private iv = randomBytes(16);
   constructor(
     @InjectRepository(UserExercise)
     private readonly userExerciseRepository: Repository<UserExercise>
@@ -24,7 +34,12 @@ export class UserExerciseService {
       const userExercise = this.userExerciseRepository.create(
         createUserExerciseDto
       );
-      await this.userExerciseRepository.save(userExercise);
+      await this.userExerciseRepository.save({
+        ...userExercise,
+        exerciseData: await this.encryptData(
+          createUserExerciseDto.exerciseData
+        ),
+      });
       if (!userExercise) {
         throw new BadRequestException('UserExercise could not be created');
       }
@@ -40,6 +55,7 @@ export class UserExerciseService {
 
   /**
    * Find all userExercises.
+   * @param {string} userId - the id of the user
    * @returns {Promise<UserExercise[]>}
    */
   async findAll(userId: string): Promise<UserExercise[]> {
@@ -57,16 +73,24 @@ export class UserExerciseService {
   /**
    * Finds a userExercise by id.
    * @param {number} id - the id of the userExercise to find
+   * @param {string} userId - the id of the user
    * @returns {Promise<UserExercise>} - the userExercise with the given id
    */
-  async findOne(id: number, userId: string): Promise<UserExercise> {
+  async findOne(id: number, userId: string): Promise<any> {
     try {
-      const userExercise = this.userExerciseRepository.findOne(id);
+      const userExercise = await this.userExerciseRepository.findOne(id);
 
       if (!userExercise) {
         throw new BadRequestException('UserExercise could not be found');
+      } else if (userExercise.userId !== userId) {
+        throw new UnauthorizedException();
+      } else {
+        const crypt = await this.decryptData(await userExercise.exerciseData);
+        return {
+          ...userExercise,
+          exerciseData: crypt,
+        };
       }
-      return userExercise;
     } catch (err) {
       Logger.log(`Could not find userExercise. ${err}`);
     }
@@ -75,21 +99,31 @@ export class UserExerciseService {
   /**
    * Updates a userExercise.
    * @param {number} id - the id of the userExercise to update
+   * @param {string} userId - the id of the user
    * @param {UpdateUserExerciseDto} updateUserExerciseDto - the userExercise to update
    * @returns {Promise<UserExercise>} - the updated userExercise
    */
   async update(
     id: number,
+    userId: string,
     updateUserExerciseDto: UpdateUserExerciseDto
   ): Promise<UserExercise> {
     try {
       const userExercise = await this.userExerciseRepository.findOne(id);
       if (!userExercise) {
         throw new BadRequestException('UserExercise could not be found');
+      } else if (userExercise.userId !== userId) {
+        throw new UnauthorizedException();
+      } else {
+        this.userExerciseRepository.merge(userExercise, updateUserExerciseDto);
+        await this.userExerciseRepository.save({
+          ...userExercise,
+          exerciseData: await this.encryptData(
+            updateUserExerciseDto.exerciseData
+          ),
+        });
+        return userExercise;
       }
-      this.userExerciseRepository.merge(userExercise, updateUserExerciseDto);
-      await this.userExerciseRepository.save(userExercise);
-      return userExercise;
     } catch (err) {
       Logger.log(`Could not update userExercise. ${err}`);
     }
@@ -98,18 +132,68 @@ export class UserExerciseService {
   /**
    * Deletes a userExercise from the database.
    * @param {number} id - the id of the userExercise to delete
+   * @param {string} userId - the id of the user
    * @returns {Promise<UserExercise>} - the deleted userExercise
    */
-  async remove(id: number): Promise<UserExercise> {
+  async remove(id: number, userId: string): Promise<UserExercise> {
     try {
       const userExercise = await this.userExerciseRepository.findOne(id);
       if (!userExercise) {
         throw new BadRequestException('UserExercise could not be found');
+      } else if (userExercise.userId !== userId) {
+        throw new UnauthorizedException();
+      } else {
+        await this.userExerciseRepository.remove(userExercise);
+        return userExercise;
       }
-      await this.userExerciseRepository.remove(userExercise);
-      return userExercise;
     } catch (err) {
       Logger.log(`Could not delete userExercise. ${err}`);
     }
+  }
+
+  /**
+   * Encrypts the given data using the given key.
+   * @param {string} data - the data to encrypt
+   * @returns {string} the encrypted data
+   */
+  async encryptData(data: string) {
+    let returnData = '';
+    // const iv = randomBytes(16);
+    const key = (await promisify(scrypt)(
+      `${process.env.ENC_SECRET}`,
+      'salt',
+      32
+    )) as Buffer;
+    const cipher = createCipheriv('aes-256-cbc', key, this.iv);
+
+    returnData = Buffer.concat([
+      cipher.update(data, 'utf8'),
+      cipher.final(),
+    ]).toString('hex');
+
+    return returnData;
+  }
+
+  /**
+   * Decrypts the given data using the ENC_SECRET environment variable.
+   * @param {string} data - the data to decrypt
+   * @returns {Promise<string>} the decrypted data
+   */
+  async decryptData(data: string): Promise<string> {
+    let returnData = '';
+    // const iv = randomBytes(16);
+    const key = (await promisify(scrypt)(
+      `${process.env.ENC_SECRET}`,
+      'salt',
+      32
+    )) as Buffer;
+    const decipher = createDecipheriv('aes-256-cbc', key, this.iv);
+
+    returnData = Buffer.concat([
+      decipher.update(data, 'hex'),
+      decipher.final(),
+    ]).toString('utf8');
+
+    return returnData;
   }
 }

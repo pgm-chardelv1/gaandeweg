@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpInterceptor,
-  HttpRequest,
   HttpHandler,
   HttpHeaders,
+  HttpInterceptor,
+  HttpRequest,
 } from '@angular/common/http';
 import { take, exhaustMap } from 'rxjs/operators';
 
+import { LoggingService } from '@gaandeweg-ws/data-access';
 import { AuthService } from './auth.service';
 import { User } from './user.model';
-import { LoggingService } from '@gaandeweg-ws/data-access';
 
 @Injectable()
 /**

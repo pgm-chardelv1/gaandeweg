@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { ExercisePage } from './exercise.page';
 
 const routes: Routes = [
@@ -9,10 +10,10 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'new-exercise',
+    path: 'edit',
     loadChildren: () =>
-      import('./new-exercise/new-exercise.module').then(
-        (m) => m.NewExerciseComponentModule
+      import('./exercise-form/exercise-form.module').then(
+        (m) => m.ExerciseFormComponentModule
       ),
   },
 ];

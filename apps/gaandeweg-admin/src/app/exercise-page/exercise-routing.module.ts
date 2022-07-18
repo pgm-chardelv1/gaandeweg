@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { AuthGuard } from '../auth/auth.guard';
 import { ExerciseStartComponent } from './exercise-start/exercise-start.component';
 import { ExerciseFormComponent } from './exercise-form/exercise-form.component';

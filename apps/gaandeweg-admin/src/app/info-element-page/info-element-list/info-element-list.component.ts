@@ -1,16 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
   faFloppyDisk,
   faPlus,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
+
 import {
   InfoElement,
   InfoService,
   LoggingService,
 } from '@gaandeweg-ws/data-access';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'gaandeweg-ws-info-element-list',

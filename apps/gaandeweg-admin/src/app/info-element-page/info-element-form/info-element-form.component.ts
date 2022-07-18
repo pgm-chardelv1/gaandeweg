@@ -5,17 +5,18 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 import {
   Category,
   CategoryService,
   InfoElement,
+  InfoService,
+  LoggingService,
 } from '@gaandeweg-ws/data-access';
-import { firstValueFrom, Subscription } from 'rxjs';
-import { InfoService, LoggingService } from '@gaandeweg-ws/data-access';
-import { ActivatedRoute, Params, Router } from '@angular/router';
 import { WysiwygComponent } from '../../shared/wysiwyg/wysiwyg.component';
 
 @Component({

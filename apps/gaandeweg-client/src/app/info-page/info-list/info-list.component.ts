@@ -1,4 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import { firstValueFrom, Subscription } from 'rxjs';
 
 import {
@@ -8,8 +10,6 @@ import {
   InfoService,
   LoggingService,
 } from '@gaandeweg-ws/data-access';
-import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'gaandeweg-ws-info-list',

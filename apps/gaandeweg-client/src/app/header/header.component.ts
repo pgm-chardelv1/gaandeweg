@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { LoggingService } from '@gaandeweg-ws/data-access';
 import { Subscription } from 'rxjs';
+
+import { LoggingService } from '@gaandeweg-ws/data-access';
 import { AuthService } from '../auth/auth.service';
 @Component({
   selector: 'gaandeweg-ws-header',

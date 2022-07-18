@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+
 import {
   LoggingService,
   UserExercise,
   UserExerciseService,
 } from '@gaandeweg-ws/data-access';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'gaandeweg-ws-profile-detail',

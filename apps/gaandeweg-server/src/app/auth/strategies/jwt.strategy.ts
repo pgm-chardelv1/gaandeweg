@@ -3,8 +3,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import * as dotenv from 'dotenv';
 
-import { UserService } from '../../user/user.service';
 import { User } from '../../user/entities/user.entity';
+import { UserService } from '../../user/user.service';
 
 dotenv.config();
 

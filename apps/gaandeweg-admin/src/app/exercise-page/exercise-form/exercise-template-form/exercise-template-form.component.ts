@@ -8,13 +8,14 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import {
   Exercise,
   ExerciseService,
   LoggingService,
 } from '@gaandeweg-ws/data-access';
-import { firstValueFrom } from 'rxjs';
 import { ExerciseFormFieldTemplate } from './field.model';
 
 @Component({

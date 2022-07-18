@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   HttpClient,
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import * as dayjs from 'dayjs';
-import { environment } from '../../environments/environment';
 import jwt_decode from 'jwt-decode';
 
+import { environment } from '../../environments/environment';
 import { User } from './user.model';
 
 /**
@@ -127,7 +127,7 @@ export class AuthService {
    */
   logout() {
     this.user.next({} as User);
-    this.router.navigate(['/auth']);
+    this.router.navigate(['/app/auth']);
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);

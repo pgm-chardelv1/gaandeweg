@@ -1,18 +1,18 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  HttpStatus,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common';
-import { ExerciseService } from './exercise.service';
+
 import { CreateExerciseDto } from './dto/create-exercise.dto';
-import { UpdateExerciseDto } from './dto/update-exercise.dto';
+import { ExerciseService } from './exercise.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { UpdateExerciseDto } from './dto/update-exercise.dto';
 
 /**
  * Controller for exercise resource

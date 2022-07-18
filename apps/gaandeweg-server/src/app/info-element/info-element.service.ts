@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { CreateInfoElementDto } from './dto/create-info-element.dto';
-import { UpdateInfoElementDto } from './dto/update-info-element.dto';
 import { InfoElement } from './entities/info-element.entity';
+import { UpdateInfoElementDto } from './dto/update-info-element.dto';
 
 /**
  * Service for info element resource.

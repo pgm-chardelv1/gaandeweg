@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { AuthResponseData, AuthService } from './auth.service';
+
 import { createPasswordStrengthValidator } from '@gaandeweg-ws/data-access';
+import { AuthResponseData, AuthService } from './auth.service';
 
 /**
  * Switches the mode of the auth component between login and signup. Allows the user to switch between the two modes. Allows the user to register or login.

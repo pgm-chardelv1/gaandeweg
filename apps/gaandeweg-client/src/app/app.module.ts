@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RouteReuseStrategy } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
-import { AppRoutingModule } from './app-routing.module';
+import { LoggingService } from '@gaandeweg-ws/data-access';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
-import { LoggingService } from '@gaandeweg-ws/data-access';
 
 @NgModule({
   declarations: [AppComponent, AuthComponent],

@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import {
   Ability,
   AbilityBuilder,
@@ -5,10 +6,10 @@ import {
   ExtractSubjectType,
   InferSubjects,
 } from '@casl/ability';
-import { Injectable } from '@nestjs/common';
+
 import { Category, Exercise, InfoElement, Profile } from '../app.entities';
-import { UserExercise } from '../user-exercise/entities/user-exercise.entity';
 import { User, UserRole } from '../user/entities/user.entity';
+import { UserExercise } from '../user-exercise/entities/user-exercise.entity';
 
 export enum Action {
   Manage = 'manage',

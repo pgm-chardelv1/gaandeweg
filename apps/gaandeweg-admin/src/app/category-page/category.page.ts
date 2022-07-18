@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+
 import {
   Category,
   CategoryService,
   LoggingService,
 } from '@gaandeweg-ws/data-access';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'gaandeweg-ws-category-page',

@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { NewExerciseComponent } from './new-exercise.component';
+import { ExerciseFormComponent } from './exercise-form.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, ReactiveFormsModule],
-  declarations: [NewExerciseComponent],
-  exports: [NewExerciseComponent],
+  declarations: [ExerciseFormComponent],
+  exports: [ExerciseFormComponent],
 })
-export class NewExerciseComponentModule {}
+export class ExerciseFormComponentModule {}

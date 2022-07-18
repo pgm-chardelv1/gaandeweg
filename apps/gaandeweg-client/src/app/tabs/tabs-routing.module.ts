@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthComponent } from '../auth/auth.component';
 
+import { AuthComponent } from '../auth/auth.component';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -46,11 +46,6 @@ const routes: Routes = [
       },
     ],
   },
-  /*   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  }, */
   {
     path: '**',
     redirectTo: 'not-found',

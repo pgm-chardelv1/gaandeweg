@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UserExercise, UserExerciseService } from '@gaandeweg-ws/data-access';
 import {
   ActivatedRouteSnapshot,
   Resolve,
@@ -7,14 +6,18 @@ import {
 } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 
+import { UserExercise, UserExerciseService } from '@gaandeweg-ws/data-access';
+
 @Injectable({ providedIn: 'root' })
 export class ProfileResolverService implements Resolve<UserExercise[]> {
   uData = localStorage.getItem('userData');
   constructor(private userExerciseService: UserExerciseService) {}
 
   async resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _route: ActivatedRouteSnapshot,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _state: RouterStateSnapshot
   ): Promise<UserExercise[]> {
     const userExercises = await lastValueFrom(
       this.userExerciseService.getUserExercises(

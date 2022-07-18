@@ -1,14 +1,6 @@
-import { createCipheriv, randomBytes, scrypt } from 'crypto';
-import {
-  BeforeInsert,
-  Column,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { promisify } from 'util';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+
 import { User } from '../../app.entities';
-import * as dotenv from 'dotenv';
 
 @Entity('user_exercise')
 export class UserExercise {
@@ -22,19 +14,19 @@ export class UserExercise {
   })
   user?: User;
 
-  @Column('varchar', { length: 45 })
+  @Column('longtext')
   exerciseName: string;
 
   @Column('json')
   exerciseTemplate: string;
 
-  @Column('varchar', { length: 4096 })
+  @Column('varchar', { length: 8192 })
   exerciseData: string;
 
   @Column('varchar')
   userId: string;
 
-  @BeforeInsert()
+  /*   @BeforeInsert()
   async encryptData() {
     const iv = randomBytes(16);
     const key = (await promisify(scrypt)(
@@ -48,5 +40,5 @@ export class UserExercise {
       cipher.update(this.exerciseData, 'utf8'),
       cipher.final(),
     ]).toString('hex');
-  }
+  } */
 }

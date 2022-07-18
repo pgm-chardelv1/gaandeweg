@@ -12,6 +12,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { firstValueFrom, Subscription } from 'rxjs';
 
 import {
   Exercise,
@@ -23,14 +24,13 @@ import {
   UserExercise,
   UserExerciseService,
 } from '@gaandeweg-ws/data-access';
-import { firstValueFrom, Subscription } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/user.model';
 
 @Component({
   selector: 'gaandeweg-ws-new-exercise',
-  templateUrl: './new-exercise.component.html',
-  styleUrls: ['./new-exercise.component.scss'],
+  templateUrl: './exercise-form.component.html',
+  styleUrls: ['./exercise-form.component.scss'],
   providers: [
     ExerciseService,
     ExerciseFormService,
@@ -38,13 +38,14 @@ import { User } from '../../auth/user.model';
     UserExerciseService,
   ],
 })
-export class NewExerciseComponent implements OnChanges, OnInit {
+export class ExerciseFormComponent implements OnChanges, OnInit {
   @Input() exerciseId!: number;
   exercise!: Exercise;
   exerciseForm: Partial<ExerciseForm> = {};
   formControls = new FormArray([]);
   myGroup!: FormGroup;
   isSubmitted = false;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   validation_messages: any = {};
   user: User = new User('', new Date(), '');
   userSub!: Subscription;
@@ -58,7 +59,8 @@ export class NewExerciseComponent implements OnChanges, OnInit {
     private userExerciseService: UserExerciseService
   ) {}
 
-  async ngOnChanges(exerciseId: SimpleChanges): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async ngOnChanges(_exerciseId: SimpleChanges): Promise<void> {
     this.exercise = await firstValueFrom(
       this.exerciseService.getExercise(this.exerciseId)
     );

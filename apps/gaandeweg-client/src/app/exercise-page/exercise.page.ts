@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { NewExerciseComponent } from './new-exercise/new-exercise.component';
+import { ExerciseFormComponent } from './exercise-form/exercise-form.component';
 import {
   Category,
   CategoryService,
@@ -29,7 +29,7 @@ import {
     ExerciseService,
     ExerciseFormService,
     LoggingService,
-    NewExerciseComponent,
+    ExerciseFormComponent,
   ],
 })
 export class ExercisePage implements OnInit {

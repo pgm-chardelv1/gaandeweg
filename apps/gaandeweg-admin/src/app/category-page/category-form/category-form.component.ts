@@ -1,15 +1,15 @@
 import {
   Component,
-  Input,
   OnChanges,
   OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Category, CategoryService } from '@gaandeweg-ws/data-access';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
+
+import { Category, CategoryService } from '@gaandeweg-ws/data-access';
 
 @Component({
   selector: 'gaandeweg-ws-category-form-component',

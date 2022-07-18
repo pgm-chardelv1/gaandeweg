@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { AuthGuard } from '../auth/auth.guard';
 import { CategoryFormComponent } from './category-form/category-form.component';
+import { CategoryPage } from './category.page';
 import { CategoryResolverService } from './category-resolver.service';
 import { CategoryStartComponent } from './category-start/category-start.component';
-import { CategoryPage } from './category.page';
 
 const routes: Routes = [
   {

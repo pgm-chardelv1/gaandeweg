@@ -6,8 +6,8 @@ import {
   UserExercise,
   UserExerciseService,
 } from '@gaandeweg-ws/data-access';
-import { User } from '../../auth/user.model';
 import { AuthService } from '../../auth/auth.service';
+import { User } from '../../auth/user.model';
 
 @Component({
   selector: 'gaandeweg-ws-profile-list',

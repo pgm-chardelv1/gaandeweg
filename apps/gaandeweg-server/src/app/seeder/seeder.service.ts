@@ -1,18 +1,22 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { InfoElement } from '../app.entities';
+
 import { CategoryService } from '../category/category.service';
 import { CreateCategoryDto } from '../category/dto/create-category.dto';
 import { CreateExerciseDto } from '../exercise/dto/create-exercise.dto';
+import { CreateInfoElementDto } from '../info-element/dto/create-info-element.dto';
 import { Exercise } from '../exercise/entities/exercise.entity';
 import { ExerciseService } from '../exercise/exercise.service';
-import { CreateInfoElementDto } from '../info-element/dto/create-info-element.dto';
+import { InfoElement } from '../app.entities';
 import { InfoElementService } from '../info-element/info-element.service';
 import { ProfileService } from '../profile/profile.service';
 import { UserRole } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 
-import { exercises } from './data/exercises';
+/**
+ * Import local JSON data files
+ */
 import { categories } from './data/categories';
+import { exercises } from './data/exercises';
 
 /**
  * The seeder service.

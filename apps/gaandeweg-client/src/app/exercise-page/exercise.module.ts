@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExercisePage } from './exercise.page';
 
 import { ExercisePageRoutingModule } from './exercise-routing.module';
-import { NewExerciseComponentModule } from './new-exercise/new-exercise.module';
+import { ExerciseFormComponentModule as ExerciseFormComponentModule } from './exercise-form/exercise-form.module';
 import { HeaderModule } from '../header/header.module';
 
 @NgModule({
@@ -16,7 +16,7 @@ import { HeaderModule } from '../header/header.module';
     FormsModule,
     HeaderModule,
     IonicModule,
-    NewExerciseComponentModule,
+    ExerciseFormComponentModule,
     ReactiveComponentModule,
     ReactiveFormsModule,
   ],
