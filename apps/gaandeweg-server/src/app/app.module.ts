@@ -60,6 +60,8 @@ import {
           migrations: [__dirname, 'src/migrations'],
           migrationsRun: true,
           migrationsTableName: 'migrations',
+          // Commented because of the following error:
+          // TypeError: No overload matches this call.
           /*           cli: {
             migrationsDir: 'src/migrations',
           }, */
