@@ -66,7 +66,7 @@ services:
 
 # The admin panel
 - type: web
-  name: admin.gaandeweg
+  name: gaandeweg-admin
   env: static
   buildCommand: npx nx build gaandeweg-admin
   staticPublishPath: ./dist/apps/gaandeweg-admin
