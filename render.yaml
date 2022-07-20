@@ -45,7 +45,7 @@ services:
   - key: ENC_SECRET
     generateValue: true
   - key: API_BASEURL
-    value: https://gaandeweg-server.onrender.com/api
+    value: https://gaandeweg-api.onrender.com/api
 
 # The client
 - type: web
@@ -78,8 +78,8 @@ services:
   envVars:
   - key: PUBLIC_URL
     value: .
-  # - key: API_BASEURL
-    # value: https://gaandeweg-server.onrender.com/api
+  - key: API_BASEURL
+    value: https://gaandeweg-api.onrender.com/api
 
 # The documentation
 - type: web
