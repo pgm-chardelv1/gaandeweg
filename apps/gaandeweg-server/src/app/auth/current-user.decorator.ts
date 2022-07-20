@@ -6,7 +6,7 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common';
  * @param {ExecutionContext} ctx - The execution context.
  * @returns The user object from the request object.
  */
-export const User = createParamDecorator(
+export const CurrentUser = createParamDecorator(
   (data: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
     const user = request.user;

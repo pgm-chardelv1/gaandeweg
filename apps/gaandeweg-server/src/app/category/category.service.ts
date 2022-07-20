@@ -84,7 +84,7 @@ export class CategoryService {
           category,
           updateCategoryDto
         );
-        await this.categoryRepository.save(updatedCategory);
+        return await this.categoryRepository.save(updatedCategory);
       }
     } catch (err) {
       Logger.log(`Could not update category. ${err}`);

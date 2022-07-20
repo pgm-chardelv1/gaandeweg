@@ -11,6 +11,10 @@ import { Category, Exercise, InfoElement, Profile } from '../app.entities';
 import { User, UserRole } from '../user/entities/user.entity';
 import { UserExercise } from '../user-exercise/entities/user-exercise.entity';
 
+/**
+ * An enum of the possible actions that can be performed on a site.
+ * @enum {string}
+ */
 export enum Action {
   Manage = 'manage',
   Create = 'create',
@@ -19,6 +23,10 @@ export enum Action {
   Delete = 'delete',
 }
 
+/**
+ * The subjects that can be used in the `get` function.
+ * @type {('all' | InferSubjects<typeof User | typeof Exercise | typeof UserExercise | typeof InfoElement | typeof Category | typeof Profile>)}
+ */
 export type Subjects =
   | InferSubjects<
       | typeof User
@@ -34,6 +42,11 @@ export type AppAbility = Ability<[Action, Subjects]>;
 
 @Injectable()
 export class AbilityFactory {
+  /**
+   * Defines the abilities for the given user.
+   * @param {User} user - The user to define the abilities for.
+   * @returns None
+   */
   defineAbility(user: User) {
     const { can, cannot, build } = new AbilityBuilder(
       Ability as AbilityClass<AppAbility>

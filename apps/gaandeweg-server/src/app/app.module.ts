@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
 import {
   AuthModule,
   CategoryModule,
@@ -15,10 +15,14 @@ import {
   UserExerciseModule,
   UserModule,
 } from './app.modules';
-
-import { Category, Exercise, InfoElement, Profile, User } from './app.entities';
-import { UserExercise } from './user-exercise/entities/user-exercise.entity';
-import { ConfigModule } from '@nestjs/config';
+import {
+  Category,
+  Exercise,
+  InfoElement,
+  Profile,
+  User,
+  UserExercise,
+} from './app.entities';
 
 /**
  * The main module of the application.
@@ -30,14 +34,20 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
-      useFactory: async (): Promise<MysqlConnectionOptions> => {
+      imports: [ConfigModule],
+      useFactory: async (
+        configService: ConfigService
+      ): Promise<MysqlConnectionOptions> => {
         return {
           type: 'mysql',
-          host: 'localhost',
-          port: 3307,
-          username: 'root',
-          password: 'root',
-          database: 'gaandeweg-dev',
+          host: configService.get<string>('DB_HOST', 'localhost'),
+          port: configService.get<number>('DB_PORT', 3307),
+          username: configService.get<string>('DB_USER', 'root'),
+          password: configService.get<string>('DB_PASSWORD', 'root'),
+          database: configService.get<string>(
+            'DB_DATABASE_NAME',
+            'gaandeweg-dev'
+          ),
           entities: [
             Exercise,
             InfoElement,
@@ -46,16 +56,17 @@ import { ConfigModule } from '@nestjs/config';
             User,
             UserExercise,
           ],
-          synchronize: true,
+          synchronize: configService.get<boolean>('DB_SYNC', true),
           migrations: [__dirname, 'src/migrations'],
           migrationsRun: true,
           migrationsTableName: 'migrations',
-          cli: {
+          /*           cli: {
             migrationsDir: 'src/migrations',
-          },
-          logging: true,
+          }, */
+          logging: configService.get<boolean>('TYPEORM_LOGGING', true),
         };
       },
+      inject: [ConfigService],
     }),
     CategoryModule,
     ExerciseModule,

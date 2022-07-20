@@ -13,6 +13,11 @@ export class AuthController {
     private readonly userService: UserService
   ) {}
 
+  /**
+   * Registers a new user.
+   * @param {CreateUserDto} registerDto - The user's information.
+   * @returns {Promise<User>} A promise that resolves to the newly created user.
+   */
   @Post('register')
   async register(@Body() registerDto: CreateUserDto) {
     const user = await this.userService.create({ ...registerDto, type: 1 });
@@ -25,6 +30,11 @@ export class AuthController {
     };
   }
 
+  /**
+   * Takes in a loginDto and validates the user.
+   * @param {LoginDto} loginDto - the loginDto object
+   * @returns {Promise<User | undefined>} - the user object if the user is valid, undefined otherwise
+   */
   @UseGuards(LocalAuthGuard)
   @HttpCode(200)
   @Post('login')
@@ -47,6 +57,10 @@ export class AuthController {
     }
   }
 
+  /**
+   * Logs the user out.
+   * @returns None
+   */
   @UseGuards(LocalAuthGuard)
   @HttpCode(200)
   @Post('logout')
@@ -56,6 +70,11 @@ export class AuthController {
     };
   }
 
+  /**
+   * Takes in a loginDto and validates the admin credentials.
+   * @param {LoginDto} loginDto - the loginDto object
+   * @returns {Promise<User | undefined>} - the user object if the credentials are valid, undefined otherwise.
+   */
   @UseGuards(LocalAuthGuard)
   @HttpCode(200)
   @Post('admin-login')

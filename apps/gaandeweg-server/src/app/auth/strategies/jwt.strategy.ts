@@ -17,6 +17,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  /**
+   * Validates the user with the given email and sub.
+   * @param {string} email - the email of the user to validate.
+   * @param {string} sub - the sub of the user to validate.
+   * @returns The user if the user exists and the sub is valid.
+   */
   async validate(validationPayload: {
     email: string;
     sub: string;
