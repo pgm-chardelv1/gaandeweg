@@ -26,17 +26,37 @@ export interface AuthResponseData {
   expiresIn: string;
 }
 
+/**
+ * Service for handling authentication and authorization.
+ * @class AuthService
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  httpOptions = {
+  /**
+   * The options for the HTTP request.
+   * @type {HttpHeaders}
+   */
+  httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
     }),
   };
 
-  user = new BehaviorSubject<User>({} as User);
+  /**
+   * A BehaviorSubject that holds the current user.
+   * @type {BehaviorSubject<User>}
+   */
+  user: BehaviorSubject<User> = new BehaviorSubject<User>({} as User);
+  /**
+   * A timer that will expire the token after a certain amount of time.
+   * @param {number} expirationTime - the amount of time in milliseconds that the token will expire.
+   */
   private tokenExpirationTimer: any;
+  /**
+   * Gets the CSRF token from the page.
+   * @returns The CSRF token.
+   */
   csrfToken = '';
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -95,6 +115,10 @@ export class AuthService {
    * @returns None
    */
   autoLogin() {
+    /**
+     * Get the user's token and expiration date from local storage.
+     * @returns {string} - the user's token and expiration date
+     */
     const userData: {
       _token: string;
       _tokenExpirationDate: string;
@@ -106,12 +130,24 @@ export class AuthService {
 
     const tokenData = this.getDecodedAccessToken(userData._token);
 
+    /**
+     * Creates a new User object from the data in the userData object.
+     * @param {string} token - the token to use for the user.
+     * @param {Date} tokenExpirationDate - the date the token expires.
+     * @param {string} id - the id of the user.
+     * @returns {User} - the new User object.
+     */
     const loadedUser = new User(
       userData._token,
       new Date(userData._tokenExpirationDate),
       tokenData.sub.id
     );
 
+    /**
+     * If the user has a token, set the user data and auto logout.
+     * @param {User} userData - the user data to set.
+     * @returns None
+     */
     if (loadedUser.token) {
       this.user.next(loadedUser);
       const expirationDuration =
@@ -121,6 +157,11 @@ export class AuthService {
     }
   }
 
+  /**
+   * Takes in a token and decodes it.
+   * @param {string} token - the token to decode
+   * @returns {any} the decoded token
+   */
   getDecodedAccessToken(token: string): any {
     try {
       return jwt_decode(token);
@@ -165,6 +206,7 @@ export class AuthService {
     const userId = this.getDecodedAccessToken(token).sub.id;
     const user = new User(token, expirationDate, userId);
     this.user.next(user);
+
     this.autoLogout(dayjs(expirationDate).unix());
     localStorage.setItem('userData', JSON.stringify(user));
   }

@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class NotFoundPageComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     console.log('NotFoundPageComponent.ngOnInit', this.router.url);
   }
 }

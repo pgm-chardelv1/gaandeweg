@@ -39,6 +39,17 @@ import { User } from '../../auth/user.model';
   ],
 })
 export class ExerciseFormComponent implements OnChanges, OnInit {
+  /**
+   * @param {number} exerciseId - the id of the exercise to load.
+   * @param exercise - The exercise object.
+   * @param exerciseForm - The form object.
+   * @param formControls - The form array object.
+   * @param myGroup - The form group object.
+   * @param isSubmitted - The boolean value for if the form has been submitted.
+   * @param validation_messages - The validation messages object.
+   * @param user - The user object.
+   * @param userSub - The user subscription object.
+   */
   @Input() exerciseId!: number;
   exercise!: Exercise;
   exerciseForm: Partial<ExerciseForm> = {};

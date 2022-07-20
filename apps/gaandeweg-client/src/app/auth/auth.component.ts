@@ -9,6 +9,7 @@ import { AuthResponseData, AuthService } from './auth.service';
 /**
  * Switches the mode of the auth component between login and signup. Allows the user to switch between the two modes. Allows the user to register or login.
  * @returns None
+ * @class AuthComponent
  */
 @Component({
   selector: 'gaandeweg-ws-auth',

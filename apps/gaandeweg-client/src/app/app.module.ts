@@ -25,6 +25,10 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
   XSRF_HEADER_NAME,
 } from './app-xhr-manipulation'; */
 
+/**
+ * The main app module.
+ * @class AppModule
+ */
 @NgModule({
   declarations: [AppComponent, AuthComponent],
   entryComponents: [],

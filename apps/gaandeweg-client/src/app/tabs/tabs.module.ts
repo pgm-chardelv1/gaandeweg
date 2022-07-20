@@ -7,6 +7,10 @@ import { HeaderModule } from '../header/header.module';
 import { TabsPage } from './tabs.page';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
+/**
+ * @description This is the main tabs page module.
+ * @class TabsPageModule
+ */
 @NgModule({
   imports: [
     IonicModule,

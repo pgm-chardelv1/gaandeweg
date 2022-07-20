@@ -12,10 +12,12 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpResponse,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+/**
+ * The name of the XSRF cookie.
+ */
 export const XSRF_COOKIE_NAME: InjectionToken<string> =
   new InjectionToken<string>('XSRF-TOKEN');
 export const XSRF_HEADER_NAME: InjectionToken<string> =
@@ -23,6 +25,12 @@ export const XSRF_HEADER_NAME: InjectionToken<string> =
 
 @Injectable()
 export class HttpXsrfCookieExtractor implements HttpXsrfTokenExtractor {
+  /**
+   * @param {string} lastCookieString - the last cookie string
+   * @param {string | null} lastToken - the token that was parsed.
+   * @param {number} parseCount - the number of times the cookie was parsed.
+   * @param {number} MAX_RETRIES - the maximum number of times to retry.
+   */
   private lastCookieString = '';
   private lastToken: string | null = null;
   private parseCount = 0;
@@ -36,6 +44,10 @@ export class HttpXsrfCookieExtractor implements HttpXsrfTokenExtractor {
   ) {}
 
   //make a HEAD request to retrieve the cookie
+  /**
+   * Makes a HEAD request to the server to get the current cookie.
+   * @returns {Promise<any>} A promise that resolves when the request is complete.
+   */
   headRequest(): Promise<any> {
     const promise = new Promise((resolve, reject) => {
       console.log('head request:');
@@ -60,6 +72,10 @@ export class HttpXsrfCookieExtractor implements HttpXsrfTokenExtractor {
     return promise;
   }
 
+  /**
+   * Gets the token from the HEAD request.
+   * @returns None
+   */
   getToken(): string | null {
     if (this.platform === 'browser') {
       //it should be 'browser’
@@ -77,6 +93,12 @@ export class HttpXsrfCookieExtractor implements HttpXsrfTokenExtractor {
   }
 }
 
+/**
+ * An interceptor that adds the XSRF token to the request header.
+ * @param {HttpRequest<any>} req - The request object.
+ * @param {HttpHandler} next - The next handler in the chain.
+ * @returns {Observable<HttpEvent<any>>} - The response object.
+ */
 @Injectable()
 export class HttpXsrfInterceptor implements HttpInterceptor {
   constructor(
@@ -104,10 +126,10 @@ export class HttpXsrfInterceptor implements HttpInterceptor {
     }
 
     const token = this.tokenService.getToken();
-    console.log('the token: ' + token);
+    /*     console.log('the token: ' + token);
     console.log('the URL: ' + lcUrl);
     console.log('the header name: ' + this.headerName);
-    console.log('the request method: ' + req.method);
+    console.log('the request method: ' + req.method); */
 
     if (token !== null && !req.headers.has(this.headerName)) {
       req = req.clone({

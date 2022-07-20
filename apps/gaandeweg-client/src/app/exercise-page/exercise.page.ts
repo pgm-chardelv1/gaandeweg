@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import {
+  AbstractControlOptions,
   FormArray,
   FormBuilder,
   FormControl,
@@ -15,7 +16,6 @@ import {
   Exercise,
   ExerciseForm,
   ExerciseFormField,
-  ExerciseFormFieldRange,
   ExerciseFormService,
   ExerciseService,
   LoggingService,
@@ -33,6 +33,17 @@ import {
   ],
 })
 export class ExercisePage implements OnInit {
+  /**
+   * The main component for the exercise editor.
+   * @param {Exercise[]} exercises - The list of exercises to display.
+   * @param {Category[]} categories - The list of categories to display.
+   * @param {Exercise} activeExercise - The exercise to display.
+   * @param {Partial<ExerciseForm>} activeExerciseForm - The form to display.
+   * @param {FormArray} formControls - The form controls to display.
+   * @param {FormGroup} myGroup - The form group to display.
+   * @param {boolean} isSubmitted - Whether the form has been submitted.
+   *
+   */
   exercises: Exercise[] = [];
   categories: Category[] = [];
   activeExercise: Exercise = {
@@ -77,6 +88,10 @@ export class ExercisePage implements OnInit {
     this.searchKey = new FormControl('');
   }
 
+  /**
+   * Searches for the search terms in the search box.
+   * @returns None
+   */
   search = () => {
     this.resetChanges();
     this.searchTerms = this.searchKey.value;
@@ -86,12 +101,20 @@ export class ExercisePage implements OnInit {
     });
   };
 
+  /**
+   * Resets the exercises to the original list of exercises.
+   * @returns None
+   */
   resetChanges = () => {
     this.exercises = this.searchListCopy;
     this.searchTerms = '';
   };
 
-  async ngOnInit() {
+  /**
+   * Initializes the component.
+   * @returns None
+   */
+  async ngOnInit(): Promise<void> {
     this.exercises = await firstValueFrom(this.exerciseService.getExercises());
 
     this.searchListCopy = this.exercises;
@@ -109,7 +132,7 @@ export class ExercisePage implements OnInit {
    * If they are, it logs the form data to the console.
    * @returns None
    */
-  onSubmit() {
+  onSubmit(): boolean {
     console.log('Form:', this.myGroup.value);
     this.isSubmitted = true;
     if (!this.myGroup.valid) {
@@ -127,7 +150,7 @@ export class ExercisePage implements OnInit {
    * @param {number} id - the id of the exercise to set as active
    * @returns None
    */
-  async setActive(id: number) {
+  async setActive(id: number): Promise<void> {
     this.activeId = id;
   }
 
@@ -135,7 +158,7 @@ export class ExercisePage implements OnInit {
    * Get the error control object for the form group.
    * @returns {FormGroup} The form group object.
    */
-  get errorControl() {
+  get errorControl(): AbstractControlOptions {
     return this.myGroup.controls;
   }
 
@@ -144,26 +167,33 @@ export class ExercisePage implements OnInit {
    * @param {ExerciseFormField} field - the field to add to the form group.
    * @returns None
    */
-  addFormControl(field: ExerciseFormField) {
+  addFormControl(field: ExerciseFormField): void {
     this.myGroup.registerControl(
       field.fieldName,
       new FormControl(field.fieldName, Validators.required)
     );
   }
 
-  fieldIsRange(field: ExerciseFormField) {
-    console.log(field as ExerciseFormFieldRange);
-    return (
-      field.fieldType === 'RANGE' &&
+  /**
+   * Determines if the given field is a range field.
+   * @param {ExerciseFormField} field - the field to check
+   * @returns {boolean} - true if the field is a range field, false otherwise
+   */
+  fieldIsRange(field: ExerciseFormField): boolean {
+    return (field.fieldType === 'RANGE' &&
       field.fieldOptions &&
       field.fieldOptions.max &&
       (field.fieldOptions.min === 0 || field.fieldOptions.min === 1) &&
       field.fieldOptions.step &&
       field.fieldOptions.icons &&
-      field.fieldOptions.icons.length === 2
-    );
+      field.fieldOptions.icons.length === 2) as boolean;
   }
 
+  /**
+   * Gets the name of the category with the given ID.
+   * @param {number} categoryId - the ID of the category to get the name of.
+   * @returns {string} - The name of the category with the given ID.
+   */
   getCategoryName(categoryId: number): string {
     const category = this.categories.find(
       (category) => category.id === categoryId
@@ -171,7 +201,12 @@ export class ExercisePage implements OnInit {
     return category?.name || '';
   }
 
-  isActive(id: number) {
+  /**
+   * Returns whether or not the given id is the id of the active exercise.
+   * @param {number} id - the id to check against the active exercise's id
+   * @returns {boolean} - whether or not the given id is the id of the active exercise.
+   */
+  isActive(id: number): boolean {
     return this.activeExercise.id === id;
   }
 }

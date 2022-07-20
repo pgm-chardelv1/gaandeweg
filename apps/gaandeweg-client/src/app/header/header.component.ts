@@ -9,6 +9,12 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  /**
+   * @param {string} pageTitle - the title of the page.
+   * @param {boolean} isAuthenticated - whether the user is authenticated.
+   * @param {boolean} isLoading - whether the user is loading.
+   * @param {Subscription} userSub - the subscription to the user.
+   */
   @Input() pageTitle = 'Gaandeweg Oefenapp';
   isAuthenticated = false;
   isLoading = true;
@@ -20,9 +26,18 @@ export class HeaderComponent implements OnInit {
     private logger: LoggingService
   ) {}
 
+  /**
+   * Initializes the component.
+   * @returns None
+   */
   ngOnInit(): void {
-    this.userSub = this.authService.user.subscribe(
-      (user) => {
+    /**
+     * A subscription to the user observable.
+     * @param {Observer<User>} observer - the observer to subscribe to the user observable.
+     * @returns None
+     */
+    this.userSub = this.authService.user.subscribe({
+      next: (user) => {
         this.logger.log('client', user.token as string);
         this.isAuthenticated = !!user.token;
         this.logger.log(
@@ -34,16 +49,20 @@ export class HeaderComponent implements OnInit {
           'User is authenticated: ' + this.isAuthenticated
         );
       },
-      (error) => {
+      error: (error) => {
         this.logger.error(
           'client',
           `An error occurred while logging you in: ${error.message}`
         );
-      }
-    );
+      },
+    });
     this.isLoading = false;
   }
 
+  /**
+   * Logs the user out of the application.
+   * @returns None
+   */
   onLogout(): void {
     this.authService.logout();
     this.logger.log('client', 'User logged out');

@@ -24,6 +24,12 @@ export class AuthInterceptorService implements HttpInterceptor {
     private logger: LoggingService
   ) {}
 
+  /**
+   * Intercepts the request and adds the user's token to the request headers.
+   * @param {HttpRequest<any>} req - the request to intercept
+   * @param {HttpHandler} next - the next handler in the chain
+   * @returns {Observable<HttpEvent<any>>} - the modified request
+   */
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return this.authService.user.pipe(
       take(1),

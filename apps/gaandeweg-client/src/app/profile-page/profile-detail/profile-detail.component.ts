@@ -13,7 +13,16 @@ import {
   templateUrl: './profile-detail.component.html',
   styleUrls: ['./profile-detail.component.scss'],
 })
+/**
+ * Displays the user profile.
+ * @class ProfileDetailComponent
+ */
 export class ProfileDetailComponent implements OnInit {
+  /**
+   * @param {boolean} isLoading Component loading state
+   * @param {UserExercise} userExercise The user exercise
+   * @param {UserData} userData The user data
+   */
   isLoading = true;
   userExercise!: UserExercise;
   userData = JSON.parse(localStorage.getItem('userData') as string);
@@ -25,6 +34,10 @@ export class ProfileDetailComponent implements OnInit {
     private userExerciseService: UserExerciseService
   ) {}
 
+  /**
+   * Initializes the component.
+   * @returns None
+   */
   ngOnInit(): void {
     this.logger.log('client', 'ProfileDetailComponent.ngOnInit');
     this.route.params.subscribe(async (params: Params) => {

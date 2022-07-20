@@ -13,6 +13,12 @@ const routes: Routes = [
       import('./tabs/tabs.module').then((m) => m.TabsPageModule),
   },
 ];
+/**
+ * The routing module for the application.
+ * @param {RouterModule} RouterModule - The Angular RouterModule.
+ * @class AppRoutingModule
+ * @returns None
+ */
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),

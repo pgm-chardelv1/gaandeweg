@@ -52,6 +52,10 @@ const routes: Routes = [
   },
 ];
 
+/**
+ * @description This is the routing module for the tabs page.
+ * @module TabsRoutingModule
+ */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })

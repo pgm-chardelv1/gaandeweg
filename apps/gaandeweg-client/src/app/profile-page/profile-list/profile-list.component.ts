@@ -14,12 +14,23 @@ import { User } from '../../auth/user.model';
   templateUrl: './profile-list.component.html',
   styleUrls: ['./profile-list.component.scss'],
 })
+/**
+ * The profile list component.
+ * @class ProfileListComponent
+ */
 export class ProfileListComponent implements OnInit, OnDestroy {
+  /**
+   * @param {boolean} isLoading Component loading state
+   * @param {User} user The user
+   * @param {UserExercise[]} userExercises The user exercises
+   * @param {Subscription} userSub The user subscription
+   * @param {any} userData The user data
+   */
   isLoading = true;
   user: User = new User('', new Date(), '');
-  userSub = new Subscription();
+  userSub: Subscription = new Subscription();
   userExercises: UserExercise[] = [] as UserExercise[];
-  userData = JSON.parse(localStorage.getItem('userData') as string);
+  userData: any = JSON.parse(localStorage.getItem('userData') as string);
 
   constructor(
     private authService: AuthService,
@@ -27,15 +38,33 @@ export class ProfileListComponent implements OnInit, OnDestroy {
     private logger: LoggingService
   ) {}
 
-  async ngOnInit() {
+  /**
+   * Initializes the component.
+   * @returns None
+   */
+  async ngOnInit(): Promise<void> {
+    /**
+     * Subscribe to the user observable and set the user property.
+     * @param {User} user - the user object from the auth service
+     * @returns None
+     */
     this.userSub = this.authService.user.subscribe((user: User) => {
       this.user = user;
       console.log('ProfileListComponent.ngOnInit', user);
     });
 
+    /**
+     * Gets the first value from a promise.
+     * @param {Promise<any>} promise - the promise to get the first value from
+     * @returns The first value from the promise
+     */
     this.userExercises = await firstValueFrom(
       this.userExerciseService.getUserExercises(this.userData.id)
     );
+    /**
+     * If there are no exercises in the user's profile, log an error.
+     * @returns None
+     */
     if (this.userExercises.length === 0) {
       this.logger.error(
         'client',
@@ -49,7 +78,11 @@ export class ProfileListComponent implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
-  ngOnDestroy() {
+  /**
+   * A function that is called when the component is destroyed.
+   * @returns None
+   */
+  ngOnDestroy(): void {
     this.isLoading = true;
   }
 }

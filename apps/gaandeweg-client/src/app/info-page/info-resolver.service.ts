@@ -8,10 +8,20 @@ import { lastValueFrom } from 'rxjs';
 
 import { InfoElement, InfoService } from '@gaandeweg-ws/data-access';
 
+/**
+ * Resolves the info elements for the page.
+ * @returns {Promise<InfoElement[]>}
+ */
 @Injectable({ providedIn: 'root' })
 export class InfoResolverService implements Resolve<InfoElement[]> {
   constructor(private infoElementService: InfoService) {}
 
+  /**
+   * Resolves the info elements for the current route.
+   * @param {ActivatedRouteSnapshot} route - the route to resolve
+   * @param {RouterStateSnapshot} state - the router state to resolve
+   * @returns {Promise<InfoElement[]>} - the info elements for the current route
+   */
   async resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

@@ -8,11 +8,18 @@ import { LoggingService } from '@gaandeweg-ws/data-access';
   styleUrls: ['info.page.scss'],
 })
 export class InfoPage implements OnInit {
+  /**
+   * @param {boolean} isLoading Component loading state
+   */
   isLoading = true;
 
   constructor(private logger: LoggingService) {}
 
-  async ngOnInit() {
+  /**
+   * Initializes the page.
+   * @returns None
+   */
+  async ngOnInit(): Promise<void> {
     this.logger.log('client', 'InfoPage.ngOnInit');
     this.isLoading = false;
   }
