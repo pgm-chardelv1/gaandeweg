@@ -14,7 +14,7 @@ services:
   region: oregon
   plan: starter
   branch: develop
-  buildCommand: npm i; npx nx affected --target=build:gaandeweg-server --parallel --max-parallel=1
+  buildCommand: npm i; npx nx build gaandeweg-server --parallel --max-parallel=1
   startCommand: yarn start gaandeweg-server
 
   envVars:
