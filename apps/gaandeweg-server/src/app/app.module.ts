@@ -40,12 +40,12 @@ import {
       ): Promise<MysqlConnectionOptions> => {
         return {
           type: 'mysql',
-          host: configService.get<string>('DB_HOST', 'localhost'),
-          port: configService.get<number>('DB_PORT', 3307),
-          username: configService.get<string>('DB_USER', 'root'),
-          password: configService.get<string>('DB_PASSWORD', 'root'),
+          host: configService.get<string>('MYSQL_HOST', 'localhost'),
+          port: configService.get<number>('MYSQL_PORT', 3307),
+          username: configService.get<string>('MYSQL_USER', 'root'),
+          password: configService.get<string>('MYSQL_PASSWORD', 'root'),
           database: configService.get<string>(
-            'DB_DATABASE_NAME',
+            'MYSQL_DATABASE',
             'gaandeweg-dev'
           ),
           entities: [
