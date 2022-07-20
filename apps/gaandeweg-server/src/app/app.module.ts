@@ -18,6 +18,7 @@ import {
 
 import { Category, Exercise, InfoElement, Profile, User } from './app.entities';
 import { UserExercise } from './user-exercise/entities/user-exercise.entity';
+import { ConfigModule } from '@nestjs/config';
 
 /**
  * The main module of the application.
@@ -27,6 +28,7 @@ import { UserExercise } from './user-exercise/entities/user-exercise.entity';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       useFactory: async (): Promise<MysqlConnectionOptions> => {
         return {

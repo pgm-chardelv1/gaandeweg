@@ -65,7 +65,8 @@
         },
         "development": {
           "browserTarget": "gaandeweg-admin:build:development",
-          "port": 4201
+          "port": 4201,
+          "proxyConfig": "apps/gaandeweg-admin/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"

@@ -70,7 +70,8 @@
           "browserTarget": "gaandeweg-client:build:production"
         },
         "development": {
-          "browserTarget": "gaandeweg-client:build:development"
+          "browserTarget": "gaandeweg-client:build:development",
+          "proxyConfig": "apps/gaandeweg-client/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"

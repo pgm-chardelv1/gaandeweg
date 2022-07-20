@@ -9,9 +9,11 @@
       <div class="alert alert-danger" *ngIf="error !== null">
         <p>{{ error }}</p>
       </div>
+
       <div *ngIf="isLoading" style="text-align: center;">
         <ion-spinner></ion-spinner>
       </div>
+      
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
         <div class="form-group">
           <ion-label for="email">E-Mail</ion-label>
@@ -25,6 +27,7 @@
             email
           ></ion-input>
         </div>
+        
         <div class="form-group">
           <ion-label for="password">Wachtwoord</ion-label>
           <ion-input
@@ -56,6 +59,7 @@
             </p>
           </div>
         </div>
+        
         <div>
           <ion-button color="primary"
             class="btn btn-primary"

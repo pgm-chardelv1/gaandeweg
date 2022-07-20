@@ -28,8 +28,16 @@ export interface AuthResponseData {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    }),
+  };
+
   user = new BehaviorSubject<User>({} as User);
   private tokenExpirationTimer: any;
+  csrfToken = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -41,10 +49,14 @@ export class AuthService {
    */
   signup(email: string, password: string) {
     return this.http
-      .post<AuthResponseData>(`${environment.API_BASEURL}/auth/register`, {
-        email: email,
-        password: password,
-      })
+      .post<AuthResponseData>(
+        `${environment.API_BASEURL}/auth/register`,
+        {
+          email: email,
+          password: password,
+        },
+        this.httpOptions
+      )
       .pipe(
         catchError(this.handleError),
         tap((resData) => {
@@ -68,11 +80,7 @@ export class AuthService {
           email: email,
           password: password,
         },
-        {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          }),
-        }
+        this.httpOptions
       )
       .pipe(
         catchError(this.handleError),
