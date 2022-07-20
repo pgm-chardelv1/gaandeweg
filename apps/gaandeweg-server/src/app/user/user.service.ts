@@ -90,7 +90,9 @@ export class UserService {
    */
   findOne(id: string): Promise<User> {
     try {
-      const user: Promise<User> = this.userRepository.findOne(id);
+      const user: Promise<User> = this.userRepository.findOne({
+        where: { id },
+      });
       if (!user) {
         throw new BadRequestException('User could not be found');
       }
@@ -125,7 +127,7 @@ export class UserService {
    */
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     try {
-      const user = await this.userRepository.findOne(id);
+      const user = await this.userRepository.findOne({ where: { id } });
       if (!user) {
         throw new BadRequestException('Could not update user. User not found.');
       } else {
@@ -145,7 +147,7 @@ export class UserService {
    */
   async remove(id: string): Promise<User> {
     try {
-      const user = await this.userRepository.findOne(id);
+      const user = await this.userRepository.findOne({ where: { id } });
       if (!user) {
         throw new BadRequestException('User could not be found');
       } else {

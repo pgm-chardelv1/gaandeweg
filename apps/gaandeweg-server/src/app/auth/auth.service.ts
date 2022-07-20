@@ -41,7 +41,9 @@ export class AuthService {
   }
 
   async validate(email: string, password: string): Promise<User> | null {
-    const user: User = await this.usersService.findUnique({ where: { email } });
+    const user: User = await this.usersService.findUnique({
+      where: { email },
+    });
     if (!user) {
       return null;
     }

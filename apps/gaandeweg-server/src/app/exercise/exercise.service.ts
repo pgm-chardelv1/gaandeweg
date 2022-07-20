@@ -57,7 +57,7 @@ export class ExerciseService {
    */
   async findOne(id: number) {
     try {
-      const exercise = this.exerciseRepository.findOne(id);
+      const exercise = this.exerciseRepository.findOne({ where: { id } });
       if (!exercise) {
         throw new BadRequestException('Exercise could not be found');
       }
@@ -75,7 +75,7 @@ export class ExerciseService {
    */
   async update(id: number, updateExerciseDto: UpdateExerciseDto) {
     try {
-      const exercise = await this.exerciseRepository.findOne(id);
+      const exercise = await this.exerciseRepository.findOne({ where: { id } });
       if (!exercise) {
         throw new BadRequestException('Exercise could not be found.');
       } else {
@@ -97,7 +97,7 @@ export class ExerciseService {
    */
   async remove(id: number) {
     try {
-      const exercise = await this.exerciseRepository.findOne(id);
+      const exercise = await this.exerciseRepository.findOne({ where: { id } });
       if (!exercise) {
         throw new BadRequestException('Exercise could not be found');
       } else {

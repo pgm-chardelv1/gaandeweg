@@ -58,7 +58,7 @@ export class CategoryService {
    */
   findOne(id: number) {
     try {
-      const category = this.categoryRepository.findOne(id);
+      const category = this.categoryRepository.findOne({ where: { id } });
       if (!category) {
         throw new BadRequestException('Category could not be found');
       }
@@ -76,7 +76,7 @@ export class CategoryService {
    */
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
     try {
-      const category = await this.categoryRepository.findOne(id);
+      const category = await this.categoryRepository.findOne({ where: { id } });
       if (!category) {
         throw new BadRequestException('Category could not be found.');
       } else {
@@ -98,7 +98,7 @@ export class CategoryService {
    */
   async remove(id: number) {
     try {
-      const category = await this.categoryRepository.findOne(id);
+      const category = await this.categoryRepository.findOne({ where: { id } });
       if (!category) {
         throw new BadRequestException('Category could not be found');
       } else {

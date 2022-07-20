@@ -78,7 +78,9 @@ export class UserExerciseService {
    */
   async findOne(id: number, userId: string): Promise<any> {
     try {
-      const userExercise = await this.userExerciseRepository.findOne(id);
+      const userExercise = await this.userExerciseRepository.findOne({
+        where: { id },
+      });
 
       if (!userExercise) {
         throw new BadRequestException('UserExercise could not be found');
@@ -109,7 +111,9 @@ export class UserExerciseService {
     updateUserExerciseDto: UpdateUserExerciseDto
   ): Promise<UserExercise> {
     try {
-      const userExercise = await this.userExerciseRepository.findOne(id);
+      const userExercise = await this.userExerciseRepository.findOne({
+        where: { id },
+      });
       if (!userExercise) {
         throw new BadRequestException('UserExercise could not be found');
       } else if (userExercise.userId !== userId) {
@@ -137,7 +141,9 @@ export class UserExerciseService {
    */
   async remove(id: number, userId: string): Promise<UserExercise> {
     try {
-      const userExercise = await this.userExerciseRepository.findOne(id);
+      const userExercise = await this.userExerciseRepository.findOne({
+        where: { id },
+      });
       if (!userExercise) {
         throw new BadRequestException('UserExercise could not be found');
       } else if (userExercise.userId !== userId) {

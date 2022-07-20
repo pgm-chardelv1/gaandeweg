@@ -58,7 +58,9 @@ export class ProfileService {
 
   findOne(id: string): Promise<Profile> {
     try {
-      const profile: Promise<Profile> = this.profileRepository.findOne(id);
+      const profile: Promise<Profile> = this.profileRepository.findOne({
+        where: { id },
+      });
       if (!profile) {
         throw new BadRequestException('Profile could not be found');
       }
@@ -79,7 +81,7 @@ export class ProfileService {
     updateProfileDto: UpdateProfileDto
   ): Promise<Profile> {
     try {
-      const profile = await this.profileRepository.findOne(id);
+      const profile = await this.profileRepository.findOne({ where: { id } });
       if (!profile) {
         throw new BadRequestException(
           'Could not update profile. Profile not found.'
@@ -103,7 +105,7 @@ export class ProfileService {
    */
   async remove(id: string): Promise<Profile> {
     try {
-      const profile = await this.profileRepository.findOne(id);
+      const profile = await this.profileRepository.findOne({ where: { id } });
       if (!profile) {
         throw new BadRequestException('Profile could not be found');
       } else {

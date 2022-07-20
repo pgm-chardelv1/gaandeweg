@@ -58,7 +58,7 @@ export class InfoElementService {
    */
   findOne(id: number) {
     try {
-      const infoElement = this.infoElementRepository.findOne(id);
+      const infoElement = this.infoElementRepository.findOne({ where: { id } });
       if (!infoElement) {
         throw new BadRequestException('InfoElement could not be found');
       }
@@ -76,7 +76,9 @@ export class InfoElementService {
    */
   async update(id: number, updateInfoElementDto: UpdateInfoElementDto) {
     try {
-      const infoElement = await this.infoElementRepository.findOne(id);
+      const infoElement = await this.infoElementRepository.findOne({
+        where: { id },
+      });
       if (!infoElement) {
         throw new BadRequestException('InfoElement could not be found.');
       } else {
@@ -98,7 +100,9 @@ export class InfoElementService {
    */
   async remove(id: number) {
     try {
-      const infoElement = await this.infoElementRepository.findOne(id);
+      const infoElement = await this.infoElementRepository.findOne({
+        where: { id },
+      });
       if (!infoElement) {
         throw new BadRequestException('InfoElement could not be found');
       } else {
