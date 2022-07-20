@@ -69,7 +69,7 @@ services:
   name: gaandeweg-admin
   env: static
   buildCommand: npx nx build gaandeweg-admin
-  staticPublishPath: ./dist/apps/gaandeweg-admin
+  staticPublishPath: ./dist/apps/gaandeweg-admin/en-US
   routes: 
   # rewrite
   - type: rewrite
