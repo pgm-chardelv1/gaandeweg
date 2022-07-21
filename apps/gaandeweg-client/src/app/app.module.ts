@@ -11,7 +11,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
-import { LoggingService } from '@gaandeweg-ws/data-access';
+import {
+  CacheInterceptorService,
+  LoggingService,
+} from '@gaandeweg-ws/data-access';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthComponent } from './auth/auth.component';
@@ -50,6 +53,11 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CacheInterceptorService,
       multi: true,
     },
 

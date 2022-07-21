@@ -15,7 +15,9 @@ export class CategoryService {
    * @returns An observable of the categories.
    */
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${environment.API_BASEURL}/categories`);
+    return this.http.get<Category[]>(`${environment.API_BASEURL}/categories`, {
+      params: { _useCache: 'true' },
+    });
   }
 
   /**
@@ -25,7 +27,8 @@ export class CategoryService {
    */
   getCategory(id: number): Observable<Category> {
     return this.http.get<Category>(
-      `${environment.API_BASEURL}/categories/${id}`
+      `${environment.API_BASEURL}/categories/${id}`,
+      { params: { _useCache: 'true' } }
     );
   }
 

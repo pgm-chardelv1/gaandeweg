@@ -15,7 +15,9 @@ export class ExerciseService {
    * @returns An observable of the list of exercises.
    */
   getExercises(): Observable<Exercise[]> {
-    return this.http.get<Exercise[]>(`${environment.API_BASEURL}/exercise`);
+    return this.http.get<Exercise[]>(`${environment.API_BASEURL}/exercise`, {
+      params: { _useCache: 'true' },
+    });
   }
 
   /**
@@ -24,7 +26,10 @@ export class ExerciseService {
    * @returns {Observable<Exercise>} - the exercise with the given id
    */
   getExercise(id: number): Observable<Exercise> {
-    return this.http.get<Exercise>(`${environment.API_BASEURL}/exercise/${id}`);
+    return this.http.get<Exercise>(
+      `${environment.API_BASEURL}/exercise/${id}`,
+      { params: { _useCache: 'true' } }
+    );
   }
 
   /**
