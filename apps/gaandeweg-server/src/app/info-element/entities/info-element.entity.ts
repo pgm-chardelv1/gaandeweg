@@ -33,7 +33,7 @@ export class InfoElement {
   @Column({ type: 'varchar', length: 250 })
   definition: string;
 
-  @Column({ type: 'longtext' })
+  @Column({ type: 'text' })
   text: string;
 
   @Column({ type: 'int' })

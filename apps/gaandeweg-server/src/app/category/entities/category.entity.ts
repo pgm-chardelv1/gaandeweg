@@ -37,7 +37,7 @@ export class Category {
   @Column('varchar', { length: 250 })
   summary: string;
 
-  @Column('longtext')
+  @Column('text')
   description: string;
 
   @CreateDateColumn()

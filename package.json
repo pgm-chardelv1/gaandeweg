@@ -83,7 +83,6 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.3",
     "@ngrx/component": "^13.1.0",
-    "@nrwl/nest": "^13.9.6",
     "@types/cookie-parser": "^1.4.3",
     "@types/csurf": "^1.11.2",
     "babel-runtime": "^6.26.0",
