@@ -48,7 +48,7 @@ export class InfoElement {
   @Column({ type: 'smallint', default: 0 })
   published: boolean;
 
-  @Column({ type: 'datetime', default: null })
+  @Column({ type: 'date', default: null })
   publishedAt?: Date;
 
   @Column({ type: 'varchar', length: 45, default: null })
