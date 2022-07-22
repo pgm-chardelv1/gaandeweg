@@ -23,6 +23,7 @@ import {
   User,
   UserExercise,
 } from './app.entities';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 /**
  * The main module of the application.
@@ -37,7 +38,30 @@ import {
       imports: [ConfigModule],
       useFactory: async (
         configService: ConfigService
-      ): Promise<MysqlConnectionOptions> => {
+      ): Promise<PostgresConnectionOptions> => {
+        return {
+          type: 'postgres',
+          host: configService.get('DB_HOST', 'localhost'),
+          port: configService.get('DB_PORT', 5432),
+          username: configService.get('DB_USERNAME', 'root'),
+          password: configService.get('DB_PASSWORD', 'toor'),
+          database: configService.get('DB_DATABASE_NAME', 'gaandeweg-dev'),
+          entities: [
+            Category,
+            Exercise,
+            InfoElement,
+            Profile,
+            User,
+            UserExercise,
+          ],
+          synchronize: true,
+          migrations: [__dirname, 'src/migrations'],
+          migrationsRun: true,
+          migrationsTableName: 'migrations',
+          logging: configService.get<boolean>('TYPEORM_LOGGING', true),
+        };
+        // }
+        /* Promise<MysqlConnectionOptions> => {
         return {
           type: 'mysql',
           host: configService.get<string>('MYSQL_HOST', 'localhost'),
@@ -64,9 +88,9 @@ import {
           // TypeError: No overload matches this call.
           /*           cli: {
             migrationsDir: 'src/migrations',
-          }, */
+          }, 
           logging: configService.get<boolean>('TYPEORM_LOGGING', true),
-        };
+        }; */
       },
       inject: [ConfigService],
     }),
