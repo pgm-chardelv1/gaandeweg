@@ -1,41 +1,61 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import { AuthComponent } from '../auth/auth.component';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
-        loadChildren: () =>
-          import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
+        path: 'auth',
+        component: AuthComponent,
       },
       {
-        path: 'tab2',
+        path: 'home',
         loadChildren: () =>
-          import('../tab2/tab2.module').then((m) => m.Tab2PageModule),
+          import('../home-page/home.module').then((m) => m.HomePageModule),
       },
       {
-        path: 'tab3',
+        path: 'exercise',
         loadChildren: () =>
-          import('../tab3/tab3.module').then((m) => m.Tab3PageModule),
+          import('../exercise-page/exercise.module').then(
+            (m) => m.ExercisePageModule
+          ),
       },
       {
-        path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full',
+        path: 'info',
+        loadChildren: () =>
+          import('../info-page/info.module').then((m) => m.InfoPageModule),
+      },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('../profile-page/profile.module').then(
+            (m) => m.ProfilePageModule
+          ),
+      },
+      {
+        path: 'not-found',
+        loadChildren: () =>
+          import('../not-found-page/not-found.module').then(
+            (m) => m.NotFoundPageModule
+          ),
       },
     ],
   },
   {
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full',
+    path: '**',
+    redirectTo: 'not-found',
   },
 ];
 
+/**
+ * @description This is the routing module for the tabs page.
+ * @module TabsRoutingModule
+ */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })

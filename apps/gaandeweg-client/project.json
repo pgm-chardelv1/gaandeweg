@@ -70,7 +70,8 @@
           "browserTarget": "gaandeweg-client:build:production"
         },
         "development": {
-          "browserTarget": "gaandeweg-client:build:development"
+          "browserTarget": "gaandeweg-client:build:development",
+          "proxyConfig": "apps/gaandeweg-client/proxy.conf.json"
         }
       },
       "defaultConfiguration": "development"
@@ -186,6 +187,13 @@
         "android": {
           "cmd": "update android"
         }
+      }
+    },
+    "generate-docs": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx compodoc -p apps/gaandeweg-client/tsconfig.json -d dist/docs/gaandeweg-client -n \"Gaandeweg Client\" -r 80",
+        "color": true
       }
     }
   },

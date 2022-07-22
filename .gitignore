@@ -45,7 +45,10 @@ Thumbs.db
 .vscode/launch.json
 .vscode/extensions.json
 
+# MySQL Database volume
+/data
 
-./**/**/.env
-
-data
+# Environment files
+/**/**/.env
+.env
+apps/gaandeweg-server/.env

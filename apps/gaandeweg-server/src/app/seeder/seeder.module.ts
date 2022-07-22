@@ -1,0 +1,31 @@
+import { Module } from '@nestjs/common';
+
+import { CategoryModule } from '../category/category.module';
+import { ExerciseModule } from '../exercise/exercise.module';
+import { InfoElementModule } from '../info-element/info-element.module';
+import { ProfileModule } from '../profile/profile.module';
+import { SeederController } from './seeder.controller';
+import { SeederService } from './seeder.service';
+import { UserModule } from '../user/user.module';
+
+/**
+ * The seeder module.
+ *
+ * @description This module contains all the seeder related services and controllers.
+ * @providers SeederService
+ * @controllers SeederController
+ * @exports SeederModule
+ */
+@Module({
+  imports: [
+    ExerciseModule,
+    InfoElementModule,
+    CategoryModule,
+    ProfileModule,
+    UserModule,
+  ],
+  providers: [SeederService],
+  exports: [SeederService],
+  controllers: [SeederController],
+})
+export class SeederModule {}

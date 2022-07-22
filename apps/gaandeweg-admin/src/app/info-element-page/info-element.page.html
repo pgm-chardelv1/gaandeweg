@@ -1,0 +1,15 @@
+<div class="row">
+    <h1>Info Elements</h1>
+
+    <div *ngIf="isLoading" style="text-align: center;">
+        <gaandeweg-ws-loading-spinner></gaandeweg-ws-loading-spinner>
+    </div>
+    
+    <div class="col-md-5">
+        <gaandeweg-ws-info-element-list></gaandeweg-ws-info-element-list>
+    </div>
+    
+    <div class="col-md-7">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-xs-12">
+        <button class="btn btn-success mb-2" (click)="onNewInfoElement()">
+            <fa-icon [icon]="faPlus"></fa-icon>
+            Nieuw informatie element
+        </button>
+    </div>
+
+    <div class="col-xs-12" *ngIf="infoElements">
+        <ul class="list-group ps-0">
+            <li class="list-group-item d-flex justify-content-between" *ngFor="let infoElement of infoElements" >
+                <a [routerLink]="['/info-element', infoElement.id, 'edit']" routerLinkActive="bg-light" title="Bewerk element">{{infoElement.name}}</a>
+
+                <button class="btn btn-danger btn-sm" (click)="onDeleteInfoElement(infoElement.id)" title="Verwijder element">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>

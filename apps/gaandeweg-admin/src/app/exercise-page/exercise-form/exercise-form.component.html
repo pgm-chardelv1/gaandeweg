@@ -1,0 +1,42 @@
+<div *ngIf="isLoading">
+    <gaandeweg-ws-loading-spinner></gaandeweg-ws-loading-spinner>
+</div>
+<div class="container-fluid" *ngIf="!isLoading">
+    <div class="card-header" *ngIf="exerciseForm">
+        <form [formGroup]="exerciseForm" (submit)="onSubmit()">
+            <input *ngIf="exercise.id" type="hidden" formControlName="id" [value]="exercise.id">
+
+            <div class="form-group mb-2">
+                <label class="label">Versie van de oefening</label>
+                <input type="text" class="form-control" formControlName="version" [value]="exercise.version" placeholder="1">
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="label">Categorie</label>
+                <select class="form-control" formControlName="categoryId" [value]="exercise.categoryId">
+                    <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="label">Naam</label>
+                <input type="text" class="form-control" formControlName="name" placeholder="Naam"
+                [value]="exercise.name">
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="label">Samenvatting</label>
+                <textarea class="form-control" formControlName="summary" placeholder="Samenvatting"
+                [value]="exercise.summary"></textarea>
+            </div>
+
+            <div class="form-group mb-2">
+                <label class="label">Velden</label>
+                <gaandeweg-ws-exercise-template-form-component [id]="exercise.id"></gaandeweg-ws-exercise-template-form-component>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Opslaan</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+
+import { AuthService } from './auth.service';
+
+/**
+ * A guard that checks if the user is authenticated.
+ * @param {AuthService} authService - The auth service to check if the user is authenticated.
+ * @param {Router} router - The router to redirect the user to the login page if they are not authenticated.
+ * @returns A boolean or a UrlTree.
+ */
+@Injectable({ providedIn: 'root' })
+export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  /**
+   * A guard that checks if the user is authenticated.
+   * @param {ActivatedRouteSnapshot} route - The route that the user is trying to access.
+   * @param {RouterStateSnapshot} router - The router state of the user.
+   * @returns {boolean | UrlTree} - True if the user is authenticated, otherwise false or a redirect to the login page.
+   */
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    router: RouterStateSnapshot
+  ):
+    | boolean
+    | UrlTree
+    | Promise<boolean | UrlTree>
+    | Observable<boolean | UrlTree> {
+    return this.authService.user.pipe(
+      take(1),
+      map((user) => {
+        const isAuth = !!user;
+        if (isAuth) {
+          if (localStorage.getItem('userData') !== null) {
+            return true;
+          } else {
+            return this.router.createUrlTree(['/app/auth']);
+          }
+        }
+        return this.router.createUrlTree(['']);
+      })
+    );
+  }
+}

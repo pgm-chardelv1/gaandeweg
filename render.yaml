@@ -1,0 +1,114 @@
+# Render deployment Blueprint
+# For more information read the documentation on: https://render.com/docs/blueprint-spec
+
+# How to use a Blueprint (Infrastructure as Code [IAC]): https://render.com/docs/infrastructure-as-code
+
+previewsEnabled: true
+previewsExpireAfterDays: 1
+
+services:
+# The server
+- type: web
+  name: gaandeweg-api
+  env: node
+  region: oregon
+  plan: starter
+  branch: develop
+  buildCommand: npm i; npx nx build gaandeweg-server --parallel --max-parallel=1
+  startCommand: yarn start gaandeweg-server
+
+  envVars:
+  - key: PORT
+    value: 4000
+  - key: EXAMPLE_GENERATE_SECRET
+    generateValue: true
+  - key: EXAMPLE_NO_SYNC
+    sync: false
+  - key: JWT_SECRET
+    generateValue: true
+  - key: BCRYPT_SALT_ROUNDS
+    value: 12
+  - fromGroup: gaandeweg-db-prod
+  - key: DB_SYNC
+    value: true
+  - key: TYPEORM_LOGGING
+    value: true
+  - key: ENC_SECRET
+    generateValue: true
+  - key: API_BASEURL
+    value: https://gaandeweg-api.onrender.com/api
+
+# The client
+- type: web
+  name: gaandeweg
+  env: static
+  buildCommand: npx nx build gaandeweg-client
+  staticPublishPath: ./dist/apps/gaandeweg-client
+  routes: 
+  # rewrite
+  - type: rewrite
+    source: /*
+    destination: /index.html
+  envVars:
+  - key: PUBLIC_URL
+    value: .
+  # - key: API_BASEURL
+    # value: https://gaandeweg-server.onrender.com/api
+
+# The admin panel
+- type: web
+  name: gaandeweg-admin
+  env: static
+  buildCommand: npx nx build gaandeweg-admin
+  staticPublishPath: ./dist/apps/gaandeweg-admin/en-US
+  routes: 
+  # rewrite
+  - type: rewrite
+    source: /*
+    destination: /index.html
+  envVars:
+  - key: PUBLIC_URL
+    value: .
+  - key: API_BASEURL
+    value: https://gaandeweg-api.onrender.com/api
+
+# The documentation
+- type: web
+  name: gaandeweg-docs
+  env: static
+  buildCommand: npx nx run-many --target=generate-docs --all=true
+  staticPublishPath: ./dist/docs
+
+# The MySQL database as a Docker container
+- type: pserv
+  name: gaandeweg-db-prod
+  plan: standard
+  env: docker
+  disk:
+    name: gaandeweg-db-prod
+    mountPath: /var/lib/mysql
+    sizeGB: 10
+  envVars:
+   - fromGroup: gaandeweg-db-prod
+
+envVarGroups:
+- name: gaandeweg-db-prod
+  envVars:
+  - key: MYSQL_DATABASE
+    value: gaandeweg-db-prod
+  - key: MYSQL_USER
+    value: gaandeweg-db-user
+  - key: MYSQL_PASSWORD
+    generateValue: true
+  - key: MYSQL_ROOT_PASSWORD
+    generateValue: true
+
+
+
+# The PostgreSQL databases
+# databases:
+## Passwords and database settings will automatically be set as 
+## Environment variables in the deployed API service
+# - name: gaandeweg-db-prod
+  # databaseName: gaandeweg-prod
+  # user: gaandeweg-prod-user

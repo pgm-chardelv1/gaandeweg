@@ -1,13 +1,14 @@
-version: '3'
+version: "3"
 services:
   mysql-dev:
     image: mysql:5.7
     container_name: mysql
-    environment: 
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=gaandeweg-dev
-    ports: 
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "gaandeweg-dev"
+    ports:
       - "3307:3306"
     volumes:
       - ./data:/var/lib/mysql
     restart: always
+  

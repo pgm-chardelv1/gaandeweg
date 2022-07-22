@@ -1,0 +1,24 @@
+<ion-spinner *ngIf="isLoading"></ion-spinner>
+
+<div class="spacer"></div>
+<ion-list>
+  <ion-item *ngFor="let userExercise of userExercises" color="{{isActive(userExercise.id) ? 'light' : ''}}">
+    <ion-label slot="start" button (click)="setActive(userExercise.id)">
+      <h2>{{userExercise?.exerciseName}}</h2>
+    </ion-label>
+
+    <ion-label slot="start">
+      <ion-chip color="primary">{{getDateString(userExercise?.createdAt)}}</ion-chip>
+    </ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="onDelete(userExercise?.id)" color="danger">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="onEdit(userExercise?.id)" color="primary">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+</ion-list>

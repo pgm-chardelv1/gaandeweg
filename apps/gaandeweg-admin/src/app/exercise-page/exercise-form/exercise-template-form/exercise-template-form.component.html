@@ -1,0 +1,72 @@
+<form [formGroup]="exerciseTemplateForm" *ngIf="exercise">
+    <div formArrayName="fields">
+        <div class="mb-4" *ngFor="let field of fields.controls; let i=index; " [formGroupName]="i">
+            <div class="field-header d-flex justify-content-between">
+                <h3>Veld {{i+1}}</h3>
+
+                <button class="btn btn-danger btn-sm" (click)="onDeleteField(i)" title="Veld verwijderen">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                </button>
+            </div>
+            <div class="form-group mb-2" *ngIf="field.get('fieldName')?.value">    
+                <label class="label">Veldnaam</label>
+                <input class="form-control" formControlName="fieldName" value="{{field.get('fieldName')?.value}}"/>
+            </div>
+
+            <div class="form-group mb-2" *ngIf="field.get('fieldType')?.value">    
+                <label class="label">Type</label>
+                <select class="form-control" formControlName="fieldType" [value]="field.get('fieldType')?.value" >
+                    <option value="RANGE">Range</option>
+                    <option value="TEXT">Tekst</option>
+                    <option value="DATE">Datum</option>
+                    <option value="TIME">Tijd</option>
+                    <option value="NUMBER">Getal</option>
+                    <option value="RADIO">Radio</option>
+                    <option value="SELECT">Select</option>
+                </select>
+            </div>
+       
+            <div class="form-group mb-2" *ngIf="field.get('fieldText')?.value">
+                <label class="label">Tekst</label>
+                <input type="text" 
+                formControlName="fieldText" class="form-control"[value]="field.get('fieldText')?.value" />
+            </div>
+        
+
+            <div class="form-group mb-2" *ngIf="field.get('fieldInfo')?.value">
+                <label class="label">Info</label>
+                <textarea class="form-control" formControlName="fieldInfo" [value]="field.get('fieldInfo')?.value"></textarea>
+            </div>
+
+            <div class="form-group mb-2" *ngIf="field.get('fieldValues') && (field.get('fieldType')?.value === 'SELECT' || field.get('fieldType')?.value === 'RADIO')" >
+                <h5>Opties</h5>
+                <div formArrayName="fieldValues">
+                    <div class="form-group mb-2" *ngFor="let value of field.get('fieldValues')?.value; let j=index; " [formGroupName]="j">
+                        <div *ngIf="value.fieldValue !== null && value.fieldLabel !== null">
+                            <label class="label">{{value.fieldValue}}</label>
+                            <input class="form-control" formControlName="fieldLabel" [value]="value.fieldLabel" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!--             <div class="form-group mb-2" *ngIf="field.get('fieldOptions') && (field.get('fieldType')?.value === 'RANGE')" formGroupName="fieldOptions">
+                <h5>Opties</h5>
+                <div class="form-group mb-2" >
+                    <label class="label">Min</label>
+                    <input class="form-control" type="number" formControlName="min" [value]="field.get('fieldOptions')?.value.min"/>
+                </div>
+
+                <div class="form-group mb-2" >
+                    <label class="label">Max</label>
+                    <input class="form-control" type="number" formControlName="max" [value]="field.get('fieldOptions')?.value.max"/>
+                </div>
+            </div> -->
+        </div>
+
+        <button class="btn btn-success" (click)="addField()">
+            <fa-icon [icon]="faPlus"></fa-icon>
+            Veld toevoegen
+        </button>
+    </div>
+</form>
