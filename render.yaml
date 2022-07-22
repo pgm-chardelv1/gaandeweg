@@ -80,7 +80,7 @@ services:
   staticPublishPath: ./dist/docs
 
 # The MySQL database as a Docker container
-- type: service
+- type: web
   name: gaandeweg-db-prod
   plan: standard
   env: docker
