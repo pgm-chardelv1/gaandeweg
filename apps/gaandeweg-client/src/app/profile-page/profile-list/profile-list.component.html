@@ -1,5 +1,6 @@
 <ion-spinner *ngIf="isLoading"></ion-spinner>
 
+<div class="spacer"></div>
 <ion-list>
   <ion-item *ngFor="let userExercise of userExercises" color="{{isActive(userExercise.id) ? 'light' : ''}}">
     <ion-label slot="start" button (click)="setActive(userExercise.id)">

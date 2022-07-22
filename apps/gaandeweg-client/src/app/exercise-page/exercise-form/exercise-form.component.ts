@@ -26,6 +26,7 @@ import {
 } from '@gaandeweg-ws/data-access';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'gaandeweg-ws-new-exercise',
@@ -67,7 +68,8 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
     private exerciseService: ExerciseService,
     private logger: LoggingService,
     public formBuilder: FormBuilder,
-    private userExerciseService: UserExerciseService
+    private userExerciseService: UserExerciseService,
+    private router: Router
   ) {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -229,6 +231,7 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
         .subscribe((data) => {
           this.logger.log('client', `Created user exercise: ${data}`);
         });
+      this.router.navigate(['/app/profile/list']);
       return true;
     }
   }
