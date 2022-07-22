@@ -13,7 +13,7 @@ services:
   env: node
   region: oregon
   plan: starter
-  branch: develop
+  branch: main
   buildCommand: npm i; npx nx build gaandeweg-server --parallel --max-parallel=1
   startCommand: yarn start gaandeweg-server
 
@@ -80,7 +80,7 @@ services:
   staticPublishPath: ./dist/docs
 
 # The MySQL database as a Docker container
-- type: pserv
+- type: service
   name: gaandeweg-db-prod
   plan: standard
   env: docker
