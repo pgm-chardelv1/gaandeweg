@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
    * @param {boolean} isLoading - whether the user is loading.
    * @param {Subscription} userSub - the subscription to the user.
    */
-  @Input() pageTitle = 'Gaandeweg Oefenapp';
+  pageTitle = 'Gaandeweg';
   isAuthenticated = false;
   isLoading = true;
   @Output() isAuthenticated$ = this.isAuthenticated;

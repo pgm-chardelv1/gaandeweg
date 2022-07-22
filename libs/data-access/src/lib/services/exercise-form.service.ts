@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
-import { Exercise, ExerciseForm } from '../models';
+import { Exercise, ExerciseForm, UserExercise } from '../models';
 import { ExerciseOption, RangeLabel } from '../models/exercise.model';
 import {
   ExerciseFormFieldDefaultTemplate,
@@ -18,13 +18,17 @@ import { fieldTypeValidator } from '../validators/field-type.validator';
 export class ExerciseFormService {
   constructor(private http: HttpClient) {}
 
-  renderExerciseTemplate(exercise: Exercise): ExerciseForm {
+  renderExerciseTemplate(exercise: Exercise | UserExercise): ExerciseForm {
     const form: ExerciseForm = {
       fields: [],
     };
 
-    if (exercise?.template) {
-      const parsedExercise = JSON.parse(exercise?.template);
+    const template = (exercise as Exercise).template
+      ? (exercise as Exercise).template
+      : (exercise as UserExercise).exerciseTemplate;
+
+    if (template) {
+      const parsedExercise = JSON.parse(template);
       for (let i = 0; i < parsedExercise.fields.length; i++) {
         const field = parsedExercise.fields[i];
         form?.fields?.push({

@@ -28,7 +28,7 @@
               </ion-range>
   
               <!-- Field type is Date, Number or Time -->
-              <ion-input slot="end" *ngIf="field.fieldType === 'DATE' || field.fieldType === 'TIME' || field.fieldType === 'NUMBER'" [type]="field.fieldType" [formControlName]="field.fieldName"></ion-input>
+              <ion-input slot="end" *ngIf="field.fieldType === 'DATE' || field.fieldType === 'NUMBER'" [type]="field.fieldType" [formControlName]="field.fieldName"></ion-input>
 
               <ion-input slot="end" *ngIf="field.fieldType === 'TIME'" type="datetime" formControlName="{{field.fieldName}}" placeholder="00:00"></ion-input>
   

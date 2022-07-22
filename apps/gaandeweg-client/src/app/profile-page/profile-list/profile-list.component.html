@@ -1,15 +1,23 @@
 <ion-spinner *ngIf="isLoading"></ion-spinner>
 
-<!--   <ion-searchbar class="searchIcon" [formControl]="searchKey"  (ionChange)="search()" debounce="100" (ionCancel)="resetChanges()" placeholder="Zoek"></ion-searchbar> -->
+<ion-list>
+  <ion-item *ngFor="let userExercise of userExercises" color="{{isActive(userExercise.id) ? 'light' : ''}}">
+    <ion-label slot="start" button (click)="setActive(userExercise.id)">
+      <h2>{{userExercise?.exerciseName}}</h2>
+    </ion-label>
 
-  <ion-list>
-    <ion-item lines="full" *ngFor="let userExercise of userExercises">
-        <!-- color="{{isActive(infoElement.id) ? 'light' : null}}" -->
-      <ion-label *ngIf="userExercise">
-        <h2>{{userExercise.id}}</h2>
-        <p>{{userExercise.userId}} - {{userData.id}}</p>
-      </ion-label>
+    <ion-label slot="start">
+      <ion-chip color="primary">{{getDateString(userExercise?.createdAt)}}</ion-chip>
+    </ion-label>
 
-      <!-- <ion-chip *ngIf="infoElement && infoElement.categoryId" slot="end">{{getCategoryName(infoElement.categoryId)}}</ion-chip> -->
-    </ion-item>
-  </ion-list>
+    <ion-buttons slot="end">
+      <ion-button (click)="onDelete(userExercise?.id)" color="danger">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="onEdit(userExercise?.id)" color="primary">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+</ion-list>

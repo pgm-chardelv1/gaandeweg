@@ -13,6 +13,7 @@ export class UserExerciseService {
   /**
    * Gets the user's exercises from the API.
    * @returns An observable of the user's exercises.
+   * @param {string} userId - the id of the user
    */
   getUserExercises(userId: string): Observable<UserExercise[]> {
     console.log(userId);
@@ -24,24 +25,26 @@ export class UserExerciseService {
   /**
    * Gets the user exercise with the given id.
    * @param {number} id - the id of the user exercise to get
+   * @param {string} userId - the id of the user
    * @returns {Observable<UserExercise>} - the user exercise with the given id
    */
   getUserExercise(id: number, userId: string): Observable<UserExercise> {
     return this.http.get<UserExercise>(
-      `${environment.API_BASEURL}/userExercise/${id}`
+      `${environment.API_BASEURL}/userExercise/${userId}/${id}`
     );
   }
 
   /**
    * Update the user exercise with the given id.
    * @param {number} id - The id of the user exercise to update.
+   * @param {string} userId - The id of the user.
    * @param {UserExercise} userExercise - The user exercise to update.
    * @returns {Observable<UserExercise>} - The updated user exercise.
    */
-  updateUserExercise(id: number, userExercise: UserExercise) {
+  updateUserExercise(id: number, userExercise: UserExercise, userId: string) {
     return this.http
       .patch<UserExercise>(
-        `${environment.API_BASEURL}/userExercise/${id}`,
+        `${environment.API_BASEURL}/userExercise/${userId}/${id}`,
         userExercise
       )
       .subscribe({
@@ -69,11 +72,12 @@ export class UserExerciseService {
   /**
    * Deletes the user exercise with the given id.
    * @param {number} id - the id of the user exercise to delete
+   * @param {string} userId - the id of the user
    * @returns {Observable<UserExercise>} - the deleted user exercise
    */
-  deleteUserExercise(id: number): Observable<UserExercise> {
+  deleteUserExercise(id: number, userId: string): Observable<UserExercise> {
     return this.http.delete<UserExercise>(
-      `${environment.API_BASEURL}/userExercise/${id}`
+      `${environment.API_BASEURL}/userExercise/${userId}/${id}`
     );
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { firstValueFrom, Subscription } from 'rxjs';
+import * as dayjs from 'dayjs';
 
 import {
   LoggingService,
@@ -8,6 +9,7 @@ import {
 } from '@gaandeweg-ws/data-access';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'gaandeweg-ws-profile-list',
@@ -26,6 +28,7 @@ export class ProfileListComponent implements OnInit, OnDestroy {
    * @param {Subscription} userSub The user subscription
    * @param {any} userData The user data
    */
+  activeId: number | undefined;
   isLoading = true;
   user: User = new User('', new Date(), '');
   userSub: Subscription = new Subscription();
@@ -35,7 +38,8 @@ export class ProfileListComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private userExerciseService: UserExerciseService,
-    private logger: LoggingService
+    private logger: LoggingService,
+    private router: Router
   ) {}
 
   /**
@@ -78,11 +82,45 @@ export class ProfileListComponent implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
+  getDateString(date: Date | undefined): string {
+    if (date) {
+      return dayjs(date).format('DD/MM/YYYY');
+    } else {
+      return '-';
+    }
+  }
+
+  onDelete(id: number | undefined): void {
+    this.userExerciseService
+      .deleteUserExercise(id as number, this.userData.id)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+      });
+    this.userExercises = this.userExercises.filter(
+      (userExercise) => userExercise.id !== id
+    );
+  }
+
+  onEdit(id: number | undefined): void {
+    console.log('ProfileListComponent.onEdit UExId', id);
+  }
+
   /**
    * A function that is called when the component is destroyed.
    * @returns None
    */
   ngOnDestroy(): void {
     this.isLoading = true;
+  }
+
+  isActive(id: number | undefined): boolean {
+    return this.activeId === id;
+  }
+
+  setActive(id: number | undefined): void {
+    this.activeId = id;
+    this.router.navigate(['app', 'profile', id]);
   }
 }

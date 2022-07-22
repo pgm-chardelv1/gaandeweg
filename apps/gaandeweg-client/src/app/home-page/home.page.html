@@ -1,8 +1,6 @@
-<gaandeweg-ws-header pageTitle="Gaandeweg Oefenapp"></gaandeweg-ws-header>
+<!-- <gaandeweg-ws-header pageTitle="Gaandeweg Oefenapp"></gaandeweg-ws-header> -->
 
 <ion-content [fullscreen]="true">
-  
-
   <ion-card>
     <!-- <ion-card-header>
       <ion-card-title>Welkom</ion-card-title>
@@ -31,7 +29,19 @@
             </li>
           </ul>
         </ion-header>
+
       </div>
+      <ion-buttons color="white">
+        <ion-button color="primary" routerLink="/app/auth">
+          <ion-icon slot="start" name="log-in"></ion-icon>
+          Inloggen
+        </ion-button>
+
+        <ion-button color="secondary" routerLink="/app/profile/list">
+          <ion-icon slot="start" name="person"></ion-icon>
+          Profiel
+        </ion-button>
+      </ion-buttons>
     </ion-card-content>
   </ion-card>
 

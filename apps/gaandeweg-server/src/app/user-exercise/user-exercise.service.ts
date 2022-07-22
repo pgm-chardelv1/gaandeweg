@@ -16,7 +16,7 @@ import { UserExercise } from './entities/user-exercise.entity';
 
 @Injectable()
 export class UserExerciseService {
-  private iv = randomBytes(16);
+  private iv = process.env.IV;
   constructor(
     @InjectRepository(UserExercise)
     private readonly userExerciseRepository: Repository<UserExercise>
@@ -87,14 +87,14 @@ export class UserExerciseService {
       } else if (userExercise.userId !== userId) {
         throw new UnauthorizedException();
       } else {
-        const crypt = await this.decryptData(await userExercise.exerciseData);
+        const crypt = await this.decryptData(userExercise.exerciseData);
         return {
           ...userExercise,
           exerciseData: crypt,
         };
       }
     } catch (err) {
-      Logger.log(`Could not find userExercise. ${err}`);
+      Logger.log(`Could not find userExercise. ${err.message}`);
     }
   }
 
@@ -107,8 +107,8 @@ export class UserExerciseService {
    */
   async update(
     id: number,
-    userId: string,
-    updateUserExerciseDto: UpdateUserExerciseDto
+    updateUserExerciseDto: UpdateUserExerciseDto,
+    userId: string
   ): Promise<UserExercise> {
     try {
       const userExercise = await this.userExerciseRepository.findOne({
@@ -163,21 +163,25 @@ export class UserExerciseService {
    * @returns {string} the encrypted data
    */
   async encryptData(data: string) {
-    let returnData = '';
-    // const iv = randomBytes(16);
-    const key = (await promisify(scrypt)(
-      `${process.env.ENC_SECRET}`,
-      'salt',
-      32
-    )) as Buffer;
-    const cipher = createCipheriv('aes-256-cbc', key, this.iv);
+    try {
+      let returnData = '';
+      // const iv = randomBytes(16);
+      const key = (await promisify(scrypt)(
+        `${process.env.ENC_SECRET}`,
+        'salt',
+        32
+      )) as Buffer;
+      const cipher = createCipheriv('aes-256-cbc', key, this.iv);
 
-    returnData = Buffer.concat([
-      cipher.update(data, 'utf8'),
-      cipher.final(),
-    ]).toString('hex');
+      returnData = Buffer.concat([
+        cipher.update(data, 'utf8'),
+        cipher.final(),
+      ]).toString('hex');
 
-    return returnData;
+      return returnData;
+    } catch (err) {
+      Logger.log(`Could not encrypt data. ${err.message}`);
+    }
   }
 
   /**

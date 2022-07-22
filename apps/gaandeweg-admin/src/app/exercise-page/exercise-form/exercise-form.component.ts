@@ -92,7 +92,7 @@ export class ExerciseFormComponent implements OnDestroy, OnInit {
               );
             }
           );
-          console.log(filteredFieldValues);
+
           templateString.fieldValues = filteredFieldValues;
         }
       });

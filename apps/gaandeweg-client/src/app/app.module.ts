@@ -19,6 +19,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { HeaderModule } from './header/header.module';
 
 // #21 CSRF protection
 /* import {
@@ -40,12 +41,8 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     IonicModule.forRoot(),
     AppRoutingModule,
     FormsModule,
+    HeaderModule,
     HttpClientModule,
-    // #21 CSRF protection
-    /*     HttpClientXsrfModule.withOptions({
-      cookieName: '_csrf',
-      headerName: 'X-CSRF-TOKEN',
-    }), */
     ReactiveFormsModule,
   ],
   providers: [

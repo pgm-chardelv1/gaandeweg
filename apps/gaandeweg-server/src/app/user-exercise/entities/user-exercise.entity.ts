@@ -1,4 +1,11 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 import { User } from '../../app.entities';
 
@@ -26,19 +33,9 @@ export class UserExercise {
   @Column('varchar')
   userId: string;
 
-  /*   @BeforeInsert()
-  async encryptData() {
-    const iv = randomBytes(16);
-    const key = (await promisify(scrypt)(
-      `${process.env.ENC_SECRET}`,
-      'salt',
-      32
-    )) as Buffer;
-    const cipher = createCipheriv('aes-256-cbc', key, iv);
+  @CreateDateColumn()
+  createdAt: Date;
 
-    this.exerciseData = Buffer.concat([
-      cipher.update(this.exerciseData, 'utf8'),
-      cipher.final(),
-    ]).toString('hex');
-  } */
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

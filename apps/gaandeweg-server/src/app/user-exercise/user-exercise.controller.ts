@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
   UseGuards,
@@ -49,7 +50,7 @@ export class UserExerciseController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put(':userId/:id')
+  @Patch(':userId/:id')
   async update(
     @Param('id') id: number,
     @Param('userId') userId: string,
@@ -57,8 +58,8 @@ export class UserExerciseController {
   ) {
     const userExercise = await this.userExerciseService.update(
       id,
-      userId,
-      updateUserExerciseDto
+      updateUserExerciseDto,
+      userId
     );
     return userExercise;
   }
