@@ -55,7 +55,6 @@ export class ExercisePage implements OnInit {
     template: '',
     createdAt: new Date(),
     updatedAt: new Date(),
-    published: false,
     publishedBy: '',
     category: {
       id: 0,

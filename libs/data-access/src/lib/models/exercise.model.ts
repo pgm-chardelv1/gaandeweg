@@ -10,6 +10,7 @@ import { Category } from './';
  * @property {string} template - The template of the exercise.
  * @property {Date} createdAt - The date the exercise was created.
  * @property {Date} updatedAt - The date the exercise was updated.
+ * @property {string} publishedBy - The name of the user who published the exercise.
  * @property {Category} category - The category the exercise belongs to.
  */
 export interface Exercise {
@@ -21,7 +22,6 @@ export interface Exercise {
   template: string;
   createdAt?: Date;
   updatedAt?: Date;
-  published?: boolean;
   publishedBy?: string;
   category?: Category;
 }

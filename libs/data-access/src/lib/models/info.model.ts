@@ -8,8 +8,6 @@ export interface InfoElement {
   text: string;
   createdAt?: Date;
   updatedAt?: Date;
-  published?: boolean;
-  publishedAt?: Date;
   publishedById?: string;
   category?: Category;
   categoryId?: number;

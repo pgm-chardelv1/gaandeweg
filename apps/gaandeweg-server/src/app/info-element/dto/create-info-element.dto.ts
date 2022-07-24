@@ -19,9 +19,6 @@ export class CreateInfoElementDto {
   text: string;
 
   @IsOptional()
-  published: boolean;
-
-  @IsOptional()
   @IsUUID()
   publishedById?: string;
 }

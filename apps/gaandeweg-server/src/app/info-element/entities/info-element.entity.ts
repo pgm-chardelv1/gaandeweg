@@ -45,9 +45,6 @@ export class InfoElement {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ type: 'smallint', default: 0 })
-  published: boolean;
-
   @Column({ type: 'date', default: null })
   publishedAt?: Date;
 

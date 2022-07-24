@@ -159,7 +159,6 @@ export class SeederService {
         name: 'Probleemgedrag',
         definition: 'Elk gedrag dat niet helpend is voor het zelfbeheer',
         text: 'Veel gedrag is niet helpend voor het zelfbeheer. Denk bijvoorbeeld aan middelenmisbruik, maar ook aan zelfverwondend gedrag, of suïcidale gedragingen.',
-        published: true,
         publishedById: '',
       };
       const infoElementSeeded = await this.infoElementService.create(

@@ -4,7 +4,7 @@ export const exercises = [
     categoryId: 'Pre-Treatment',
     name: 'Dagboekkaart',
     summary: 'Dagboekkaart en vaardighedenopvolging',
-    published: true,
+
     publishedBy: 1,
     template: {
       fields: [
@@ -133,7 +133,6 @@ export const exercises = [
     categoryId: 'KOV',
     name: 'KOV',
     summary: 'Kernoplettendheidsvaardigheden',
-    published: true,
     publishedBy: 1,
     template: {
       fields: [
@@ -342,7 +341,6 @@ export const exercises = [
     categoryId: 'Middelenmisbruik',
     name: 'Alcoholdagboek',
     summary: 'Alcoholdagboek',
-    published: true,
     publishedBy: 1,
     template: {
       fields: [
@@ -657,7 +655,6 @@ export const exercises = [
     categoryId: 'Middelenmisbruik',
     name: 'Alcoholdagboek Dagelijks',
     summary: 'Alcoholdagboek dagelijks',
-    published: true,
     publishedBy: 1,
     template: {
       fields: [
@@ -854,7 +851,6 @@ export const exercises = [
     categoryId: 'ACT',
     name: 'Angstendagboek',
     summary: 'Angstendagboek (bij exposure)',
-    published: true,
     publishedBy: 1,
     template: {
       fields: [
@@ -1023,7 +1019,7 @@ export const exercises = [
     name: 'BETOVER OOST',
     summary:
       'BETOVER OOST - Wanneer je doel het belangrijkst is in een interactie.',
-    published: true,
+
     publishedBy: 1,
     template: {
       fields: [
@@ -1133,7 +1129,7 @@ export const exercises = [
     categoryId: 'ACT',
     name: 'Dagboek Gedragsactivatie',
     summary: 'Dagboek Gedragsactivatie',
-    published: true,
+
     publishedBy: 1,
     template: {
       fields: [
@@ -1335,7 +1331,7 @@ export const exercises = [
     categoryId: 'Pre-Treatment',
     name: 'Dagboekkaart',
     summary: 'Dagboekkaart van ...',
-    published: true,
+
     publishedBy: 1,
     template: {
       fields: [
@@ -1447,7 +1443,7 @@ export const exercises = [
     categoryId: 'Eetvaardigheden',
     name: 'Eetdagboek',
     summary: 'Eetdagboek',
-    published: true,
+
     publishedBy: 1,
     template: {
       fields: [
@@ -1554,7 +1550,7 @@ export const exercises = [
     categoryId: 'Emotieregulatie',
     name: 'Emotiewerkblad',
     summary: 'Emotiewerkblad',
-    published: true,
+
     publishedBy: 1,
     template: {
       fields: [
@@ -1703,7 +1699,7 @@ export const exercises = [
     categoryId: 'Stresstolerantie',
     name: 'Gedragsanalyse',
     summary: 'Gedragsanalyse',
-    published: true,
+
     publishedBy: 1,
     template: {
       fields: [
@@ -1925,7 +1921,7 @@ export const exercises = [
     name: 'OEWW',
     summary:
       'OEWW - Wanneer zelfrespect het belangrijkste is in de interactie.',
-    published: true,
+
     publishedBy: 1,
     template: {
       fields: [
@@ -2009,7 +2005,7 @@ export const exercises = [
     categoryId: 'Intermenselijke vaardigheden',
     name: 'VIVO',
     summary: 'VIVO - Wanneer je relatie het belangrijkste is in de interactie',
-    published: true,
+
     publishedBy: 1,
     template: {
       fields: [
@@ -2110,7 +2106,7 @@ export const exercises = [
     categoryId: 'Emotieregulatie',
     name: 'Tegengesteld handelen',
     summary: 'Tegengesteld handelen',
-    published: true,
+
     publishedBy: 1,
     template: {
       fields: [
