@@ -29,7 +29,7 @@ async function bootstrap() {
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  app.enableCors();
+  // app.enableCors();
 
   // #21 CSRF protection
   /* app.use(csrfProtection);
