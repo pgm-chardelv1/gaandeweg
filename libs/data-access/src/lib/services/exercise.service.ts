@@ -17,6 +17,10 @@ export class ExerciseService {
   getExercises(): Observable<Exercise[]> {
     return this.http.get<Exercise[]>(`${environment.API_BASEURL}/exercise`, {
       params: { _useCache: 'true' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
     });
   }
 
@@ -28,7 +32,13 @@ export class ExerciseService {
   getExercise(id: number): Observable<Exercise> {
     return this.http.get<Exercise>(
       `${environment.API_BASEURL}/exercise/${id}`,
-      { params: { _useCache: 'true' } }
+      {
+        params: { _useCache: 'true' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
     );
   }
 
