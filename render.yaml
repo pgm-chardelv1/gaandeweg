@@ -13,7 +13,6 @@ services:
   env: node
   region: oregon
   plan: starter
-  autoscaling: true
   branch: develop
   buildCommand: npm i; npx nx build gaandeweg-server --parallel --max-parallel=1
   startCommand: npx nx run gaandeweg-server:serve
@@ -72,8 +71,8 @@ services:
   envVars:
   - key: PUBLIC_URL
     value: .
-  # - key: API_BASEURL
-    # value: https://gaandeweg-server.onrender.com/api
+  - key: API_BASEURL
+    value: https://gaandeweg-server.onrender.com/api
 
 # The admin panel
 - type: web

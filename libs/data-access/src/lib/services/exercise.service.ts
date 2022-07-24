@@ -19,7 +19,7 @@ export class ExerciseService {
       params: { _useCache: 'true' },
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
+        Accept: 'application/json',
       },
     });
   }
@@ -37,6 +37,7 @@ export class ExerciseService {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
+          Accept: 'application/json',
         },
       }
     );

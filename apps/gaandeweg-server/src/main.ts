@@ -18,15 +18,7 @@ async function bootstrap() {
         'https://gaandeweg.onrender.com',
         'https://gaandeweg-admin.onrender.com',
       ],
-      credentials: false,
-      allowedHeaders: [
-        'Content-Type',
-        'Access-Control-Allow-Origin',
-        'Authorization',
-        'Accept',
-        'X-CSRF-Token',
-      ],
-      methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+      credentials: true,
     },
   });
   const configService = app.get(ConfigService);

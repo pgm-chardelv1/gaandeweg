@@ -40,6 +40,7 @@ export class AuthService {
     headers: new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
+      Accept: 'application/json',
     }),
   };
 
