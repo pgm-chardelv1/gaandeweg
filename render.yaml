@@ -13,9 +13,10 @@ services:
   env: node
   region: oregon
   plan: starter
+  autoscaling: true
   branch: develop
   buildCommand: npm i; npx nx build gaandeweg-server --parallel --max-parallel=1
-  startCommand: node --max-old-space-size=256 dist/main
+  startCommand: npx nx run gaandeweg-server:serve
 
   envVars:
   - key: PORT
