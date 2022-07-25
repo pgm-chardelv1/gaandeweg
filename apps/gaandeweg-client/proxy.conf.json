@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://gaandeweg-server.onrender.com",
+    "target": "https://gaandeweg-api.onrender.com",
     "secure": false
   }
 }

@@ -72,7 +72,7 @@ services:
   - key: PUBLIC_URL
     value: .
   - key: API_BASEURL
-    value: https://gaandeweg-server.onrender.com/api
+    value: https://gaandeweg-api.onrender.com/api
 
 # The admin panel
 - type: web
