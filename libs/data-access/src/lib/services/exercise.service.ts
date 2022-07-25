@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { httpOpts } from '.';
 import { environment } from '../../../environments/environment';
 import { Exercise } from '../models';
 
@@ -15,13 +16,10 @@ export class ExerciseService {
    * @returns An observable of the list of exercises.
    */
   getExercises(): Observable<Exercise[]> {
-    return this.http.get<Exercise[]>(`${environment.API_BASEURL}/exercise`, {
-      params: { _useCache: 'true' },
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    });
+    return this.http.get<Exercise[]>(
+      `${environment.API_BASEURL}/exercise`,
+      httpOpts
+    );
   }
 
   /**
@@ -32,14 +30,7 @@ export class ExerciseService {
   getExercise(id: number): Observable<Exercise> {
     return this.http.get<Exercise>(
       `${environment.API_BASEURL}/exercise/${id}`,
-      {
-        params: { _useCache: 'true' },
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          Accept: 'application/json',
-        },
-      }
+      httpOpts
     );
   }
 
@@ -54,7 +45,11 @@ export class ExerciseService {
     const body = exercise;
 
     return this.http
-      .patch<Exercise>(`${environment.API_BASEURL}/exercise/${id}`, body)
+      .patch<Exercise>(
+        `${environment.API_BASEURL}/exercise/${id}`,
+        body,
+        httpOpts
+      )
       .subscribe({
         next: (data) => {
           console.log(data);
@@ -72,7 +67,7 @@ export class ExerciseService {
    */
   createExercise(exercise: Exercise) {
     return this.http
-      .post<Exercise>(`${environment.API_BASEURL}/exercise`, exercise)
+      .post<Exercise>(`${environment.API_BASEURL}/exercise`, exercise, httpOpts)
       .subscribe({
         next: (data) => {
           console.log(data);
@@ -90,7 +85,8 @@ export class ExerciseService {
    */
   deleteExercise(id: number): Observable<Exercise> {
     return this.http.delete<Exercise>(
-      `${environment.API_BASEURL}/exercise/${id}`
+      `${environment.API_BASEURL}/exercise/${id}`,
+      httpOpts
     );
   }
 }

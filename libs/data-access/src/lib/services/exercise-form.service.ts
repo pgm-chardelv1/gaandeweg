@@ -1,9 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { httpOpts } from '.';
 import { environment } from '../../../environments/environment';
 import { Exercise, ExerciseForm, UserExercise } from '../models';
-import { ExerciseOption, RangeLabel } from '../models/exercise.model';
+import { ExerciseOption } from '../models/exercise.model';
 import {
   ExerciseFormFieldDefaultTemplate,
   ExerciseFormFieldRadioTemplate,
@@ -50,21 +52,15 @@ export class ExerciseFormService {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   updateExercise(exercise: Partial<Exercise>): any {
-    const updatedExercise = {
-      ...exercise,
-    };
     const body = exercise;
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+
     this.http
       .patch<Exercise>(
         `${environment.API_BASEURL}/exercise/${!exercise?.id}`,
         body,
-        options
+        httpOpts
       )
       .subscribe((data) => {
         console.log(data);
