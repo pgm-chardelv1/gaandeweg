@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import * as dayjs from 'dayjs';
@@ -12,6 +8,7 @@ import jwt_decode from 'jwt-decode';
 
 import { environment } from '../../environments/environment';
 import { User } from './user.model';
+import { httpOpts } from '@gaandeweg-ws/data-access';
 
 /**
  * The response data from the authentication request.
@@ -29,6 +26,7 @@ export interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User>({} as User);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -68,11 +66,7 @@ export class AuthService {
           email: email,
           password: password,
         },
-        {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-          }),
-        }
+        httpOpts
       )
       .pipe(
         catchError(this.handleError),
@@ -96,8 +90,6 @@ export class AuthService {
       return;
     }
 
-    const tokenData = this.getDecodedAccessToken(userData._token);
-
     const loadedUser = new User(
       userData._token,
       new Date(userData._tokenExpirationDate)
@@ -112,6 +104,7 @@ export class AuthService {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getDecodedAccessToken(token: string): any {
     try {
       return jwt_decode(token);

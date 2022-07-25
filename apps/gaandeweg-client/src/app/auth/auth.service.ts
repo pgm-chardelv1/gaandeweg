@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import * as dayjs from 'dayjs';
@@ -12,6 +8,7 @@ import jwt_decode from 'jwt-decode';
 
 import { environment } from '../../environments/environment';
 import { User } from './user.model';
+import { httpOpts } from '@gaandeweg-ws/data-access';
 
 /**
  * The response data from the authentication request.
@@ -33,17 +30,6 @@ export interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   /**
-   * The options for the HTTP request.
-   * @type {HttpHeaders}
-   */
-  httpOptions: { headers: HttpHeaders } = {
-    headers: new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
-    }),
-  };
-
-  /**
    * A BehaviorSubject that holds the current user.
    * @type {BehaviorSubject<User>}
    */
@@ -52,6 +38,7 @@ export class AuthService {
    * A timer that will expire the token after a certain amount of time.
    * @param {number} expirationTime - the amount of time in milliseconds that the token will expire.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private tokenExpirationTimer: any;
   /**
    * Gets the CSRF token from the page.
@@ -75,7 +62,7 @@ export class AuthService {
           email: email,
           password: password,
         },
-        this.httpOptions
+        httpOpts
       )
       .pipe(
         catchError(this.handleError),
@@ -100,7 +87,7 @@ export class AuthService {
           email: email,
           password: password,
         },
-        this.httpOptions
+        httpOpts
       )
       .pipe(
         catchError(this.handleError),
@@ -162,6 +149,7 @@ export class AuthService {
    * @param {string} token - the token to decode
    * @returns {any} the decoded token
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getDecodedAccessToken(token: string): any {
     try {
       return jwt_decode(token);

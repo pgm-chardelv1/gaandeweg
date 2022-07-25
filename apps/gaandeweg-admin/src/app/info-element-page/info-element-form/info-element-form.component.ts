@@ -43,7 +43,6 @@ export class InfoElementFormComponent implements OnInit {
     definition: '',
     text: '',
     categoryId: 1,
-    published: false,
     publishedById: '',
   };
   infoElement!: InfoElement;
@@ -128,7 +127,6 @@ export class InfoElementFormComponent implements OnInit {
         console.log('InfoElementFormComponent.onSubmit.create', infoElement);
         this.infoElementService.createInfoElement({
           ...infoElement,
-          published: true,
           version: '1.0.0',
           publishedById: 'admin',
         });
@@ -198,8 +196,6 @@ export class InfoElementFormComponent implements OnInit {
       );
       return false;
     }
-
-    // console.log(this.infoElement);
 
     this.infoElementForm = this.formBuilder.group({
       id: [this.infoElement.id],

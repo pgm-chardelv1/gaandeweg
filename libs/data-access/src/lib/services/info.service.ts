@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { httpOpts } from '.';
 import { environment } from '../../../environments/environment';
 import { InfoElement } from '../models';
 
@@ -16,7 +17,8 @@ export class InfoService {
    */
   getInfoElements(): Observable<InfoElement[]> {
     return this.http.get<InfoElement[]>(
-      `${environment.API_BASEURL}/info-element`
+      `${environment.API_BASEURL}/info-element`,
+      httpOpts
     );
   }
 
@@ -27,7 +29,8 @@ export class InfoService {
    */
   getInfoElement(id: number): Observable<InfoElement> {
     return this.http.get<InfoElement>(
-      `${environment.API_BASEURL}/info-element/${id}`
+      `${environment.API_BASEURL}/info-element/${id}`,
+      httpOpts
     );
   }
 
@@ -41,7 +44,8 @@ export class InfoService {
     return this.http
       .patch<InfoElement>(
         `${environment.API_BASEURL}/info-element/${id}`,
-        infoElement
+        infoElement,
+        httpOpts
       )
       .subscribe({
         next: (data) => {
@@ -60,7 +64,11 @@ export class InfoService {
    */
   createInfoElement(infoElement: InfoElement) {
     return this.http
-      .post<InfoElement>(`${environment.API_BASEURL}/info-element`, infoElement)
+      .post<InfoElement>(
+        `${environment.API_BASEURL}/info-element`,
+        infoElement,
+        httpOpts
+      )
       .subscribe({
         next: (data) => {
           return data;
@@ -78,7 +86,8 @@ export class InfoService {
    */
   deleteInfoElement(id: number): Observable<InfoElement> {
     return this.http.delete<InfoElement>(
-      `${environment.API_BASEURL}/info-element/${id}`
+      `${environment.API_BASEURL}/info-element/${id}`,
+      httpOpts
     );
   }
 }

@@ -128,7 +128,6 @@ export class ExerciseFormComponent implements OnDestroy, OnInit {
           this.exerciseService.createExercise({
             ...exercise,
             template: JSON.stringify(templateString),
-            published: true,
             publishedBy: uId.sub.id,
           });
           this.router.navigate(['/exercise']);

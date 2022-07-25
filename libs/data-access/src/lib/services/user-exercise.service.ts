@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { httpOpts } from '.';
 import { environment } from '../../../environments/environment';
 import { UserExercise } from '../models/user-exercise.model';
 
@@ -18,7 +19,8 @@ export class UserExerciseService {
   getUserExercises(userId: string): Observable<UserExercise[]> {
     console.log(userId);
     return this.http.get<UserExercise[]>(
-      `${environment.API_BASEURL}/userExercise/${userId}`
+      `${environment.API_BASEURL}/userExercise/${userId}`,
+      httpOpts
     );
   }
 
@@ -30,7 +32,8 @@ export class UserExerciseService {
    */
   getUserExercise(id: number, userId: string): Observable<UserExercise> {
     return this.http.get<UserExercise>(
-      `${environment.API_BASEURL}/userExercise/${userId}/${id}`
+      `${environment.API_BASEURL}/userExercise/${userId}/${id}`,
+      httpOpts
     );
   }
 
@@ -45,7 +48,8 @@ export class UserExerciseService {
     return this.http
       .patch<UserExercise>(
         `${environment.API_BASEURL}/userExercise/${userId}/${id}`,
-        userExercise
+        userExercise,
+        httpOpts
       )
       .subscribe({
         next: (data) => {
@@ -65,7 +69,8 @@ export class UserExerciseService {
   createUserExercise(userExercise: UserExercise): Observable<UserExercise> {
     return this.http.post<UserExercise>(
       `${environment.API_BASEURL}/userExercise`,
-      userExercise
+      userExercise,
+      httpOpts
     );
   }
 
@@ -77,7 +82,8 @@ export class UserExerciseService {
    */
   deleteUserExercise(id: number, userId: string): Observable<UserExercise> {
     return this.http.delete<UserExercise>(
-      `${environment.API_BASEURL}/userExercise/${userId}/${id}`
+      `${environment.API_BASEURL}/userExercise/${userId}/${id}`,
+      httpOpts
     );
   }
 }

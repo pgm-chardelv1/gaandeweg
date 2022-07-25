@@ -21,7 +21,7 @@ export class UserExercise {
   })
   user?: User;
 
-  @Column('longtext')
+  @Column('text')
   exerciseName: string;
 
   @Column('json')

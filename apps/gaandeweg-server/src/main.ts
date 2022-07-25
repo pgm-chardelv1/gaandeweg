@@ -12,16 +12,11 @@ import { AppModule } from './app/app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
-      origin: ['http://localhost:4200', 'http://localhost:4201'],
-      credentials: false,
-      allowedHeaders: [
-        'Content-Type',
-        'Access-Control-Allow-Origin',
-        'Authorization',
-        'Accept',
-        'X-CSRF-Token',
+      origin: [
+        'https://gaandeweg.onrender.com',
+        'https://gaandeweg-admin.onrender.com',
       ],
-      methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+      credentials: true,
     },
   });
   const configService = app.get(ConfigService);
@@ -32,7 +27,7 @@ async function bootstrap() {
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  app.enableCors();
+  // app.enableCors();
 
   // #21 CSRF protection
   /* app.use(csrfProtection);

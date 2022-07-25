@@ -48,7 +48,11 @@ Thumbs.db
 # MySQL Database volume
 /data
 
+# PostgreSQL Database volume
+/pgdata
+
 # Environment files
 /**/**/.env
 .env
 apps/gaandeweg-server/.env
+apps/gaandeweg-server/src/app/app.module.ts

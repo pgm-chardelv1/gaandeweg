@@ -50,7 +50,7 @@ export class SeederService {
    */
   async startSeed(): Promise<unknown> {
     try {
-      const createUserIfDoesntExist =
+      /* const createUserIfDoesntExist =
         await this.userService.createIfDoesntExist({
           where: {
             email: 'super@real.be',
@@ -60,12 +60,15 @@ export class SeederService {
             password: 'super',
             type: UserRole.SUPERUSER,
           },
-        });
+        }); */
+      const createTestUser = await this.userService.create({
+        email: 'super@real.be',
+        password: 'super',
+        type: UserRole.SUPERUSER,
+      });
       const categoriesSeeded = await this.seedCategories();
       if (categoriesSeeded) {
-        const exercisesSeeded = await this.seedExercises(
-          createUserIfDoesntExist.id
-        );
+        const exercisesSeeded = await this.seedExercises(createTestUser.id);
         const infoElementsSeeded = await this.seedInfoElements();
         return {
           categoriesSeeded,
@@ -156,7 +159,6 @@ export class SeederService {
         name: 'Probleemgedrag',
         definition: 'Elk gedrag dat niet helpend is voor het zelfbeheer',
         text: 'Veel gedrag is niet helpend voor het zelfbeheer. Denk bijvoorbeeld aan middelenmisbruik, maar ook aan zelfverwondend gedrag, of suïcidale gedragingen.',
-        published: true,
         publishedById: '',
       };
       const infoElementSeeded = await this.infoElementService.create(

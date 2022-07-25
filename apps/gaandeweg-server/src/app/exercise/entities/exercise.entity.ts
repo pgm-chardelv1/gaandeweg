@@ -44,9 +44,6 @@ export class Exercise {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column('tinyint')
-  published: boolean;
-
   @Column('varchar', { length: 45 })
   publishedBy: string;
 

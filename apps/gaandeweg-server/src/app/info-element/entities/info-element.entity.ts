@@ -33,7 +33,7 @@ export class InfoElement {
   @Column({ type: 'varchar', length: 250 })
   definition: string;
 
-  @Column({ type: 'longtext' })
+  @Column({ type: 'text' })
   text: string;
 
   @Column({ type: 'int' })
@@ -45,10 +45,7 @@ export class InfoElement {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ type: 'tinyint', default: false })
-  published: boolean;
-
-  @Column({ type: 'datetime', default: null })
+  @Column({ type: 'date', default: null })
   publishedAt?: Date;
 
   @Column({ type: 'varchar', length: 45, default: null })

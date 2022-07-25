@@ -57,7 +57,7 @@ export class User {
    * The type of user.
    * @type {number}
    */
-  @Column('tinyint')
+  @Column('smallint')
   type: UserRole;
 
   @OneToMany(() => UserExercise, (userExercise) => userExercise.user)

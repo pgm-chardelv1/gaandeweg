@@ -9,7 +9,7 @@ import { IsInt, IsJSON, IsOptional } from 'class-validator';
  * @property {string} summary - The summary of the exercise.
  * @property {string} template - The template of the exercise.
  * @optional @property {string} publishedById - The id of the user who published the exercise.
- * @optional @property {boolean} published - Whether the exercise is published.
+ * @optional @property {number} published - Whether the exercise is published.
  * @class CreateExerciseDto
  * @exports CreateExerciseDto
  */
@@ -25,9 +25,6 @@ export class CreateExerciseDto {
 
   @IsJSON()
   template: string;
-
-  @IsOptional()
-  published: boolean;
 
   @IsOptional()
   publishedBy: string;

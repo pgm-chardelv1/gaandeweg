@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { environment } from '../../../environments/environment';
 import { Category } from '../models';
+import { httpOpts } from '.';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +17,10 @@ export class CategoryService {
    * @returns An observable of the categories.
    */
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${environment.API_BASEURL}/categories`, {
-      params: { _useCache: 'true' },
-    });
+    return this.http.get<Category[]>(
+      `${environment.API_BASEURL}/categories`,
+      httpOpts
+    );
   }
 
   /**
@@ -28,7 +31,7 @@ export class CategoryService {
   getCategory(id: number): Observable<Category> {
     return this.http.get<Category>(
       `${environment.API_BASEURL}/categories/${id}`,
-      { params: { _useCache: 'true' } }
+      httpOpts
     );
   }
 
@@ -41,7 +44,11 @@ export class CategoryService {
   updateCategory(id: number, category: Category) {
     const body = category;
     return this.http
-      .patch<Category>(`${environment.API_BASEURL}/categories/${id}`, body)
+      .patch<Category>(
+        `${environment.API_BASEURL}/categories/${id}`,
+        body,
+        httpOpts
+      )
       .subscribe({
         next: (data) => {
           console.log(data);
@@ -59,7 +66,11 @@ export class CategoryService {
    */
   createCategory(category: Category) {
     return this.http
-      .post<Category>(`${environment.API_BASEURL}/categories`, category)
+      .post<Category>(
+        `${environment.API_BASEURL}/categories`,
+        category,
+        httpOpts
+      )
       .subscribe({
         next: (data) => {
           console.log(data);
@@ -77,7 +88,8 @@ export class CategoryService {
    */
   deleteCategory(id: number): Observable<Category> {
     return this.http.delete<Category>(
-      `${environment.API_BASEURL}/categories/${id}`
+      `${environment.API_BASEURL}/categories/${id}`,
+      httpOpts
     );
   }
 }
