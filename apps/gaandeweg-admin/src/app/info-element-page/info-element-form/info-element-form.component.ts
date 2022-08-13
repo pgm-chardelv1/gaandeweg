@@ -83,18 +83,14 @@ export class InfoElementFormComponent implements OnInit {
         );
         const formInitiated = await this.initForm();
         if (formInitiated) {
-          console.log(
-            -'InfoElementFormComponent.ngOnInit.isInitiated',
-            this.infoElement,
-            this.wysiwyg?.data
-          );
+          console.log('InfoElementFormComponent.ngOnInit.isInitiated');
         }
       });
       this.categories = await firstValueFrom(
         this.categoryService.getCategories()
       );
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
     }
   }
 
@@ -117,20 +113,17 @@ export class InfoElementFormComponent implements OnInit {
     if (this.infoElementFormValid) {
       const infoElement = this.infoElementForm.value;
       if (this.editMode) {
-        console.log('InfoElementFormComponent.onSubmit.update', infoElement);
         this.infoElementService.updateInfoElement(
           this.id as number,
           this.infoElementForm.value
         );
         this.router.navigate(['/info-element', this.id, 'edit']);
       } else {
-        console.log('InfoElementFormComponent.onSubmit.create', infoElement);
         this.infoElementService.createInfoElement({
           ...infoElement,
           version: '1.0.0',
           publishedById: 'admin',
         });
-        console.log('InfoElementFormComponent.onSubmit.create.navigate');
         this.router.navigate(['info-element']);
       }
     }
