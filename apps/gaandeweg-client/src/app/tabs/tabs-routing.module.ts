@@ -26,7 +26,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'info',
+        path: 'info/list',
         loadChildren: () =>
           import('../info-page/info.module').then((m) => m.InfoPageModule),
       },
