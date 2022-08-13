@@ -7,13 +7,15 @@ import { InfoResolverService } from './info-resolver.service';
 import { InfoStartComponent } from './info-start/info-start.component';
 
 const routes: Routes = [
-  {
+  /* {
     path: '',
     redirectTo: 'list',
-  },
+    pathMatch: 'full',
+  }, */
   {
     path: '',
     component: InfoPage,
+    pathMatch: 'full',
     children: [
       {
         path: 'list',
