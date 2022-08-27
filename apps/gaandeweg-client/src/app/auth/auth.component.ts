@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { createPasswordStrengthValidator } from '@gaandeweg-ws/data-access';
+import {
+  createPasswordStrengthValidator,
+  LoggingService,
+} from '@gaandeweg-ws/data-access';
 import { AuthResponseData, AuthService } from './auth.service';
 
 /**
@@ -31,7 +34,8 @@ export class AuthComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public logger: LoggingService
   ) {}
 
   /**
@@ -90,17 +94,20 @@ export class AuthComponent implements OnInit {
     authObs.subscribe({
       next: (resData) => {
         this.isLoading = false;
-        console.log('Successfully logged in.', resData);
+        this.logger.log('client', `Successfully logged in. ${resData}`);
         this.router.navigate(['/app/home']);
       },
       error: (errorMessage) => {
         this.error = errorMessage;
-        console.log('An error occurred while logging you in: ', errorMessage);
+        this.logger.log(
+          'client',
+          `An error occurred while logging you in: ${errorMessage}`
+        );
         this.isLoading = false;
       },
       complete: () => {
         this.isLoading = false;
-        console.log('Logging in completed.');
+        this.logger.log('client', `Login complete.`);
       },
     });
 

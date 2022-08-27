@@ -136,14 +136,20 @@ export class ExercisePage implements OnInit {
    * @returns None
    */
   onSubmit(): boolean {
-    console.log('Form:', this.myGroup.value);
+    this.logger.log(
+      'client',
+      `Tried to submit form with values: ${this.myGroup.value}`
+    );
     this.isSubmitted = true;
     if (!this.myGroup.valid) {
-      console.log('Please provide all the required values!');
+      alert('Please provide all the required values!');
       return false;
     } else {
-      console.log(this.myGroup.value);
-      this.logger.log('client', this.myGroup.value);
+      this.logger.log(
+        'client',
+        `Failed to submit form with values: ${this.myGroup.value}`
+      );
+      alert('Successfully submitted form!');
       return true;
     }
   }

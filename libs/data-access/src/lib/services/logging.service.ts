@@ -11,7 +11,10 @@ export class LoggingService {
    * @returns None
    */
   log(app: string, message: string) {
-    console.log(`${this.d}: ${app}: ${message}`);
+    /**
+     * Uncomment to enable logging. This is useful for debugging.
+     */
+    // console.log(`${this.d}: ${app}: ${message}`);
   }
 
   /**

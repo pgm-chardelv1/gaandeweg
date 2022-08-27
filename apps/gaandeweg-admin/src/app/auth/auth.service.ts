@@ -58,7 +58,7 @@ export class AuthService {
    * @returns A promise that resolves to the auth response data.
    */
   login(email: string, password: string) {
-    console.log('Attempted login with email: ' + email);
+    // console.log('Attempted login with email: ' + email);
     return this.http
       .post<AuthResponseData>(
         `${environment.API_BASEURL}/auth/admin-login`,

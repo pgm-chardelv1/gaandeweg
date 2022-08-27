@@ -7,7 +7,11 @@ import {
 } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
-import { InfoElement, InfoService } from '@gaandeweg-ws/data-access';
+import {
+  InfoElement,
+  InfoService,
+  LoggingService,
+} from '@gaandeweg-ws/data-access';
 
 @Component({
   selector: 'gaandeweg-ws-info-element',
@@ -21,7 +25,10 @@ export class InfoElementPage implements OnInit, OnChanges {
   infoElements: InfoElement[] = [];
   infoElement!: InfoElement;
 
-  constructor(private infoService: InfoService) {}
+  constructor(
+    private infoService: InfoService,
+    private logger: LoggingService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     this.infoElements = await firstValueFrom(
@@ -36,6 +43,6 @@ export class InfoElementPage implements OnInit, OnChanges {
   }
 
   ngOnChanges(dataChange: SimpleChanges): void {
-    console.log(dataChange);
+    this.logger.log('admin', `InfoElementPage dataChange: ${dataChange}`);
   }
 }

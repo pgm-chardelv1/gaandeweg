@@ -65,9 +65,7 @@ export class ProfileDetailComponent implements OnInit {
    */
   async ngOnInit(): Promise<void> {
     this.logger.log('client', 'ProfileDetailComponent.ngOnInit');
-    console.log(this.userData.id);
     this.route.params.subscribe(async (params: Params) => {
-      console.log('params', params);
       this.userExerciseId = +params['id'];
       if (this.userExerciseId) {
         this.userExercise = await lastValueFrom(
@@ -94,7 +92,7 @@ export class ProfileDetailComponent implements OnInit {
 
         this.setFormValues();
       } else {
-        console.log('userExercise', 'not found');
+        this.logger.log('client', 'ProfileDetailComponent.ngOnInit.NoId');
       }
     });
 
@@ -277,7 +275,7 @@ export class ProfileDetailComponent implements OnInit {
     this.isSubmitted = true;
 
     if (!this.myGroup.valid) {
-      console.log('Please provide all the required values!');
+      alert('Please provide all the required values!');
       return false;
     } else {
       this.logger.log('client', this.myGroup.value);
@@ -295,7 +293,6 @@ export class ProfileDetailComponent implements OnInit {
         this.userData.id
       );
 
-      console.log(exSubmitted);
       this.router.navigate(['app', 'profile', 'list']);
       return true;
     }

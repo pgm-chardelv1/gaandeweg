@@ -57,9 +57,8 @@ export class ProfileDetailViewComponent implements OnInit {
    */
   async ngOnInit(): Promise<void> {
     this.logger.log('client', 'ProfileDetailComponent.ngOnInit');
-    console.log(this.userData.id);
+
     this.route.params.subscribe(async (params: Params) => {
-      console.log('params', params);
       this.userExerciseId = +params['id'];
       if (this.userExerciseId) {
         this.userExercise = await lastValueFrom(
@@ -83,7 +82,7 @@ export class ProfileDetailViewComponent implements OnInit {
           this.outputField(field);
         });
       } else {
-        console.log('userExercise', 'not found');
+        this.logger.log('client', 'ProfileDetailComponent.ngOnInit.NoId');
       }
     });
 
@@ -107,7 +106,7 @@ export class ProfileDetailViewComponent implements OnInit {
   async outputField(field: ExerciseFormField): Promise<void> {
     this.logger.log('client', 'ProfileDetailComponent.outputField');
     const data = JSON.parse(this.exerciseData);
-    console.log(typeof data[field.fieldName]);
+
     const renderValue = () => {
       if (
         typeof data[field.fieldName] === 'string' &&

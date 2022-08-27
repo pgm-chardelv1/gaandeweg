@@ -54,7 +54,10 @@ export class ProfileListComponent implements OnInit, OnDestroy {
      */
     this.userSub = this.authService.user.subscribe((user: User) => {
       this.user = user;
-      console.log('ProfileListComponent.ngOnInit', user);
+      this.logger.log(
+        'client',
+        `ProfileListComponent.ngOnInit - user:  ${user}`
+      );
     });
 
     /**
@@ -75,9 +78,9 @@ export class ProfileListComponent implements OnInit, OnDestroy {
         'ProfileListComponent.ngOnInit No exercises found'
       );
     }
-    console.log(
-      'ProfileListComponent.ngOnInit user exercises',
-      this.userExercises
+    this.logger.log(
+      'client',
+      `ProfileListComponent.ngOnInit - userExercises: ${this.userExercises}`
     );
     this.isLoading = false;
   }
@@ -95,7 +98,10 @@ export class ProfileListComponent implements OnInit, OnDestroy {
       .deleteUserExercise(id as number, this.userData.id)
       .subscribe({
         next: (data) => {
-          console.log(data);
+          this.logger.log(
+            'client',
+            `ProfileListComponent.onDelete - data: ${data}`
+          );
         },
       });
     this.userExercises = this.userExercises.filter(

@@ -99,10 +99,10 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
       this.logger.log('client', user.token as string);
       this.user = user;
     });
-    console.log('this.user', this.user);
-    console.log(
-      'userId from localstorage',
-      JSON.parse(localStorage.getItem('userData') as string).id
+    this.logger.log(
+      'client',
+      `User: ${this.user}
+    User in local storage: ${localStorage.getItem('userData')}`
     );
   }
 
@@ -235,9 +235,8 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
           handler: (opt) => {
             const val: Array<{ value: any }> = Object.values(opt);
             const value = val[0].value;
-            // const { value } = val[0];
             this.myGroup.controls[field.fieldName].setValue(value);
-            console.log(this.myGroup.value);
+            this.logger.log('client', `Value selected from picker: ${value}`);
           },
         },
       ],
@@ -247,7 +246,7 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
   }
 
   presentInfoPopover = async (ev: any) => {
-    console.log('ExerciseForm presentInfoPopover event', ev);
+    this.logger.log('client', `Presenting info popover with content ${ev}`);
     const popover = await this.popoverCtrl.create({
       component: PopoverComponent,
       componentProps: {
@@ -278,8 +277,13 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
       alert('Vul alle velden in');
       return false;
     } else {
-      this.logger.log('client', this.myGroup.value);
-      console.log('UserId', this.user.id);
+      this.logger.log(
+        'client',
+        `Submitting exercise form with values: ${this.myGroup.value}
+      Valid: ${this.myGroup.valid}
+      User: ${this.user}`
+      );
+
       const userExercise: UserExercise = {
         exerciseName: this.exercise.name,
         exerciseTemplate: this.exercise.template,

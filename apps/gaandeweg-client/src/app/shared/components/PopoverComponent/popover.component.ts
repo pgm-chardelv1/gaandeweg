@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { LoggingService } from '@gaandeweg-ws/data-access';
 
 @Component({
   selector: 'gaandeweg-ws-popover-component',
@@ -8,10 +9,14 @@ import { Component, Input, OnInit } from '@angular/core';
 export class PopoverComponent implements OnInit {
   @Input() content = 'Hello World';
   @Input() props: { content: string } = { content: 'Hello World' };
-  constructor() {}
+  constructor(private logger: LoggingService) {}
 
   ngOnInit() {
-    if (this.props) console.log(this.props);
-    else console.log('No content');
+    if (this.content)
+      this.logger.log(
+        'client',
+        `PopoverComponent.ngOnInit content = ${this.content}`
+      );
+    else this.logger.log('client', 'PopoverComponent.ngOnInit props is null');
   }
 }

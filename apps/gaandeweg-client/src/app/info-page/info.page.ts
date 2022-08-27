@@ -67,7 +67,11 @@ export class InfoPage implements OnInit, OnDestroy {
 
     this.searchTerms = this.searchKey.value;
     this.isLoading = false;
-    console.log('InfoListComponent.ngOnInit', this.infoElements);
+    this.logger.log(
+      'client',
+      `InfoListComponent.ngOnInit complete
+      with ${this.infoElements.length} info elements`
+    );
   }
 
   /**
