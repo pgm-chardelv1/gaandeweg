@@ -74,7 +74,7 @@ export class InfoDetailComponent implements OnChanges, OnInit {
           'client',
           'Else clause of InfoDetailComponent.ngOnInit'
         );
-        this.router.navigate(['app/info/1']);
+        this.router.navigate(['app/info/2']);
       }
     });
   }

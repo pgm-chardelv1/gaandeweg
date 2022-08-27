@@ -17,23 +17,9 @@
                   <ion-icon *ngIf="field.fieldInfo" slot="end" name="information-circle-outline"></ion-icon>
                 </ion-label>
               </div>
-  
-<!--               <!-- Field input type is Range -->
-              <!-- <ion-range class="form-control" slot="end" *ngIf="fieldIsRange(field)" min="{{field.fieldOptions?.min}}" max="{{field.fieldOptions?.max}}" step="{{field.fieldOptions?.step}}" snaps="true" formControlName="{{field.fieldName}}">
-  
-                <!-- Field uses values -->
-                <!--<ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === false" slot="start" class="item-start">{{field.fieldOptions.icons[0].value}}</ion-label>
 
-                <ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === false" slot="end">{{field.fieldOptions.icons[1].value}}</ion-label>
-  
-                <!-- Field uses icons -->
-                <!--<ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === true" slot="start" name="thumbs-down-outline"></ion-icon>
-                
-                <ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === true" name="thumbs-up-outline" slot="end"></ion-icon>
-  
-              </ion-range> -->
               <ion-button class="form-control" slot="end" class="item-end" *ngIf="fieldIsRange(field)" (click)="openPicker(field)">
-
+                Selecteer
               </ion-button>
   
               <!-- Field type is Date, Number or Time -->
