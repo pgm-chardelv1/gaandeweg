@@ -50,22 +50,17 @@ export class SeederService {
    */
   async startSeed(): Promise<unknown> {
     try {
-      /* const createUserIfDoesntExist =
-        await this.userService.createIfDoesntExist({
-          where: {
-            email: 'super@real.be',
-          },
-          data: {
-            email: 'super@real.be',
-            password: 'super',
-            type: UserRole.SUPERUSER,
-          },
-        }); */
-      const createTestUser = await this.userService.create({
+      const testUser = {
         email: 'super@real.be',
         password: 'super',
         type: UserRole.SUPERUSER,
+      };
+      const testUserExists = await this.userService.findUnique({
+        where: { email: testUser.email },
       });
+      const createTestUser = testUserExists
+        ? testUserExists
+        : await this.userService.create(testUser);
       const categoriesSeeded = await this.seedCategories();
       if (categoriesSeeded) {
         const exercisesSeeded = await this.seedExercises(createTestUser.id);
@@ -154,26 +149,37 @@ export class SeederService {
     infoElement: InfoElement;
   }> {
     try {
-      const infoElement: CreateInfoElementDto = {
-        version: '1',
-        name: 'Probleemgedrag',
-        definition: 'Elk gedrag dat niet helpend is voor het zelfbeheer',
-        text: 'Veel gedrag is niet helpend voor het zelfbeheer. Denk bijvoorbeeld aan middelenmisbruik, maar ook aan zelfverwondend gedrag, of suïcidale gedragingen.',
-        publishedById: '',
-      };
-      const infoElementSeeded = await this.infoElementService.create(
-        infoElement
-      );
-      if (infoElementSeeded) {
-        return {
-          status: 201,
-          message: 'InfoElement seeded',
-          infoElement: infoElementSeeded,
+      const category = await this.categoryService.findOne(1);
+      if (category) {
+        const infoElement: CreateInfoElementDto = {
+          version: '1',
+          name: 'Probleemgedrag',
+          definition: 'Elk gedrag dat niet helpend is voor het zelfbeheer',
+          text: 'Veel gedrag is niet helpend voor het zelfbeheer. Denk bijvoorbeeld aan middelenmisbruik, maar ook aan zelfverwondend gedrag, of suïcidale gedragingen.',
+          publishedById: '',
+          categoryId: category.id,
         };
+        const infoElementSeeded = await this.infoElementService.create(
+          infoElement
+        );
+        if (infoElementSeeded) {
+          return {
+            status: 201,
+            message: 'InfoElement seeded',
+            infoElement: infoElementSeeded,
+          };
+        } else {
+          return {
+            status: 500,
+            message: 'Something went wrong while seeding the info elements',
+            infoElement: null,
+          };
+        }
       } else {
         return {
           status: 500,
-          message: 'Something went wrong while seeding the info elements',
+          message:
+            'Something went wrong while seeding the info elements, no category found',
           infoElement: null,
         };
       }

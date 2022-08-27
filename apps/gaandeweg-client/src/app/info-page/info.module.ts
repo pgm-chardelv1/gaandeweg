@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-import { DirectivesModule } from '../shared/directives.module';
+import { SharedModule } from '../shared/shared.module';
 import { HeaderModule } from '../header/header.module';
 import { InfoDetailComponent } from './info-detail/info-detail.component';
 import { InfoListComponent } from './info-list/info-list.component';
@@ -14,7 +14,7 @@ import { InfoStartComponent } from './info-start/info-start.component';
 @NgModule({
   imports: [
     CommonModule,
-    DirectivesModule,
+    SharedModule,
     FormsModule,
     HeaderModule,
     IonicModule,

@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  API_BASEURL: 'https://gaandeweg-api.onrender.com/api',
+  API_BASEURL: 'http://localhost:3333/api',
 };

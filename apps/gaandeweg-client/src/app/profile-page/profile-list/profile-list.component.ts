@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { lastValueFrom, Subscription } from 'rxjs';
 import * as dayjs from 'dayjs';
 
 import {
@@ -58,11 +58,11 @@ export class ProfileListComponent implements OnInit, OnDestroy {
     });
 
     /**
-     * Gets the first value from a promise.
-     * @param {Promise<any>} promise - the promise to get the first value from
-     * @returns The first value from the promise
+     * Gets the last value from a promise.
+     * @param {Promise<any>} promise - the promise to get the last value from
+     * @returns The last value from the promise
      */
-    this.userExercises = await firstValueFrom(
+    this.userExercises = await lastValueFrom(
       this.userExerciseService.getUserExercises(this.userData.id)
     );
     /**
@@ -104,7 +104,7 @@ export class ProfileListComponent implements OnInit, OnDestroy {
   }
 
   onEdit(id: number | undefined): void {
-    console.log('ProfileListComponent.onEdit UExId', id);
+    this.router.navigate(['app', 'profile', id, 'edit']);
   }
 
   /**

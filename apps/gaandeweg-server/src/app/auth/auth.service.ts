@@ -45,8 +45,16 @@ export class AuthService {
       ...registerDto,
       password: hashedPassword,
     });
-
-    return this.login(user);
+    const payload = {
+      email: user.email,
+      sub: {
+        id: user.id,
+        type: user.type,
+      },
+      expiresIn: '1d',
+    };
+    const jwt = this.jwtService.sign(payload);
+    return { token: jwt, expiresIn: payload.expiresIn };
   }
 
   /**

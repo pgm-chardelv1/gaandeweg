@@ -1,0 +1,15 @@
+.exercise-list {
+  max-height: 40%;
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    &__label {
+      background-color: rgba(0, 0, 0, 0);
+    }
+    &:hover, &:active, &:focus, &:focus-within {
+      background-color: #f5f5f5;
+    }
+  }
+}

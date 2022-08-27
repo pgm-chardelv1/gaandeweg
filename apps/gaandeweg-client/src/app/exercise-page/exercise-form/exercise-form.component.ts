@@ -12,6 +12,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import {
+  PickerColumn,
+  PickerController,
+  PopoverController,
+} from '@ionic/angular';
 import { firstValueFrom, Subscription } from 'rxjs';
 
 import {
@@ -27,6 +32,7 @@ import {
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../../auth/user.model';
 import { Router } from '@angular/router';
+import { PopoverComponent } from '../../shared/components/PopoverComponent/popover.component';
 
 @Component({
   selector: 'gaandeweg-ws-new-exercise',
@@ -69,7 +75,9 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
     private logger: LoggingService,
     public formBuilder: FormBuilder,
     private userExerciseService: UserExerciseService,
-    private router: Router
+    private router: Router,
+    private pickerCtrl: PickerController,
+    private popoverCtrl: PopoverController
   ) {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -91,6 +99,11 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
       this.logger.log('client', user.token as string);
       this.user = user;
     });
+    console.log('this.user', this.user);
+    console.log(
+      'userId from localstorage',
+      JSON.parse(localStorage.getItem('userData') as string).id
+    );
   }
 
   registerControl(field: ExerciseFormField): void {
@@ -99,7 +112,7 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
         this.myGroup.registerControl(
           field.fieldName,
           new FormControl(
-            null,
+            'null',
             Validators.compose([
               Validators.required,
               Validators.min(field.fieldOptions.min),
@@ -210,21 +223,70 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
     }
   }
 
+  async openPicker(field: ExerciseFormField): Promise<void> {
+    const picker = await this.pickerCtrl.create({
+      buttons: [
+        {
+          text: 'Annuleren',
+          role: 'cancel',
+        },
+        {
+          text: 'Opslaan',
+          handler: (opt) => {
+            const val: Array<{ value: any }> = Object.values(opt);
+            const value = val[0].value;
+            // const { value } = val[0];
+            this.myGroup.controls[field.fieldName].setValue(value);
+            console.log(this.myGroup.value);
+          },
+        },
+      ],
+      columns: this.getPickerColumns(field),
+    });
+    await picker.present();
+  }
+
+  presentInfoPopover = async (ev: any) => {
+    console.log('ExerciseForm presentInfoPopover event', ev);
+    const popover = await this.popoverCtrl.create({
+      component: PopoverComponent,
+      componentProps: {
+        content: ev,
+      },
+      event: ev,
+      translucent: true,
+      cssClass: 'popover--info',
+    });
+    return await popover.present();
+  };
+
+  getPickerColumns(field: ExerciseFormField): PickerColumn[] {
+    const { min, max } = field.fieldOptions as { min: number; max: number };
+    const values = Array.from({ length: max - min + 1 }, (_, i) => i + min);
+    return [
+      {
+        name: field.fieldName,
+        options: values.map((value) => ({ text: value.toString(), value })),
+      },
+    ] as PickerColumn[];
+  }
+
   async onSubmit(): Promise<boolean> {
     this.isSubmitted = true;
 
     if (!this.myGroup.valid) {
-      console.log('Please provide all the required values!');
+      alert('Vul alle velden in');
       return false;
     } else {
       this.logger.log('client', this.myGroup.value);
+      console.log('UserId', this.user.id);
       const userExercise: UserExercise = {
         exerciseName: this.exercise.name,
         exerciseTemplate: this.exercise.template,
         exerciseData: JSON.stringify(this.myGroup.value),
         userId: this.user.id
           ? this.user.id
-          : '91645816-60ad-41d8-b287-e843d3f408b7',
+          : JSON.parse(localStorage.getItem('userData') as string).id,
       };
       this.userExerciseService
         .createUserExercise(userExercise)

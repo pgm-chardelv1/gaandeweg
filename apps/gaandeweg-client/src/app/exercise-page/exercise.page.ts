@@ -45,6 +45,7 @@ export class ExercisePage implements OnInit {
    *
    */
   exercises: Exercise[] = [];
+  allExercises: Exercise[] = [];
   categories: Category[] = [];
   activeExercise: Exercise = {
     id: 0,
@@ -95,7 +96,7 @@ export class ExercisePage implements OnInit {
     this.resetChanges();
     this.searchTerms = this.searchKey.value;
 
-    this.exercises = this.exercises.filter((item) => {
+    this.exercises = this.allExercises.filter((item) => {
       return item.name.toLowerCase().includes(this.searchTerms.toLowerCase());
     });
   };
@@ -114,9 +115,12 @@ export class ExercisePage implements OnInit {
    * @returns None
    */
   async ngOnInit(): Promise<void> {
-    this.exercises = await firstValueFrom(this.exerciseService.getExercises());
+    this.allExercises = await firstValueFrom(
+      this.exerciseService.getExercises()
+    );
+    this.exercises = this.allExercises.slice(0, 5);
 
-    this.searchListCopy = this.exercises;
+    this.searchListCopy = this.allExercises;
 
     this.categories = await firstValueFrom(
       this.categoryService.getCategories()

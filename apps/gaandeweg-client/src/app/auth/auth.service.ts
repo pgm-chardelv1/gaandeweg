@@ -190,13 +190,18 @@ export class AuthService {
    * @returns None
    */
   private handleAuthentication(token: string, expiresIn: string) {
-    const expirationDate = this.getExpirationDuration(expiresIn);
-    const userId = this.getDecodedAccessToken(token).sub.id;
-    const user = new User(token, expirationDate, userId);
-    this.user.next(user);
+    try {
+      console.log('ExpireIn', expiresIn);
+      const expirationDate = this.getExpirationDuration(expiresIn);
+      const userId = this.getDecodedAccessToken(token).sub.id;
+      const user = new User(token, expirationDate, userId);
+      this.user.next(user);
 
-    this.autoLogout(dayjs(expirationDate).unix());
-    localStorage.setItem('userData', JSON.stringify(user));
+      this.autoLogout(dayjs(expirationDate).unix());
+      localStorage.setItem('userData', JSON.stringify(user));
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   /**

@@ -12,8 +12,12 @@ const routes: Routes = [
     component: InfoPage,
     children: [
       {
-        path: 'list',
+        path: '',
         component: InfoStartComponent,
+      },
+      {
+        path: 'list',
+        component: InfoPage,
       },
       {
         path: ':id',
@@ -21,11 +25,6 @@ const routes: Routes = [
         resolve: [InfoResolverService],
       },
     ],
-  },
-  {
-    path: '',
-    redirectTo: 'list',
-    pathMatch: 'full',
   },
 ];
 

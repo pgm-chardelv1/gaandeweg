@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content class="exercise-form">
     <ion-card *ngIf="exercise && exercise.name">
     <ion-card-header>
       <ion-card-title>
@@ -9,42 +9,51 @@
       <form [formGroup]="myGroup" (ngSubmit)="onSubmit()" novalidate>
         <ion-list *ngFor="let field of exerciseForm?.fields" >
           <ion-item-group>
-            <ion-item>
-              <ion-label slot="start">{{field.fieldText}}</ion-label>
+            <ion-item class="item">
+              <div (click)="presentInfoPopover(field.fieldInfo)">
+                <ion-label slot="start" class="item-start" (click)="presentInfoPopover(field.fieldInfo)">
+                  {{field.fieldText}}
+                  
+                  <ion-icon *ngIf="field.fieldInfo" slot="end" name="information-circle-outline"></ion-icon>
+                </ion-label>
+              </div>
   
-              <!-- Field input type is Range -->
-              <ion-range class="form-control" slot="end" *ngIf="fieldIsRange(field)" min="{{field.fieldOptions?.min}}" max="{{field.fieldOptions?.max}}" step="{{field.fieldOptions?.step}}" snaps="true" formControlName="{{field.fieldName}}">
+<!--               <!-- Field input type is Range -->
+              <!-- <ion-range class="form-control" slot="end" *ngIf="fieldIsRange(field)" min="{{field.fieldOptions?.min}}" max="{{field.fieldOptions?.max}}" step="{{field.fieldOptions?.step}}" snaps="true" formControlName="{{field.fieldName}}">
   
                 <!-- Field uses values -->
-                <ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === false" slot="start">{{field.fieldOptions.icons[0].value}}</ion-label>
+                <!--<ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === false" slot="start" class="item-start">{{field.fieldOptions.icons[0].value}}</ion-label>
 
                 <ion-label *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === false" slot="end">{{field.fieldOptions.icons[1].value}}</ion-label>
   
                 <!-- Field uses icons -->
-                <ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === true" slot="start" name="thumbs-down-outline"></ion-icon>
+                <!--<ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[0] && field.fieldOptions.icons[0].icon === true" slot="start" name="thumbs-down-outline"></ion-icon>
                 
                 <ion-icon *ngIf="field && field.fieldOptions && field.fieldOptions.icons && field.fieldOptions.icons[1] && field.fieldOptions.icons[1].icon === true" name="thumbs-up-outline" slot="end"></ion-icon>
   
-              </ion-range>
+              </ion-range> -->
+              <ion-button class="form-control" slot="end" class="item-end" *ngIf="fieldIsRange(field)" (click)="openPicker(field)">
+
+              </ion-button>
   
               <!-- Field type is Date, Number or Time -->
-              <ion-input slot="end" *ngIf="field.fieldType === 'DATE' || field.fieldType === 'NUMBER'" [type]="field.fieldType" [formControlName]="field.fieldName"></ion-input>
+              <ion-input slot="end" class="item-end" *ngIf="field.fieldType === 'DATE' || field.fieldType === 'NUMBER'" [type]="field.fieldType" [formControlName]="field.fieldName"></ion-input>
 
-              <ion-input slot="end" *ngIf="field.fieldType === 'TIME'" type="datetime" formControlName="{{field.fieldName}}" placeholder="00:00"></ion-input>
+              <ion-input slot="end" class="item-end" *ngIf="field.fieldType === 'TIME'" type="datetime" formControlName="{{field.fieldName}}" placeholder="00:00"></ion-input>
   
               <!-- Field type is Text -->
-              <ion-textarea slot="end" *ngIf="field.fieldType === 'TEXT'" formControlName="{{field.fieldName}}"></ion-textarea>
+              <ion-textarea slot="end" class="item-end" *ngIf="field.fieldType === 'TEXT'" formControlName="{{field.fieldName}}"></ion-textarea>
               
               <!-- Field type is Radio -->
-              <ion-radio-group slot="end" *ngIf="field.fieldValues && field.fieldType === 'RADIO'" formControlName="{{field.fieldName}}">
+              <ion-radio-group slot="end" class="item-end" *ngIf="field.fieldValues && field.fieldType === 'RADIO'" formControlName="{{field.fieldName}}">
                 <ion-item *ngFor="let value of (field.fieldValues)">
                   <ion-label>{{value.fieldLabel}}</ion-label>
-                  <ion-radio slot="start" value="{{value.fieldValue}}"></ion-radio>
+                  <ion-radio slot="start" class="item-start" value="{{value.fieldValue}}"></ion-radio>
                 </ion-item>
               </ion-radio-group>
   
               <!-- Field type is Select -->
-              <ion-select slot="end" *ngIf="field.fieldValues && field.fieldType === 'SELECT'" formControlName="{{field.fieldName}}" multiple="{{field.fieldRepeatable}}">
+              <ion-select slot="end" class="item-end" *ngIf="field.fieldValues && field.fieldType === 'SELECT'" formControlName="{{field.fieldName}}" multiple="{{field.fieldRepeatable}}">
                 <ion-select-option *ngFor="let value of (field.fieldValues)" value="{{value.fieldValue}}">{{value.fieldLabel}}</ion-select-option>
               </ion-select>
   
@@ -59,7 +68,8 @@
               </ng-container>
             </div>
 
-            <ion-text *ngIf="field.fieldInfo">{{field.fieldInfo}}</ion-text>
+            <!-- <ion-text *ngIf="field.fieldInfo">{{field.fieldInfo}}</ion-text> -->
+
             
           </ion-item-group>
         </ion-list>
