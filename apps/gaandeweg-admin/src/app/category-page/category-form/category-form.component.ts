@@ -9,7 +9,11 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
 
-import { Category, CategoryService } from '@gaandeweg-ws/data-access';
+import {
+  Category,
+  CategoryService,
+  LoggingService,
+} from '@gaandeweg-ws/data-access';
 
 @Component({
   selector: 'gaandeweg-ws-category-form-component',
@@ -32,11 +36,12 @@ export class CategoryFormComponent implements OnChanges, OnDestroy, OnInit {
     private categoryService: CategoryService,
     public formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public logger: LoggingService
   ) {}
 
   ngOnChanges(categoryForm: SimpleChanges): void {
-    console.log(categoryForm);
+    this.logger.log('admin', `CategoryFormComponent form: ${categoryForm}`);
   }
 
   async ngOnInit(): Promise<void> {
@@ -76,11 +81,17 @@ export class CategoryFormComponent implements OnChanges, OnDestroy, OnInit {
     if (this.categoryForm.valid) {
       const category = this.categoryForm.value;
       if (this.editMode) {
-        console.log('CategoryFormComponent.onSubmit.update', category);
+        this.logger.log(
+          'admin',
+          `CategoryFormComponent.onSubmit.update: ${category}`
+        );
         this.categoryService.updateCategory(this.id, category);
         this.router.navigate(['/category', this.id, 'edit']);
       } else {
-        console.log('CategoryFormComponent.onSubmit.create', category);
+        this.logger.log(
+          'admin',
+          `CategoryFormComponent.onSubmit.create: ${category}`
+        );
         this.categoryService.createCategory(category);
         this.router.navigate(['/category']);
       }

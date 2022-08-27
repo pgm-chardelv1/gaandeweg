@@ -112,7 +112,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
       this.id = params['id'];
     });
 
-    console.log('ExerciseTemplateFormComponent.ngOnInit');
+    this.logger.log('admin', 'ExerciseTemplateFormComponent.ngOnInit');
     if (this.id) {
       this.exercise = await firstValueFrom(
         this.exerciseService.getExercise(this.id as number)
@@ -123,7 +123,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
   }
 
   async ngOnChanges(exercise: SimpleChanges): Promise<void> {
-    console.log('ExerciseTemplateFormComponent.ngOnChanges');
+    this.logger.log('admin', 'ExerciseTemplateFormComponent.ngOnChanges');
     if (this.id) {
       this.exercise = await firstValueFrom(
         this.exerciseService.getExercise(this.id as number)
@@ -162,7 +162,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
       fieldValues: this.formBuilder.array([]),
     });
     this.fields.push(fieldForm);
-    console.log(this.exerciseTemplateForm.controls);
+    // console.log(this.exerciseTemplateForm.controls);
   }
 
   onDeleteField(index: number) {
@@ -226,7 +226,7 @@ export class ExerciseTemplateFormComponent implements OnInit, OnChanges {
         fieldGroup.setControl('fieldValues', fieldValueArr);
       }
     });
-    console.log(this.exerciseTemplateForm.controls);
+    // console.log(this.exerciseTemplateForm.controls);
   }
 
   trackByFieldId(index: number, field: ExerciseFormFieldTemplate) {

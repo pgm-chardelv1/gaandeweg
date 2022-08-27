@@ -1,0 +1,19 @@
+.exercise-form {
+  max-height: 50%;
+
+  .item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+}
+.popover--info {
+  padding: 2rem;
+  margin: 2rem;
+  .icon {
+    size: 2rem;
+  }
+  .popover-viewport.sc-ion-popover-md {
+    padding: 2rem!important;
+  }
+}

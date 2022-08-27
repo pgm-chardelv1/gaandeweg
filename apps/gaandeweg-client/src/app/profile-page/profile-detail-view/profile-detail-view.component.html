@@ -1,0 +1,25 @@
+<ion-content class="profile-content">
+    <ion-card *ngIf="userExercise && userExercise.exerciseName">
+        <ion-card-header>
+            <ion-card-title>
+                {{userExercise.exerciseName}} - {{userExercise.createdAt | date:'short'}}
+            </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+            <ion-list *ngFor="let field, let value of outputData" >
+                <ion-item-group>
+                    <ion-item>
+                        <ion-text slot="start">
+                            {{ value.itemName }}
+                        </ion-text>
+                        <ion-text slot="end">
+                            {{ value.itemValue }}
+                        </ion-text>
+                    </ion-item>
+                </ion-item-group>
+            </ion-list>            
+                       
+        </ion-card-content>
+    </ion-card>
+</ion-content>

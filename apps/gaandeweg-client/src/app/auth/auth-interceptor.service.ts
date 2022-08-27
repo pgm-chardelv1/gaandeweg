@@ -19,10 +19,7 @@ import { User } from './user.model';
  * @returns {Observable<HttpEvent<any>>} - the modified request
  */
 export class AuthInterceptorService implements HttpInterceptor {
-  constructor(
-    private authService: AuthService,
-    private logger: LoggingService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   /**
    * Intercepts the request and adds the user's token to the request headers.
@@ -37,7 +34,6 @@ export class AuthInterceptorService implements HttpInterceptor {
         if (!user || !user.token) {
           const uData = localStorage.getItem('userData');
           if (uData !== null) {
-            // console.log('uData', JSON.parse(uData).id);
             const modifiedReq = req.clone({
               headers: new HttpHeaders().set(
                 'Authorization',
@@ -46,12 +42,6 @@ export class AuthInterceptorService implements HttpInterceptor {
             });
             return next.handle(modifiedReq);
           }
-          /*           this.logger.log(
-            'client/auth-interceptor.service.ts',
-            `User found: false. User data found: ${localStorage.getItem(
-              'userData'
-            )}`
-          ); */
           return next.handle(req);
         } else {
           const modifiedReq = req.clone({

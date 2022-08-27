@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { lastValueFrom, Subscription } from 'rxjs';
 import * as dayjs from 'dayjs';
 
 import {
@@ -54,15 +54,18 @@ export class ProfileListComponent implements OnInit, OnDestroy {
      */
     this.userSub = this.authService.user.subscribe((user: User) => {
       this.user = user;
-      console.log('ProfileListComponent.ngOnInit', user);
+      this.logger.log(
+        'client',
+        `ProfileListComponent.ngOnInit - user:  ${user}`
+      );
     });
 
     /**
-     * Gets the first value from a promise.
-     * @param {Promise<any>} promise - the promise to get the first value from
-     * @returns The first value from the promise
+     * Gets the last value from a promise.
+     * @param {Promise<any>} promise - the promise to get the last value from
+     * @returns The last value from the promise
      */
-    this.userExercises = await firstValueFrom(
+    this.userExercises = await lastValueFrom(
       this.userExerciseService.getUserExercises(this.userData.id)
     );
     /**
@@ -75,9 +78,9 @@ export class ProfileListComponent implements OnInit, OnDestroy {
         'ProfileListComponent.ngOnInit No exercises found'
       );
     }
-    console.log(
-      'ProfileListComponent.ngOnInit user exercises',
-      this.userExercises
+    this.logger.log(
+      'client',
+      `ProfileListComponent.ngOnInit - userExercises: ${this.userExercises}`
     );
     this.isLoading = false;
   }
@@ -95,7 +98,10 @@ export class ProfileListComponent implements OnInit, OnDestroy {
       .deleteUserExercise(id as number, this.userData.id)
       .subscribe({
         next: (data) => {
-          console.log(data);
+          this.logger.log(
+            'client',
+            `ProfileListComponent.onDelete - data: ${data}`
+          );
         },
       });
     this.userExercises = this.userExercises.filter(
@@ -104,7 +110,7 @@ export class ProfileListComponent implements OnInit, OnDestroy {
   }
 
   onEdit(id: number | undefined): void {
-    console.log('ProfileListComponent.onEdit UExId', id);
+    this.router.navigate(['app', 'profile', id, 'edit']);
   }
 
   /**

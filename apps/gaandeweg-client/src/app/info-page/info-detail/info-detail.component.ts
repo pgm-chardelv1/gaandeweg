@@ -61,7 +61,7 @@ export class InfoDetailComponent implements OnChanges, OnInit {
     this.route.params.subscribe(async (params: Params) => {
       if (+params['id'] as number) {
         this.infoId = +params['id'];
-        console.log(params);
+
         this.infoElement = await firstValueFrom(
           this.infoService.getInfoElement(+this.infoId)
         );
@@ -70,8 +70,11 @@ export class InfoDetailComponent implements OnChanges, OnInit {
           `InfoDetailComponent.ngOnInit.IsInitiated: #${this.infoId}`
         );
       } else {
-        console.log('Else clause of InfoDetailComponent.ngOnInit');
-        this.router.navigate(['app/info/1']);
+        this.logger.log(
+          'client',
+          'Else clause of InfoDetailComponent.ngOnInit'
+        );
+        this.router.navigate(['app/info/2']);
       }
     });
   }

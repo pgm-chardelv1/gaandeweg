@@ -8,7 +8,7 @@ import jwt_decode from 'jwt-decode';
 
 import { environment } from '../../environments/environment';
 import { User } from './user.model';
-import { httpOpts } from '@gaandeweg-ws/data-access';
+import { httpOpts, LoggingService } from '@gaandeweg-ws/data-access';
 
 /**
  * The response data from the authentication request.
@@ -46,7 +46,11 @@ export class AuthService {
    */
   csrfToken = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private logger: LoggingService
+  ) {}
 
   /**
    * Sign up a user with the given email and password.
@@ -79,7 +83,7 @@ export class AuthService {
    * @returns A promise that resolves to the auth response data.
    */
   login(email: string, password: string) {
-    console.log('Attempted login with email: ' + email);
+    this.logger.log('client', `Attempted login with email: ${email}`);
     return this.http
       .post<AuthResponseData>(
         `${environment.API_BASEURL}/auth/login`,
@@ -190,13 +194,18 @@ export class AuthService {
    * @returns None
    */
   private handleAuthentication(token: string, expiresIn: string) {
-    const expirationDate = this.getExpirationDuration(expiresIn);
-    const userId = this.getDecodedAccessToken(token).sub.id;
-    const user = new User(token, expirationDate, userId);
-    this.user.next(user);
+    try {
+      this.logger.log('client', `Expires in: ${expiresIn}`);
+      const expirationDate = this.getExpirationDuration(expiresIn);
+      const userId = this.getDecodedAccessToken(token).sub.id;
+      const user = new User(token, expirationDate, userId);
+      this.user.next(user);
 
-    this.autoLogout(dayjs(expirationDate).unix());
-    localStorage.setItem('userData', JSON.stringify(user));
+      this.autoLogout(dayjs(expirationDate).unix());
+      localStorage.setItem('userData', JSON.stringify(user));
+    } catch (err) {
+      this.logger.log('client', `Authentication error: ${err}`);
+    }
   }
 
   /**

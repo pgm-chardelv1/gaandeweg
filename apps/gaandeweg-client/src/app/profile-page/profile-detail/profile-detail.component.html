@@ -1,8 +1,8 @@
-<ion-content>
-    <ion-card *ngIf="userExercise && userExercise.exerciseName">
+<ion-content class="profile-content">
+    <ion-card *ngIf="userExercise && userExercise.exerciseName && userExercise.createdAt">
     <ion-card-header>
       <ion-card-title>
-        {{userExercise.exerciseName}}
+        {{userExercise.exerciseName}} {{userExercise.createdAt | date:'medium'}}
       </ion-card-title>
       </ion-card-header>
   

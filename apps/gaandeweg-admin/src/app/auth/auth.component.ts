@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { AuthResponseData, AuthService } from './auth.service';
+import { LoggingService } from '@gaandeweg-ws/data-access';
 
 @Component({
   selector: 'gaandeweg-ws-auth',
@@ -23,7 +24,8 @@ export class AuthComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public logger: LoggingService
   ) {}
 
   /**
@@ -50,7 +52,7 @@ export class AuthComponent implements OnInit {
    * @returns None
    */
   onSubmit() {
-    console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     const form = this.loginForm;
     if (!form.valid) {
       return;
@@ -67,17 +69,17 @@ export class AuthComponent implements OnInit {
 
     authObs.subscribe(
       (resData) => {
-        console.log(resData);
+        // console.log(resData);
         this.isLoading = false;
         this.router.navigate(['']);
       },
       (errorMessage) => {
-        console.log(errorMessage);
+        // console.log(errorMessage);
         this.error = errorMessage;
         this.isLoading = false;
       },
       () => {
-        console.log('authObs complete');
+        this.logger.log('admin', 'authObs complete');
       }
     );
 

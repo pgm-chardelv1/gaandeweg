@@ -56,5 +56,5 @@ export class InfoElement {
     onUpdate: 'CASCADE',
     orphanedRowAction: 'nullify',
   })
-  category: Category;
+  category?: Category;
 }

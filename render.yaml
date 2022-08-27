@@ -13,7 +13,7 @@ services:
   env: node
   region: oregon
   plan: starter
-  branch: develop
+  branch: main
   buildCommand: npm i; npx nx build gaandeweg-server --parallel --max-parallel=1
   startCommand: npx nx run gaandeweg-server:serve
 

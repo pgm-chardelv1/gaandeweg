@@ -77,16 +77,15 @@ export class InfoElementFormComponent implements OnInit {
       this.route.params.subscribe(async (params: Params) => {
         this.id = +params['id'];
         this.editMode = params['id'] != null;
-        console.log(
-          'InfoElementFormComponent.ngOnInit.editMode',
-          this.editMode
+        this.logger.log(
+          'admin',
+          `InfoElementFormComponent.ngOnInit.editMode: ${this.editMode}`
         );
         const formInitiated = await this.initForm();
         if (formInitiated) {
-          console.log(
-            -'InfoElementFormComponent.ngOnInit.isInitiated',
-            this.infoElement,
-            this.wysiwyg?.data
+          this.logger.log(
+            'admin',
+            'InfoElementFormComponent.ngOnInit.isInitiated'
           );
         }
       });
@@ -94,17 +93,15 @@ export class InfoElementFormComponent implements OnInit {
         this.categoryService.getCategories()
       );
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
     }
   }
 
   async dataChangedHandler(dataChanged: string): Promise<void> {
-    console.log('InfoElementFormComponent.dataChangedHandler', dataChanged);
-    console.log(
-      'InfoElementFormComponent.dataChangedHandler',
-      this.dataChanged
+    this.logger.log(
+      'admin',
+      `InfoElementFormComponent.dataChangedHandler.dataChanged: ${dataChanged}`
     );
-    console.log(this.infoElementForm.value);
   }
 
   async onSubmit(): Promise<void> {
@@ -117,20 +114,17 @@ export class InfoElementFormComponent implements OnInit {
     if (this.infoElementFormValid) {
       const infoElement = this.infoElementForm.value;
       if (this.editMode) {
-        console.log('InfoElementFormComponent.onSubmit.update', infoElement);
         this.infoElementService.updateInfoElement(
           this.id as number,
           this.infoElementForm.value
         );
         this.router.navigate(['/info-element', this.id, 'edit']);
       } else {
-        console.log('InfoElementFormComponent.onSubmit.create', infoElement);
         this.infoElementService.createInfoElement({
           ...infoElement,
           version: '1.0.0',
           publishedById: 'admin',
         });
-        console.log('InfoElementFormComponent.onSubmit.create.navigate');
         this.router.navigate(['info-element']);
       }
     }
@@ -183,16 +177,17 @@ export class InfoElementFormComponent implements OnInit {
           });
       } else {
         this.infoElementForm.patchValue(this.newInfoElement);
-        console.log(
+        this.logger.log(
+          'admin',
           'InfoElementFormComponent.initForm.newInfoElement - Could not find infoElement'
         );
         this.isLoading = false;
       }
       return true;
     } catch (err: any) {
-      console.log(
-        'InfoElementFormComponent.initForm.err subscription failed to initialize infoElement',
-        err
+      this.logger.log(
+        'admin',
+        `InfoElementFormComponent.initForm.err subscription failed to initialize infoElement form ${err}`
       );
       return false;
     }
@@ -209,7 +204,12 @@ export class InfoElementFormComponent implements OnInit {
   }
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
-    console.log(this.wysiwyg?.data);
+    this.logger.log(
+      'admin',
+      `InfoElementFormComponent.ngOnChanges.changes: ${JSON.stringify(
+        changes
+      )}, ${JSON.stringify(this.infoElement)}`
+    );
     this.infoElementForm.patchValue(this.infoElement);
     this.infoElementForm.patchValue({ text: this.dataChanged });
   }

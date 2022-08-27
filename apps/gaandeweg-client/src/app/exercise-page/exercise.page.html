@@ -5,9 +5,9 @@
   <ion-searchbar class="searchIcon" [formControl]="searchKey"  (ionChange)="search()" debounce="100" (ionCancel)="resetChanges()" placeholder="Zoek"></ion-searchbar>
 
   <!-- List of exercises -->
-  <ion-list>
-    <ion-item lines="full" *ngFor="let exercise of exercises" color="{{isActive(exercise.id) ? 'light' : ''}}">
-      <ion-label lines="full" *ngIf="exercise && exercise.id" button (click)="setActive(exercise.id)" slot="start">
+  <ion-list class="exercise-list">
+    <ion-item class="exercise-list__item" lines="full" *ngFor="let exercise of exercises" color="{{isActive(exercise.id) ? 'light' : ''}}">
+      <ion-label class="exercise-list__item__label" lines="full" *ngIf="exercise && exercise.id" button (click)="setActive(exercise.id)" slot="start">
         <h2>{{exercise.name}}</h2>
         <p>{{exercise.summary}}</p>
       </ion-label>
@@ -15,7 +15,8 @@
       <ion-chip slot="end">{{getCategoryName(exercise.categoryId)}}</ion-chip>
     </ion-item>
   </ion-list>
-
+  <hr />
   <gaandeweg-ws-new-exercise [exerciseId]="activeId"></gaandeweg-ws-new-exercise>
+
   
 </ion-content>

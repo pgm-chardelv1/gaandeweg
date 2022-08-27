@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { randomBytes, scrypt, createCipheriv, createDecipheriv } from 'crypto';
+import { scrypt, createCipheriv, createDecipheriv } from 'crypto';
 import { Repository } from 'typeorm';
 import { promisify } from 'util';
 import * as dotenv from 'dotenv';
@@ -191,7 +191,6 @@ export class UserExerciseService {
    */
   async decryptData(data: string): Promise<string> {
     let returnData = '';
-    // const iv = randomBytes(16);
     const key = (await promisify(scrypt)(
       `${process.env.ENC_SECRET}`,
       'salt',

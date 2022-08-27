@@ -42,8 +42,8 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
         return {
           type: 'postgres',
           host: configService.get('DB_HOST', 'localhost'),
-          port: configService.get('DB_PORT', 5432),
-          username: configService.get('DB_USERNAME', 'root'),
+          port: configService.get('DB_PORT', 5433),
+          username: configService.get('DB_USERNAME', 'postgres'),
           password: configService.get('DB_PASSWORD', 'toor'),
           database: configService.get('DB_DATABASE_NAME', 'gaandeweg-dev'),
           entities: [
@@ -60,37 +60,6 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
           migrationsTableName: 'migrations',
           logging: configService.get<boolean>('TYPEORM_LOGGING', true),
         };
-        // }
-        /* Promise<MysqlConnectionOptions> => {
-        return {
-          type: 'mysql',
-          host: configService.get<string>('MYSQL_HOST', 'localhost'),
-          port: configService.get<number>('MYSQL_PORT', 3307),
-          username: configService.get<string>('MYSQL_USER', 'root'),
-          password: configService.get<string>('MYSQL_PASSWORD', 'root'),
-          database: configService.get<string>(
-            'MYSQL_DATABASE',
-            'gaandeweg-dev'
-          ),
-          entities: [
-            Exercise,
-            InfoElement,
-            Category,
-            Profile,
-            User,
-            UserExercise,
-          ],
-          synchronize: configService.get<boolean>('DB_SYNC', true),
-          migrations: [__dirname, 'src/migrations'],
-          migrationsRun: true,
-          migrationsTableName: 'migrations',
-          // Commented because of the following error:
-          // TypeError: No overload matches this call.
-          /*           cli: {
-            migrationsDir: 'src/migrations',
-          }, 
-          logging: configService.get<boolean>('TYPEORM_LOGGING', true),
-        }; */
       },
       inject: [ConfigService],
     }),

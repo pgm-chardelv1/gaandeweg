@@ -5,6 +5,7 @@ import { ProfileDetailComponent } from './profile-detail/profile-detail.componen
 import { ProfilePage } from './profile.page';
 import { ProfileResolverService } from './profile-resolver.service';
 import { ProfileStartComponent } from './profile-start/profile-start.component';
+import { ProfileDetailViewComponent } from './profile-detail-view/profile-detail-view.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,11 @@ const routes: Routes = [
       },
       {
         path: ':id',
+        component: ProfileDetailViewComponent,
+        resolve: [ProfileResolverService],
+      },
+      {
+        path: ':id/edit',
         component: ProfileDetailComponent,
         resolve: [ProfileResolverService],
       },

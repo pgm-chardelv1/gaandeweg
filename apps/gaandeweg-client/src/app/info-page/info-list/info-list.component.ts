@@ -71,7 +71,11 @@ export class InfoListComponent implements OnInit, OnDestroy {
 
     this.searchTerms = this.searchKey.value;
     this.isLoading = false;
-    console.log('InfoListComponent.ngOnInit', this.infoElements);
+    this.logger.log(
+      'client',
+      `InfoListComponent.ngOnInit - done
+    InfoElement count: ${this.infoElements.length}`
+    );
   }
 
   /**

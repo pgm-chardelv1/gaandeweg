@@ -21,4 +21,6 @@ export class CreateInfoElementDto {
   @IsOptional()
   @IsUUID()
   publishedById?: string;
+
+  categoryId: number;
 }

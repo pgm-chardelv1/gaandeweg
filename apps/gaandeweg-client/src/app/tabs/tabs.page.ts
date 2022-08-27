@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoggingService } from '@gaandeweg-ws/data-access';
 
 /**
  * The tabs page.
@@ -13,9 +14,16 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['tabs.page.scss'],
 })
 export class TabsPage implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private logger: LoggingService
+  ) {}
 
   ngOnInit(): void {
-    console.log('TabsPage.ngOnInit', this.router.url);
+    this.logger.log(
+      'client',
+      `TabsPage.ngOnInit Router URL: ${this.router.url}`
+    );
   }
 }

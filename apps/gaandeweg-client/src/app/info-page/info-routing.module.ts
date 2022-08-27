@@ -9,16 +9,15 @@ import { InfoStartComponent } from './info-start/info-start.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'list',
-    pathMatch: 'full',
-  },
-  {
-    path: '',
     component: InfoPage,
     children: [
       {
-        path: 'list',
+        path: '',
         component: InfoStartComponent,
+      },
+      {
+        path: 'list',
+        component: InfoPage,
       },
       {
         path: ':id',
