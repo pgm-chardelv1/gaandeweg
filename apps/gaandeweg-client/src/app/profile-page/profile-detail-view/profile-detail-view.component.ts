@@ -107,11 +107,27 @@ export class ProfileDetailViewComponent implements OnInit {
   async outputField(field: ExerciseFormField): Promise<void> {
     this.logger.log('client', 'ProfileDetailComponent.outputField');
     const data = JSON.parse(this.exerciseData);
+    console.log(typeof data[field.fieldName]);
+    const renderValue = () => {
+      if (
+        typeof data[field.fieldName] === 'string' &&
+        data[field.fieldName] === 'true'
+      ) {
+        return 'Ja';
+      } else if (
+        typeof data[field.fieldName] === 'string' &&
+        data[field.fieldName] === 'false'
+      ) {
+        return 'Nee';
+      } else {
+        return data[field.fieldName];
+      }
+    };
     this.outputData = [
       ...this.outputData,
       {
         itemName: field.fieldText,
-        itemValue: data[field.fieldName],
+        itemValue: renderValue(),
       },
     ];
   }
