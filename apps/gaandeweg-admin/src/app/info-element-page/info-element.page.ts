@@ -35,9 +35,9 @@ export class InfoElementPage implements OnInit, OnChanges {
       this.infoService.getInfoElements()
     );
 
-    this.infoElement = await firstValueFrom(this.infoService.getInfoElement(1));
+    this.infoElement = await firstValueFrom(this.infoService.getInfoElement(2));
 
-    if (this.infoElement && this.infoElements) {
+    if (!!this.infoElement && !!this.infoElements) {
       this.isLoading = false;
     }
   }

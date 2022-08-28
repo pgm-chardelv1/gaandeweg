@@ -12,12 +12,8 @@ const routes: Routes = [
     component: InfoPage,
     children: [
       {
-        path: '',
-        component: InfoStartComponent,
-      },
-      {
         path: 'list',
-        component: InfoPage,
+        component: InfoStartComponent,
       },
       {
         path: ':id',
