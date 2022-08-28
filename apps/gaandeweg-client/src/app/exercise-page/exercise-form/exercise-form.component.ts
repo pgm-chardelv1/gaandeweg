@@ -271,34 +271,42 @@ export class ExerciseFormComponent implements OnChanges, OnInit {
   }
 
   async onSubmit(): Promise<boolean> {
-    this.isSubmitted = true;
+    try {
+      this.isSubmitted = true;
 
-    if (!this.myGroup.valid) {
-      alert('Vul alle velden in');
+      if (!this.myGroup.valid) {
+        alert('Vul alle velden in');
+        return false;
+      } else {
+        this.logger.log(
+          'client',
+          `Submitting exercise form with values: ${this.myGroup.value}
+        Valid: ${this.myGroup.valid}
+        User: ${this.user}`
+        );
+        const userFromLocalStorage = JSON.parse(
+          localStorage.getItem('userData') as string
+        );
+        if (!this.user && !userFromLocalStorage) {
+          alert('Je moet ingelogd zijn om deze actie uit te kunnen voeren');
+        }
+        const userExercise: UserExercise = {
+          exerciseName: this.exercise.name,
+          exerciseTemplate: this.exercise.template,
+          exerciseData: JSON.stringify(this.myGroup.value),
+          userId: this.user?.id ? this.user?.id : userFromLocalStorage?.id,
+        };
+        this.userExerciseService
+          .createUserExercise(userExercise)
+          .subscribe((data) => {
+            this.logger.log('client', `Created user exercise: ${data}`);
+          });
+        this.router.navigate(['/app/profile/list']);
+        return true;
+      }
+    } catch (err) {
+      alert('Er is iets fout gegaan');
       return false;
-    } else {
-      this.logger.log(
-        'client',
-        `Submitting exercise form with values: ${this.myGroup.value}
-      Valid: ${this.myGroup.valid}
-      User: ${this.user}`
-      );
-
-      const userExercise: UserExercise = {
-        exerciseName: this.exercise.name,
-        exerciseTemplate: this.exercise.template,
-        exerciseData: JSON.stringify(this.myGroup.value),
-        userId: this.user.id
-          ? this.user.id
-          : JSON.parse(localStorage.getItem('userData') as string).id,
-      };
-      this.userExerciseService
-        .createUserExercise(userExercise)
-        .subscribe((data) => {
-          this.logger.log('client', `Created user exercise: ${data}`);
-        });
-      this.router.navigate(['/app/profile/list']);
-      return true;
     }
   }
 
