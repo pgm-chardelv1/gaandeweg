@@ -10,7 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { HeaderComponent } from './header/header.component';
-import { LoggingService } from '@gaandeweg-ws/data-access';
+import {
+  CacheInterceptorService,
+  LoggingService,
+} from '@gaandeweg-ws/data-access';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -30,6 +33,11 @@ import { SharedModule } from './shared/shared.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CacheInterceptorService,
       multi: true,
     },
   ],

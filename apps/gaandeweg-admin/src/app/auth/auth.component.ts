@@ -52,7 +52,6 @@ export class AuthComponent implements OnInit {
    * @returns None
    */
   onSubmit() {
-    // console.log(this.loginForm.value);
     const form = this.loginForm;
     if (!form.valid) {
       return;
@@ -67,21 +66,27 @@ export class AuthComponent implements OnInit {
 
     this.isLoading = true;
 
-    authObs.subscribe(
-      (resData) => {
-        // console.log(resData);
+    authObs.subscribe({
+      next: (resData) => {
         this.isLoading = false;
-        this.router.navigate(['']);
+        this.logger.log(
+          'admin',
+          `Successfully logged in with email ${resData}`
+        );
+        this.router.navigate(['/exercise']);
       },
-      (errorMessage) => {
-        // console.log(errorMessage);
+      error: (errorMessage) => {
         this.error = errorMessage;
+        this.logger.log(
+          'admin',
+          `Failed to log in with email ${email} - ${errorMessage}`
+        );
         this.isLoading = false;
       },
-      () => {
-        this.logger.log('admin', 'authObs complete');
-      }
-    );
+      complete: () => {
+        this.logger.log('admin', 'Completed login');
+      },
+    });
 
     form.reset();
   }

@@ -19,6 +19,14 @@
             email
           />
         </div>
+
+        <div class="field-message" *ngIf="loginForm.get('email')?.hasError('required')">
+          <p>
+            Email is verplicht.
+          </p>
+        ></div>
+        
+
         <div class="form-group">
           <label for="password">Wachtwoord</label>
           <input
@@ -31,6 +39,25 @@
             minlength="5"
           />
         </div>
+
+        <div class="field-message" *ngIf="loginForm.get('password')?.hasError('passwordStrength')">
+          <p>
+            Wachtwoord moet een kleine letter, een hoofdletter, een cijfer en een speciaal teken bevatten.
+          </p>
+        ></div>
+
+        <div class="field-message" *ngIf="loginForm.get('password')?.hasError('minlength')">
+          <p>
+            Wachtwoord moet minimaal 5 karakters bevatten.
+          </p>
+        ></div>
+
+        <div class="field-message" *ngIf="loginForm.get('password')?.hasError('required')">
+          <p>
+            Wachtwoord is verplicht.
+          </p>
+        ></div>
+
         <div class="mt-3">
           <button
             class="btn btn-primary"

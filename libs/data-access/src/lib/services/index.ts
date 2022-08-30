@@ -12,7 +12,7 @@ const corsHeaders = new HttpHeaders({
   'Access-Control-Allow-Origin': '*',
   Accept: 'application/json',
 });
-const httpOpts = { headers: corsHeaders };
+const httpOpts = { headers: corsHeaders, params: { _useCache: 'true' } };
 
 export {
   httpOpts,
