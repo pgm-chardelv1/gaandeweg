@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { firstValueFrom, Subscription } from 'rxjs';
 
@@ -9,6 +9,7 @@ import {
   InfoElement,
   InfoService,
   LoggingService,
+  SEOService,
 } from '@gaandeweg-ws/data-access';
 
 @Component({
@@ -21,7 +22,9 @@ export class InfoPage implements OnInit, OnDestroy {
     private categoryService: CategoryService,
     private infoService: InfoService,
     private logger: LoggingService,
-    private router: Router
+    private route: ActivatedRoute,
+    private router: Router,
+    private SEOService: SEOService
   ) {
     this.searchKey = new FormControl('');
   }
@@ -72,6 +75,9 @@ export class InfoPage implements OnInit, OnDestroy {
       `InfoListComponent.ngOnInit complete
       with ${this.infoElements.length} info elements`
     );
+    const { meta } = this.route.snapshot.data;
+    this.SEOService.updateTitle(meta.title);
+    this.SEOService.updateDescription(meta.description);
   }
 
   /**

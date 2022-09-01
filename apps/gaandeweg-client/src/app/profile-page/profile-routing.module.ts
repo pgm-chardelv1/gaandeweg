@@ -6,11 +6,13 @@ import { ProfilePage } from './profile.page';
 import { ProfileResolverService } from './profile-resolver.service';
 import { ProfileStartComponent } from './profile-start/profile-start.component';
 import { ProfileDetailViewComponent } from './profile-detail-view/profile-detail-view.component';
+import { sectionsMetadata } from '../static.metadata';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'list',
+    data: sectionsMetadata.profilePage,
     pathMatch: 'full',
   },
   {

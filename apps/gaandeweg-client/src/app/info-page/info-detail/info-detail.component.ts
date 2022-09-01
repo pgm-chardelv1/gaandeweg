@@ -6,6 +6,7 @@ import {
   InfoElement,
   InfoService,
   LoggingService,
+  SEOService,
 } from '@gaandeweg-ws/data-access';
 
 @Component({
@@ -31,7 +32,8 @@ export class InfoDetailComponent implements OnChanges, OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private infoService: InfoService,
-    private logger: LoggingService
+    private logger: LoggingService,
+    private SEOService: SEOService
   ) {}
 
   /**
@@ -68,6 +70,11 @@ export class InfoDetailComponent implements OnChanges, OnInit {
         this.logger.log(
           'client',
           `InfoDetailComponent.ngOnInit.IsInitiated: #${this.infoId}`
+        );
+        const { meta } = this.route.snapshot.data;
+        this.SEOService.updateTitle(`${meta.title}: ${this.infoElement.name}`);
+        this.SEOService.updateDescription(
+          `${meta.description}: ${this.infoElement.name}`
         );
       } else {
         this.logger.log(
