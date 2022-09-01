@@ -6,6 +6,7 @@ import { InfoService } from './info.service';
 import { LoggingService } from './logging.service';
 import { UserExerciseService } from './user-exercise.service';
 import { HttpHeaders } from '@angular/common/http';
+import { SEOService } from './seo.service';
 
 const corsHeaders = new HttpHeaders({
   'Content-Type': 'application/json',
@@ -22,5 +23,6 @@ export {
   ExerciseService,
   InfoService,
   LoggingService,
+  SEOService,
   UserExerciseService,
 };

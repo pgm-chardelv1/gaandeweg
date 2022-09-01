@@ -19,7 +19,9 @@ import {
   ExerciseFormService,
   ExerciseService,
   LoggingService,
+  SEOService,
 } from '@gaandeweg-ws/data-access';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'gaandeweg-ws-exercise',
@@ -83,7 +85,9 @@ export class ExercisePage implements OnInit {
     private exerciseService: ExerciseService,
     private categoryService: CategoryService,
     public formBuilder: FormBuilder,
-    private logger: LoggingService
+    private logger: LoggingService,
+    private SEOService: SEOService,
+    private route: ActivatedRoute
   ) {
     this.searchKey = new FormControl('');
   }
@@ -127,6 +131,10 @@ export class ExercisePage implements OnInit {
     );
     this.myGroup = this.formBuilder.group({});
     this.searchTerms = this.searchKey.value;
+
+    const { meta } = this.route.snapshot.data;
+    this.SEOService.updateTitle(`${meta.title}`);
+    this.SEOService.updateDescription(`${meta.description}`);
   }
 
   /**

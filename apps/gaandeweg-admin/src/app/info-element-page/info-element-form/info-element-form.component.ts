@@ -16,6 +16,7 @@ import {
   InfoElement,
   InfoService,
   LoggingService,
+  SEOService,
 } from '@gaandeweg-ws/data-access';
 import { WysiwygComponent } from '../../shared/wysiwyg/wysiwyg.component';
 
@@ -59,7 +60,8 @@ export class InfoElementFormComponent implements OnInit {
     private infoElementService: InfoService,
     private logger: LoggingService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private SEOService: SEOService
   ) {
     this.infoElementForm = this.formBuilder.group({
       id: ['', Validators.required],
@@ -91,6 +93,14 @@ export class InfoElementFormComponent implements OnInit {
       });
       this.categories = await firstValueFrom(
         this.categoryService.getCategories()
+      );
+      const { meta } = this.route.snapshot.data;
+      this.SEOService.updateTitle(
+        `${meta.title} ${
+          this.editMode
+            ? 'Bewerk ' + this.infoElement.name
+            : 'Nieuw info element'
+        }`
       );
     } catch (err: any) {
       console.error(err);
@@ -191,16 +201,6 @@ export class InfoElementFormComponent implements OnInit {
       );
       return false;
     }
-
-    this.infoElementForm = this.formBuilder.group({
-      id: [this.infoElement.id],
-      version: [this.infoElement.version],
-      categoryId: [this.infoElement.categoryId, Validators.required],
-      name: [this.infoElement.name, Validators.required],
-      definition: [this.infoElement.definition, Validators.required],
-      text: [this.infoElement.text, Validators.required],
-      publishedBy: [this.infoElement.publishedById],
-    });
   }
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {

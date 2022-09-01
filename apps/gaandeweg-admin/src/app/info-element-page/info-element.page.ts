@@ -11,7 +11,9 @@ import {
   InfoElement,
   InfoService,
   LoggingService,
+  SEOService,
 } from '@gaandeweg-ws/data-access';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'gaandeweg-ws-info-element',
@@ -27,7 +29,9 @@ export class InfoElementPage implements OnInit, OnChanges {
 
   constructor(
     private infoService: InfoService,
-    private logger: LoggingService
+    private logger: LoggingService,
+    private route: ActivatedRoute,
+    private SEOService: SEOService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -40,6 +44,10 @@ export class InfoElementPage implements OnInit, OnChanges {
     if (!!this.infoElement && !!this.infoElements) {
       this.isLoading = false;
     }
+
+    const { meta } = this.route.snapshot.data;
+    this.SEOService.updateTitle(`${meta.title}`);
+    this.SEOService.updateDescription(`${meta.description}`);
   }
 
   ngOnChanges(dataChange: SimpleChanges): void {

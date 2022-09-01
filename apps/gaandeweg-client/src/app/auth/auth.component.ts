@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import {
   createPasswordStrengthValidator,
   LoggingService,
+  SEOService,
 } from '@gaandeweg-ws/data-access';
 import { AuthResponseData, AuthService } from './auth.service';
+import { sectionsMetadata } from '../static.metadata';
 
 /**
  * Switches the mode of the auth component between login and signup. Allows the user to switch between the two modes. Allows the user to register or login.
@@ -32,7 +34,9 @@ export class AuthComponent implements OnInit {
    * @param {FormBuilder} formBuilder - The form builder service.
    */
   constructor(
+    private SEOService: SEOService,
     private authService: AuthService,
+    private route: ActivatedRoute,
     private router: Router,
     public formBuilder: FormBuilder,
     public logger: LoggingService
@@ -54,6 +58,19 @@ export class AuthComponent implements OnInit {
         ],
       ],
     });
+    const { meta } = this.route.snapshot.data;
+    this.SEOService.updateTitle(
+      `${
+        this.isLoginMode ? meta.title : sectionsMetadata.signupPage.meta.title
+      }`
+    );
+    this.SEOService.updateDescription(
+      `${
+        this.isLoginMode
+          ? meta.description
+          : sectionsMetadata.signupPage.meta.description
+      }`
+    );
   }
 
   /**
