@@ -13,25 +13,25 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isAuthenticated">
                 <li routerLinkActive="active" class="nav-item">
-                    <a routerLink="/exercise" class="nav-link">Exercises</a>
+                    <a routerLink="/exercise" class="nav-link">Oefeningen</a>
                 </li>
                 
                 <li routerLinkActive="active" class="nav-item">
-                    <a routerLink="/info-element" class="nav-link">Info Elements</a>
+                    <a routerLink="/info-element" class="nav-link">Info Elementen</a>
                 </li>
 
                 <li routerLinkActive="active" class="nav-item">
-                    <a routerLink="/category" class="nav-link">Categories</a>
+                    <a routerLink="/category" class="nav-link">Categorieën</a>
                 </li> 
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 <li *ngIf="isAuthenticated" class="nav-item">
-                    <a class="nav-link" style="cursor: pointer;" (click)="onLogout()" routerLink="/auth">Logout</a>
+                    <a class="nav-link" style="cursor: pointer;" (click)="onLogout()" routerLink="/auth">Uitloggen</a>
                 </li>
 
                 <li class="nav-item" *ngIf="!isAuthenticated">
-                    <a class="nav-link" routerLink="/auth">Login</a>
+                    <a class="nav-link" routerLink="/auth">Inloggen</a>
                 </li>
             </ul>
         </div>

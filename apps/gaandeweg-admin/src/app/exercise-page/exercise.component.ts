@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import {
   Exercise,
   ExerciseService,
   LoggingService,
+  SEOService,
 } from '@gaandeweg-ws/data-access';
 
 @Component({
@@ -20,11 +22,16 @@ export class ExercisePage implements OnInit {
 
   constructor(
     private exerciseService: ExerciseService,
-    private logger: LoggingService
+    private logger: LoggingService,
+    private route: ActivatedRoute,
+    private SEOService: SEOService
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.exercises = await firstValueFrom(this.exerciseService.getExercises());
+    const { meta } = this.route.snapshot.data;
+    this.SEOService.updateTitle(`${meta.title}`);
+    this.SEOService.updateDescription(`${meta.description}`);
     this.isLoading = false;
   }
 

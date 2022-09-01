@@ -11,6 +11,7 @@ import {
   ExerciseFormField,
   ExerciseFormService,
   ExerciseService,
+  SEOService,
 } from '@gaandeweg-ws/data-access';
 import { User } from '../../auth/user.model';
 import { ExerciseTemplateFormComponent } from './exercise-template-form/exercise-template-form.component';
@@ -50,7 +51,8 @@ export class ExerciseFormComponent implements OnDestroy, OnInit {
     private categoryService: CategoryService,
     private exerciseService: ExerciseService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private SEOService: SEOService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -62,6 +64,14 @@ export class ExerciseFormComponent implements OnDestroy, OnInit {
     this.categories = await firstValueFrom(
       this.categoryService.getCategories()
     );
+
+    const { meta } = this.route.snapshot.data;
+    this.SEOService.updateTitle(
+      `${meta.title} ${
+        this.editMode ? 'Bewerk ' + this.exercise.name : 'Nieuwe oefening'
+      }`
+    );
+    this.SEOService.updateDescription(meta.description);
     this.isLoading = false;
   }
 
